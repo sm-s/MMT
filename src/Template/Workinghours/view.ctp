@@ -45,7 +45,7 @@
         </tr>
         <tr>
             <th><?= __('Description') ?></th>
-            <td><?= h($workinghour->description) ?></td>
+            <td><?= h(Cake\Utility\Text::wrap($workinghour->description, ['width' => 50, 'wordWrap' => false])) ?></td>
         </tr>
         <tr>
             <th><?= __('Id') ?></th>
