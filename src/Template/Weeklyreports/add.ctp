@@ -25,8 +25,10 @@
                 $reportWeek = $now->weekOfYear -1;
                 $currProj = $this->request->session()->read('selected_project')['project_name'];
 
-				// autofills some info to report title
-                echo $this->Form->input('title', array('value' => $currProj.', report for week '.$reportWeek.', '.$now->year) );
+		// autofills some info to report title
+                //echo $this->Form->input('title', array('value' => $currProj.', report for week '.$reportWeek.', '.$now->year) );              
+                // The automatic title doesn't contain the week any longer
+                echo $this->Form->input('title', array('value' => $currProj.', weekly report') );
                 echo $this->Form->input('week', array('value' => $reportWeek, 'style' => 'width: 35%;'));
                 echo $this->Form->input('year', array('value' => $now->year, 'style' => 'width: 35%;'));
                 echo $this->Form->input('meetings');
