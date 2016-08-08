@@ -203,7 +203,7 @@ class ChartsController extends AppController
         $myChart->legend->backgroundColor->stops = array(array(0, 'rgb(217, 217, 217)'), array(1, 'rgb(255, 255, 255)'));
         // labels to describe the content of axes
         $myChart->xAxis->title->text = 'Week number';
-        $myChart->yAxis->title->text = 'Total amount of phases';
+        $myChart->yAxis->title->text = 'Total number of phases';
         
         // tooltips for the plotted graphs
         $myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {
@@ -253,7 +253,7 @@ class ChartsController extends AppController
         $myChart->legend->backgroundColor->stops = array(array(0, 'rgb(217, 217, 217)'), array(1, 'rgb(255, 255, 255)'));
         // labels to describe the content of axes
         $myChart->xAxis->title->text = 'Week number';
-        $myChart->yAxis->title->text = 'Total amount of requirements';
+        $myChart->yAxis->title->text = 'Total number of requirements';
         
         // tooltips etc
         $myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {
@@ -347,7 +347,7 @@ class ChartsController extends AppController
     	
     	// labels to describe the content of axes
     	$myChart->xAxis->title->text = 'Week number';
-    	$myChart->yAxis->title->text = 'Total amount of commits';
+    	$myChart->yAxis->title->text = 'Total number of commits';
    
     	return $myChart;
     }
@@ -391,7 +391,7 @@ class ChartsController extends AppController
     	$myChart->plotOptions->area->marker->enabled = false;
     	// labels to describe the content of axes
     	$myChart->xAxis->title->text = 'Week number';
-    	$myChart->yAxis->title->text = 'Total amount of test cases';
+    	$myChart->yAxis->title->text = 'Total number of test cases';
     
     	return $myChart;
     }
@@ -491,7 +491,7 @@ class ChartsController extends AppController
         $myChart->plotOptions->area->marker->enabled = false;
         return $myChart;
     }
-    
+      
     public function isAuthorized($user)
     {      
         return True;
