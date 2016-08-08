@@ -1,7 +1,16 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Member'), ['action' => 'edit', $member->id]) ?> </li>
+        
+        <?php
+
+// SUMMER MMT
+        // Link not visible to devs or managers
+        $admin = $this->request->session()->read('is_admin');
+        $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;       
+        if ($admin || $supervisor ) { ?>
+            <li><?= $this->Html->link(__('Edit Member'), ['action' => 'edit', $member->id]) ?> </li>
+        <?php } ?>        
     </ul>
 </nav>
 <div class="members view large-8 medium-16 columns content float: left">
@@ -26,55 +35,116 @@
 			?></td>
         </tr>
         <tr>
+            <?php
+//SUMMER MMT
+            // Remove link from the email address 
+            ?>
             <th><?= __('Email') ?></th>
-            <td><?= $member->has('user') ? $this->Html->link($member->user->email, ['controller' => 'Users', 'action' => 'view', $member->user->id]) : '' ?></td>
+            
+            <td><?= $member->has('user') ? $member->user->email : '' ?></td>
+                
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Related Weeklyhours') ?></h4>
-        <?php if (!empty($member->weeklyhours)): ?>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <th><?= __('Weeklyreport id') ?></th>
-                    <th><?= __('Duration') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-                <?php foreach ($member->weeklyhours as $weeklyhours): ?>
-                <tr>
-                    <td><?= h($weeklyhours->weeklyreport_id) ?></td>
-                    <td><?= h($weeklyhours->duration) ?></td>
-                    <td class="actions">
-
-                    <?= $this->Html->link(__('View'), ['controller' => 'Weeklyhours', 'action' => 'view', $weeklyhours->id]) ?>
-                                       
-                    <?php       
-                    // links for edit and delete are not visible to devs and managers
-                    $admin = $this->request->session()->read('is_admin');
-                    $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-                    // $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
-                    // if($admin || $supervisor || $manager) {
-                    if($admin || $supervisor) {
-                    ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Weeklyhours', 'action' => 'edit', $weeklyhours->id]) ?>
-
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Weeklyhours', 'action' => 'delete', $weeklyhours->id], ['confirm' => __('Are you sure you want to delete # {0}?', $weeklyhours->id)]) ?>
-                    <?php } ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-
-                <h4><?= __('Related Workinghours') ?></h4>
+        <h4><?= __('Workinghours') ?></h4>
         <?php if (!empty($member->workinghours)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <th><?= __('Date') ?></th>
-                    <th><?= __('Description') ?></th>
-                    <th><?= __('Duration') ?></th>
+                    <th><?= __('Worktype') ?></th>
+                    <th><?= __('Hours') ?></th>
+                </tr>
+                
+                <?php         
+                $query = $member->workinghours;
+                $memberID = $member->id;
+                //$query->select(['duration' => $query->func()->sum('*')]);  
+                foreach ($query as $key) {
+                   $hours[] = $key->duration;
+                   $sum = array_sum($hours);  
+                }
+                // Fill array with zeros to avoid a bug if there are no workinghours of some work type
+                $sums = array();
+                $sums = array_fill(1, 5, 0);
+                $id = 0;
+                foreach($query as $key) {
+                    $hour = 0;
+                    if ($key->worktype_id === 1) {
+                        $hour = $key->duration;
+                        if (!(isset($sums[1]))) {
+                            $sums[1] = $hour;
+                        }
+                        else {
+                            $sums[1] += $hour;
+                        }
+                    }
+                    if ($key->worktype_id === 2) {
+                        $hour = $key->duration;
+                        if (!(isset($sums[2]))) {
+                            $sums[2] = $hour;
+                        }
+                        else {
+                            $sums[2] += $hour;
+                        }
+                    }
+                    if ($key->worktype_id === 3) {
+                        $hour = $key->duration;
+                        if (!(isset($sums[3]))) {
+                            $sums[3] = $hour;
+                        }
+                        else {
+                            $sums[3] += $hour;
+                        } 
+                    }
+                    if ($key->worktype_id === 4) {
+                        $hour = $key->duration;
+                        if (!(isset($sums[4]))) {
+                            $sums[4] = $hour;
+                        }
+                        else {
+                            $sums[4] += $hour;
+                        }
+                    }
+                    if ($key->worktype_id === 5) {
+                        $hour = $key->duration;
+                        if (!(isset($sums[5]))) {
+                            $sums[5] = $hour;
+                        }
+                        else {
+                            $sums[5] += $hour;
+                        }
+                    }                  
+                }          
+                // Get the names for worktypes
+              	$queryForTypes = Cake\ORM\TableRegistry::get('Worktypes')
+                    ->find()
+                    ->toArray();
+                ?>
+
+                <?php             
+                foreach($queryForTypes as $type): ?>
+                <tr>
+                    <td><?= h($type->description) ?></td>                
+                    <td><?= h($sums[$type->id]) ?></td>
+
+                <?php endforeach; ?>   
+                </tr>
+                    <td><b><?= __('Total') ?></b></th> 
+                    <td><b><?= h($sum) ?></b></td>
+            </table>
+        <?php endif; ?>
+
+        <h4><?= __('Logged tasks') ?></h4>
+        <?php if (!empty($member->workinghours)): ?>
+            <table cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>                  
+                    <th><?= __('Date') ?></th>                    
+                    <th style="width:200px;"><?= __('Description') ?></th>
+                    <th style="width:70px;"><?= __('Duration') ?></th>
                     <th><?= __('Worktype') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
+            </thead>
                 <?php foreach ($member->workinghours as $workinghours): 
                 	$query = Cake\ORM\TableRegistry::get('Worktypes')
                 		->find()
@@ -84,8 +154,8 @@
                 ?>
                 <tr>
                     <td><?= h($workinghours->date->format('d.m.Y')) ?></td>
-                    <td><?= h($workinghours->description) ?></td>
-                    <td><?= $this->Number->format($workinghours->duration) ?></td>
+                    <td><?= h(Cake\Utility\Text::wrap($workinghours->description, ['width' => 30, 'wordWrap' => false])) ?></td>
+                    <td style="text-align:center;"><?= $this->Number->format($workinghours->duration) ?></td>
 	                <td><?= h($worktype->description) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['controller' => 'Workinghours', 'action' => 'view', $workinghours->id]) ?>
