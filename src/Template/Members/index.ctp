@@ -10,7 +10,7 @@
             
             if($admin || $supervisor || $manager ) {
         ?>
-			<li><?= $this->Html->link(__('New Member'), ['action' => 'add']) ?></li>
+            <li><?= $this->Html->link(__('New Member'), ['action' => 'add']) ?></li>
         <?php }
         ?>
     </ul>
@@ -22,20 +22,36 @@
             <tr>
                 <th><?= $this->Paginator->sort('user_id') ?></th>
                 <th><?= $this->Paginator->sort('project_role') ?></th>
+                <th><?= __('Workinghours') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($members as $member): ?>
+
             <tr>
                 <td><?= $member->has('user') ? $this->Html->link($member->user->first_name . " ". $member->user->last_name, ['controller' => 'Users', 'action' => 'view', $member->user->id]) : '' ?></td>
-                <td><?= h($member->project_role) ?></td>
+                <td><?= h($member->project_role) ?></td><?php
+                // Get the sum of workinghours for a member who has working hours
+                if (!empty($member->workinghours)) {
+                    $query = $member->workinghours;
+                    $hours = array();
+                    $sum = 0;
+                    foreach ($query as $key) {
+                        $hours[] = $key->duration;
+                        $sum = array_sum($hours);   
+                    }
+                }
+                else {
+                    $sum = "";
+                } ?>
+                <td><?= h($sum) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $member->id]) ?>
                     <?php
-			            $admin = $this->request->session()->read('is_admin');
-			            $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-			            if($admin || $supervisor){
+			$admin = $this->request->session()->read('is_admin');
+			$supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
+			if($admin || $supervisor){
 			        ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $member->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $member->id], ['confirm' => __('Are you sure you want to delete # {0}?', $member->id)]) ?>

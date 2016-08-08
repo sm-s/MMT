@@ -11,7 +11,7 @@ class MembersController extends AppController
         // Only members of the current project are loaded
         $project_id = $this->request->session()->read('selected_project')['id'];   
         $this->paginate = [
-            'contain' => ['Users', 'Projects'],
+            'contain' => ['Users', 'Projects', 'Workinghours'],
             'conditions' => array('Members.project_id' => $project_id)
         ];
         $this->set('members', $this->paginate($this->Members));
