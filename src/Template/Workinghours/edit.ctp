@@ -18,10 +18,34 @@ echo $this->Html->script('jquery-ui.min');
 <div class="workinghours form large-8 medium-16 columns content float: left">
     <?= $this->Form->create($workinghour) ?>
     <fieldset>
-        <legend><?= __('Edit logged time') ?></legend>
+            <?php
+            
+            // Print out the name of the member whose workinghour will be edited
+            // for admins, supervisors and managers
+            $admin = $this->request->session()->read('is_admin');
+            $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
+            $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
+            
+            if($admin || $supervisor || $manager) {    
+        
+                $userid = $workinghour->member->user_id;
+            
+                $queryName = Cake\ORM\TableRegistry::get('Users')
+                ->find()
+           	->select(['first_name','last_name']) 
+            	->where(['id =' => $userid])
+                ->toArray(); 
+            
+                if ($queryName != null) { ?>
+                    <legend><?= __('Edit logged time for ') . $queryName[0]['first_name'] . " " . $queryName[0]['last_name'] ?></legend>    
+                <?php }
+            }    
+            else { ?>
+                <legend><?= __('Edit logged time') ?></legend>
+            <?php } ?>
+        
         <?php
-            // echo $this->Form->input('member_id', ['options' => $members]);
-            // 
+
             // ISSUE TO FIX
             // format the date that is in the field when the page is opened
             echo $this->Form->input('date', ['type' => 'text', 'readonly' => true]);
@@ -32,7 +56,7 @@ echo $this->Html->script('jquery-ui.min');
             echo $this->Form->input('worktype_id', ['options' => $worktypes]);    
         /*
          *
-        */
+         */
             /*
              * Req 21:
              * The weeks when the weekly reports were sent or if there are no reports,
