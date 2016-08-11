@@ -55,7 +55,9 @@ class ChartsController extends AppController
         $testcaseChart = $this->testcaseChart();
         $hoursChart = $this->hoursChart();
         $weeklyhourChart = $this->weeklyhourChart();
-        $reqPercentChart = $this->reqPercentChart();    
+        $reqPercentChart = $this->reqPercentChart();
+        // Chart for derived metrics
+        $derivedChart = $this->derivedChart();
         
         // Get all the data for the charts, based on the chartlimits
         // Fuctions in "ChartsTable.php"
@@ -152,8 +154,16 @@ class ChartsController extends AppController
             'data' => $reqData['rejected']
         );
         
+// MMT SUMMER        
+        // chart for derived metrics
+        $derivedChart->xAxis->categories = $weeklyreports['weeks'];    
+        $derivedChart->series[] = array(
+            'name' => 'weekly hours',
+            'data' => $weeklyhourData
+        );
+        
         // This sets the charts visible in the actual charts page "Charts/index.php"
-        $this->set(compact('phaseChart', 'reqChart', 'commitChart', 'testcaseChart', 'hoursChart', 'weeklyhourChart', 'reqPercentChart'));
+        $this->set(compact('phaseChart', 'reqChart', 'commitChart', 'testcaseChart', 'hoursChart', 'weeklyhourChart', 'reqPercentChart', 'derivedChart'));
     }
     // All the following functions are similar
     // They create a custom chart object and return it
@@ -185,7 +195,7 @@ class ChartsController extends AppController
         // body of the chart
         $myChart->chart->width =  800;
         $myChart->chart->height = 500;
-        /*
+        /* (This part is removed from other functions. Kept here as backup.)
          $myChart->chart->marginTop = 60;
          $myChart->chart->marginLeft = 90;
          $myChart->chart->marginRight = 30;
@@ -230,15 +240,7 @@ class ChartsController extends AppController
         // body of the chart
         $myChart->chart->width =  800;
         $myChart->chart->height = 500;
-        /*
-         $myChart->chart->marginTop = 60;
-         $myChart->chart->marginLeft = 90;
-         $myChart->chart->marginRight = 30;
-         $myChart->chart->marginBottom = 110;
-         $myChart->chart->spacingRight = 10;
-         $myChart->chart->spacingBottom = 15;
-         $myChart->chart->spacingLeft = 0;
-         */
+
         // $myChart->chart->alignTicks = FALSE;
         $myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
         $myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
@@ -281,15 +283,7 @@ class ChartsController extends AppController
     	// body of the chart
     	$myChart->chart->width =  800;
     	$myChart->chart->height = 500;
-    	/*
-    	 $myChart->chart->marginTop = 60;
-    	 $myChart->chart->marginLeft = 90;
-    	 $myChart->chart->marginRight = 30;
-    	 $myChart->chart->marginBottom = 110;
-    	 $myChart->chart->spacingRight = 10;
-    	 $myChart->chart->spacingBottom = 15;
-    	 $myChart->chart->spacingLeft = 0;
-    	 */
+
     	// $myChart->chart->alignTicks = FALSE;
     	$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
     	$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
@@ -326,15 +320,7 @@ class ChartsController extends AppController
     	// body of the chart
     	$myChart->chart->width =  800;
     	$myChart->chart->height = 500;
-    	/*
-    	 $myChart->chart->marginTop = 60;
-    	 $myChart->chart->marginLeft = 90;
-    	 $myChart->chart->marginRight = 30;
-    	 $myChart->chart->marginBottom = 110;
-    	 $myChart->chart->spacingRight = 10;
-    	 $myChart->chart->spacingBottom = 15;
-    	 $myChart->chart->spacingLeft = 0;
-    	 */
+
     	// $myChart->chart->alignTicks = FALSE;
     	$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
     	$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
@@ -367,15 +353,7 @@ class ChartsController extends AppController
     	// body of the chart
     	$myChart->chart->width =  800;
     	$myChart->chart->height = 500;
-    	/*
-    	 $myChart->chart->marginTop = 60;
-    	 $myChart->chart->marginLeft = 90;
-    	 $myChart->chart->marginRight = 30;
-    	 $myChart->chart->marginBottom = 110;
-    	 $myChart->chart->spacingRight = 10;
-    	 $myChart->chart->spacingBottom = 15;
-    	 $myChart->chart->spacingLeft = 0;
-    	 */
+
     	// $myChart->chart->alignTicks = FALSE;
     	$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
     	$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
@@ -414,15 +392,7 @@ class ChartsController extends AppController
     	// body of the chart
     	$myChart->chart->width =  800;
     	$myChart->chart->height = 500;
-    	/*
-    	 $myChart->chart->marginTop = 60;
-    	 $myChart->chart->marginLeft = 90;
-    	 $myChart->chart->marginRight = 30;
-    	 $myChart->chart->marginBottom = 110;
-    	 $myChart->chart->spacingRight = 10;
-    	 $myChart->chart->spacingBottom = 15;
-    	 $myChart->chart->spacingLeft = 0;
-    	 */
+
     	// $myChart->chart->alignTicks = FALSE;
     	$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
     	$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
@@ -465,15 +435,7 @@ class ChartsController extends AppController
 		// body of the chart
 		$myChart->chart->width =  800;
 		$myChart->chart->height = 500;
-		/*
-		 $myChart->chart->marginTop = 60;
-		 $myChart->chart->marginLeft = 90;
-		 $myChart->chart->marginRight = 30;
-		 $myChart->chart->marginBottom = 110;
-		 $myChart->chart->spacingRight = 10;
-		 $myChart->chart->spacingBottom = 15;
-		 $myChart->chart->spacingLeft = 0;
-		 */
+
 		// $myChart->chart->alignTicks = FALSE;
 		$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
 		$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
@@ -491,7 +453,42 @@ class ChartsController extends AppController
         $myChart->plotOptions->area->marker->enabled = false;
         return $myChart;
     }
-      
+
+    public function derivedChart(){
+		$myChart = $this->Highcharts->createChart();
+		$myChart->chart->renderTo = 'derivedwrapper';
+		$myChart->chart->type = 'area';
+	
+		$myChart->title = array(
+			'text' => 'Weeklyhours',
+			'y' => 20,
+			'align' => 'center',
+			'styleFont' => '18px Metrophobic, Arial, sans-serif',
+			'styleColor' => '#0099ff',
+		);
+		$myChart->subtitle->text = 'submitted to weekly reports';
+		
+		// body of the chart
+		$myChart->chart->width =  800;
+		$myChart->chart->height = 500;
+
+		// $myChart->chart->alignTicks = FALSE;
+		$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
+		$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
+		
+		// this chart doesn't need a legend
+		$myChart->legend->enabled = false;
+		
+		// labels to describe the content of axes
+		$myChart->xAxis->title->text = 'Week number';
+		$myChart->yAxis->title->text = 'Total amount of weeklyhours';
+		
+        $myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {
+        return this.series.name +' produced <b>'+
+        Highcharts.numberFormat(this.y, 0) +'</b><br/>Week number '+ this.x;}");
+        $myChart->plotOptions->area->marker->enabled = false;
+        return $myChart;
+    }    
     public function isAuthorized($user)
     {      
         return True;

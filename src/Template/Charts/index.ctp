@@ -31,14 +31,14 @@
     <!-- Following two (2) charts are both about requirements, so they share a bigger header -->
     <div class="chart">
         <h4>Requirement Charts</h4>
-        <h5>Amounts in numbers</h5>
+        <!--<h5>Amounts in numbers</h5>-->
         <div id="reqwrapper">
         	<?php echo $this->Highcharts->render($reqChart, 'reqchart'); ?>
         </div>
     </div>
-    
+    </br>
     <div class="chart">
-        <h5>Amounts in percentages</h5>
+        <!--<h5>Amounts in percentages</h5>-->
         <div id="reqpercentwrapper">
         	<?php echo $this->Highcharts->render($reqPercentChart, 'reqpercentchart'); ?>
         </div>
@@ -62,15 +62,27 @@
     <div class="chart">
         <h4>Categorized Working Hour Chart</h4>
         <div id="hourswrapper">
-			<?php echo $this->Highcharts->render($hoursChart, 'hourschart'); ?>
-		</div>
+		<?php echo $this->Highcharts->render($hoursChart, 'hourschart'); ?>
+	</div>
     </div>
-
+    
     <div class="chart">
         <h4>Weeklyhour Chart</h4>
         <div id="weeklyhourwrapper">
 	        <?php echo $this->Highcharts->render($weeklyhourChart, 'weeklyhourchart'); ?>
 		</div>
-	</div>
+    </div>
+    
+    <?php 
+    // The chart for derived metrics is visible only to admins
+    $admin = $this->request->session()->read('is_admin');
+    if ($admin) { ?>  
+        <div class="chart">
+            <h4>Derived Metrics Chart</h4>
+            <div id="derivedwrapper">
+                <?php echo $this->Highcharts->render($derivedChart, 'weeklyhourchart'); ?>
+            </div>
+        </div>
+    <?php } ?>
 	
 </div>
