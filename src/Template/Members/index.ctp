@@ -1,10 +1,8 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
         <?php
             $admin = $this->request->session()->read('is_admin');
             $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-
             // FIX: managers can also add new members
             $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
             
@@ -20,19 +18,21 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th><?= $this->Paginator->sort('user_id') ?></th>
+                <th><?= __('Name') ?></th>
                 <th><?= $this->Paginator->sort('project_role') ?></th>
-                <th><?= __('Workinghours') ?></th>
+                <th><?= __('Working hours') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
+            <?php // Total of team's working hours
+            $total = 0;?>
             <?php foreach ($members as $member): ?>
 
             <tr>
-                <td><?= $member->has('user') ? $this->Html->link($member->user->first_name . " ". $member->user->last_name, ['controller' => 'Users', 'action' => 'view', $member->user->id]) : '' ?></td>
+                <td><?= h($member->user->first_name . " ". $member->user->last_name) ?></td>
                 <td><?= h($member->project_role) ?></td><?php
-                // Get the sum of workinghours for a member who has working hours
+                // Get the sum of workinghours for a member who has working hours              
                 if (!empty($member->workinghours)) {
                     $query = $member->workinghours;
                     $hours = array();
@@ -42,9 +42,12 @@
                         $sum = array_sum($hours);   
                     }
                 }
+                // If the member doesn't have workinghours
                 else {
                     $sum = "";
-                } ?>
+                }
+                $total += $sum;?>
+                
                 <td><?= h($sum) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $member->id]) ?>
@@ -59,6 +62,15 @@
                 </td>
             </tr>
             <?php endforeach; ?>
+            
+            <?php // Total of team's workinghours is placed on the bottom row of the table
+            if (!empty($member->project_id)) { ?>
+            <tr style="border-top: 2px solid black;">
+                <td><b><?= __('Total') ?></b></td>
+                <td></td>
+                <td><b><?= h($total) ?></b></td>
+            </tr> 
+            <?php } ?>
         </tbody>
     </table>
     <div class="paginator">
@@ -69,4 +81,4 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-</div>
+</div>  
