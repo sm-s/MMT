@@ -36,32 +36,33 @@
         </tr>
         <tr>
             <?php
-//SUMMER MMT
-            // Remove link from the email address 
+
+            // Removed link from the email address 
             ?>
             <th><?= __('Email') ?></th>
-            
-            <td><?= $member->has('user') ? $member->user->email : '' ?></td>
+            <td><?= $member->user->email ?></td>
                 
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Workinghours') ?></h4>
+        <h4><?= __('Working hours') ?></h4>
         <?php if (!empty($member->workinghours)): ?>
             <table cellpadding="0" cellspacing="0">
+
                 <tr>
                     <th><?= __('Worktype') ?></th>
                     <th><?= __('Hours') ?></th>
                 </tr>
-                
+
                 <?php         
                 $query = $member->workinghours;
                 $memberID = $member->id;
-                //$query->select(['duration' => $query->func()->sum('*')]);  
+                // Total of workinghours
                 foreach ($query as $key) {
                    $hours[] = $key->duration;
                    $sum = array_sum($hours);  
                 }
+                // Hours per worktype
                 // Fill array with zeros to avoid a bug if there are no workinghours of some work type
                 $sums = array();
                 $sums = array_fill(1, 5, 0);
@@ -128,8 +129,10 @@
 
                 <?php endforeach; ?>   
                 </tr>
-                    <td><b><?= __('Total') ?></b></th> 
+                <tr style="border-top: 2px solid black;">
+                    <td><b><?= __('Total') ?></b></td> 
                     <td><b><?= h($sum) ?></b></td>
+                </tr>    
             </table>
         <?php endif; ?>
 
@@ -139,7 +142,7 @@
             <thead>
                 <tr>                  
                     <th><?= __('Date') ?></th>                    
-                    <th style="width:200px;"><?= __('Description') ?></th>
+                    <th style="width:220px;"><?= __('Description') ?></th>
                     <th style="width:70px;"><?= __('Duration') ?></th>
                     <th><?= __('Worktype') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
@@ -154,7 +157,9 @@
                 ?>
                 <tr>
                     <td><?= h($workinghours->date->format('d.m.Y')) ?></td>
-                    <td><?= h(Cake\Utility\Text::wrap($workinghours->description, ['width' => 30, 'wordWrap' => false])) ?></td>
+                    <?php 
+                    /*<td><?= h(Cake\Utility\Text::wrap($workinghours->description, ['width' => 15, 'wordWrap' => false])) ?></td>*/ ?>
+                    <td><?= h(wordwrap($workinghours->description,33,"\n",TRUE)) ?></td>
                     <td style="text-align:center;"><?= $this->Number->format($workinghours->duration) ?></td>
 	                <td><?= h($worktype->description) ?></td>
                     <td class="actions">
@@ -205,4 +210,3 @@
         <?php endif; ?>
     </div>
 </div>
-
