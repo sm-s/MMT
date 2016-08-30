@@ -68,6 +68,7 @@
     
     <div class="chart">
         <h4>Weeklyhour Chart</h4>
+        <h5>This will be replaced with "Workinghours per week" Chart</h5>
         <div id="weeklyhourwrapper">
 	        <?php echo $this->Highcharts->render($weeklyhourChart, 'weeklyhourchart'); ?>
 		</div>
@@ -80,7 +81,7 @@
         <div class="chart">
             <h4>Derived Metrics Chart</h4>
             <div id="derivedwrapper">
-                <?php echo $this->Highcharts->render($derivedChart, 'weeklyhourchart'); ?>
+                <?php echo $this->Highcharts->render($derivedChart, 'testcasechart'); ?>
             </div>
         </div>
     <?php } ?>

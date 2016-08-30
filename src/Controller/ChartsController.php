@@ -73,7 +73,7 @@ class ChartsController extends AppController
         // phaseChart
         $phaseChart->xAxis->categories = $weeklyreports['weeks'];
         $phaseChart->series[] = array(
-            'name' => 'Total phases',
+            'name' => 'Total phases planned',
             'data' => $phaseData['phaseTotal']
         );
         $phaseChart->series[] = array(
@@ -109,11 +109,11 @@ class ChartsController extends AppController
         // testcaseChart
         $testcaseChart->xAxis->categories = $weeklyreports['weeks'];
         $testcaseChart->series[] = array(
-            'name' => 'Total tests',
+            'name' => 'Total test cases',
             'data' => $testcaseData['testsTotal']
         );
         $testcaseChart->series[] = array(
-            'name' => 'Passed tests',
+            'name' => 'Passed test cases',
             'data' => $testcaseData['testsPassed']
         );
         // hoursChart
@@ -156,12 +156,15 @@ class ChartsController extends AppController
         
 // MMT SUMMER        
         // chart for derived metrics
-        $derivedChart->xAxis->categories = $weeklyreports['weeks'];    
+        $derivedChart->xAxis->categories = $weeklyreports['weeks'];
         $derivedChart->series[] = array(
-            'name' => 'weekly hours',
-            'data' => $weeklyhourData
+            'name' => 'Total test cases',
+            'data' => $testcaseData['testsTotal']
         );
-        
+        $derivedChart->series[] = array(
+            'name' => 'Passed test cases',
+            'data' => $testcaseData['testsPassed']
+        );
         // This sets the charts visible in the actual charts page "Charts/index.php"
         $this->set(compact('phaseChart', 'reqChart', 'commitChart', 'testcaseChart', 'hoursChart', 'weeklyhourChart', 'reqPercentChart', 'derivedChart'));
     }
@@ -455,39 +458,41 @@ class ChartsController extends AppController
     }
 
     public function derivedChart(){
-		$myChart = $this->Highcharts->createChart();
-		$myChart->chart->renderTo = 'derivedwrapper';
-		$myChart->chart->type = 'area';
-	
-		$myChart->title = array(
-			'text' => 'Weeklyhours',
-			'y' => 20,
-			'align' => 'center',
-			'styleFont' => '18px Metrophobic, Arial, sans-serif',
-			'styleColor' => '#0099ff',
-		);
-		$myChart->subtitle->text = 'submitted to weekly reports';
-		
-		// body of the chart
-		$myChart->chart->width =  800;
-		$myChart->chart->height = 500;
+        
+   	$myChart = $this->Highcharts->createChart();
+    	$myChart->chart->renderTo = 'derivedwrapper';
+    	$myChart->chart->type = 'area';
+    
+    	$myChart->title = array(
+        	'text' => 'Test cases',
+        	'y' => 20,
+        	'align' => 'center',
+        	'styleFont' => '18px Metrophobic, Arial, sans-serif',
+        	'styleColor' => '#0099ff',
+        );
+    	
+    	// body of the chart
+    	$myChart->chart->width =  800;
+    	$myChart->chart->height = 500;
 
-		// $myChart->chart->alignTicks = FALSE;
-		$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
-		$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
-		
-		// this chart doesn't need a legend
-		$myChart->legend->enabled = false;
-		
-		// labels to describe the content of axes
-		$myChart->xAxis->title->text = 'Week number';
-		$myChart->yAxis->title->text = 'Total amount of weeklyhours';
-		
-        $myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {
-        return this.series.name +' produced <b>'+
+    	// $myChart->chart->alignTicks = FALSE;
+    	$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
+    	$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
+    	// legend below the charts
+    	$myChart->legend->itemStyle = array('color' => '#222');
+    	$myChart->legend->backgroundColor->linearGradient = array(0, 0, 0, 25);
+    	$myChart->legend->backgroundColor->stops = array(array(0, 'rgb(217, 217, 217)'), array(1, 'rgb(255, 255, 255)'));
+    	 
+    	// tooltips etc
+    	$myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {
+        return this.series.name +' <b>'+
         Highcharts.numberFormat(this.y, 0) +'</b><br/>Week number '+ this.x;}");
-        $myChart->plotOptions->area->marker->enabled = false;
-        return $myChart;
+    	$myChart->plotOptions->area->marker->enabled = false;
+    	// labels to describe the content of axes
+    	$myChart->xAxis->title->text = 'Week number';
+    	$myChart->yAxis->title->text = 'Total number of test cases';
+    
+    	return $myChart;
     }    
     public function isAuthorized($user)
     {      
