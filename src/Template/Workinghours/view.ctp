@@ -1,38 +1,36 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
         <?php
         	$admin = $this->request->session()->read('is_admin');
-			$supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-			$manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
-			// the week and year of the last weekly report
-			$project_id = $this->request->session()->read('selected_project')['id'];
-			$query = Cake\ORM\TableRegistry::get('Weeklyreports')
+                $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
+		$manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
+		// the week and year of the last weekly report
+		$project_id = $this->request->session()->read('selected_project')['id'];
+		$query = Cake\ORM\TableRegistry::get('Weeklyreports')
 				->find()
 				->select(['year','week']) 
 				->where(['project_id =' => $project_id])
 				->toArray();
-			if ($query != null) {
-				// picking out the week of the last weeklyreport from the results
-				$max = max($query);
-				$maxYear = $max['year'];
-				$maxWeek = $max['week'];
-			}
-                        else {
-                            $firstWeeklyReport = true;
-                        }
-			// the week and the year of the workinghour
-			$week= $workinghour->date->format('W');
-			$year= $workinghour->date->format('Y');
-			$firstWeeklyReport = false;
-			/* The next IF looks kinda complicated, but it means this:
-			* IF you are the owning user AND workinghour isn't from previous weeks
-			* OR you are an admin or a supervisor
-			*/
+		if ($query != null) {
+			// picking out the week of the last weeklyreport from the results
+			$max = max($query);
+			$maxYear = $max['year'];
+			$maxWeek = $max['week'];
+		}
+                else {
+                        $firstWeeklyReport = true;
+                }
+		// the week and the year of the workinghour
+		$week= $workinghour->date->format('W');
+		$year= $workinghour->date->format('Y');
+		$firstWeeklyReport = false;
+		/* The next IF looks kinda complicated, but it means this:
+		* IF you are the owning user AND workinghour isn't from previous weeks
+		* OR you are an admin or a supervisor */
         	if ( ( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id') || $manager)
-                            && ($firstWeeklyReport || (($year >= $maxYear) && ($week > $maxWeek)))) 
-					     || ($admin || $supervisor) ) { ?>
-				<li><?= $this->Html->link(__('Edit logged time'), ['action' => 'edit', $workinghour->id]) ?> </li>
+                        && ($firstWeeklyReport || (($year >= $maxYear) && ($week > $maxWeek)))) 
+				|| ($admin || $supervisor) ) { ?>
+			<li><?= $this->Html->link(__('Edit logged time'), ['action' => 'edit', $workinghour->id]) ?> </li>
 		<?php } ?>
     </ul>
 </nav>
@@ -44,12 +42,12 @@
             <td><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Members', 'action' => 'view', $workinghour->member->id]) : '' ?></td>
         </tr>
         <tr>
-            <th><?= __('Description') ?></th>
-            <td><?= h(Cake\Utility\Text::wrap($workinghour->description, ['width' => 50, 'wordWrap' => false])) ?></td>
+            <th><?= __('Date') ?></th>
+            <td><?= h($workinghour->date->format('d.m.Y')) ?></tr>
         </tr>
         <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($workinghour->id) ?></td>
+            <th><?= __('Description') ?></th>
+            <td><?= h(Cake\Utility\Text::wrap($workinghour->description, ['width' => 50, 'wordWrap' => false])) ?></td>
         </tr>
         <tr>
             <th><?= __('Duration') ?></th>
@@ -58,10 +56,6 @@
         <tr>
             <th><?= __('Worktype') ?></th>
             <td><?= $workinghour->has('worktype') ? $this->Html->link($workinghour->worktype->description, ['controller' => 'Worktypes', 'action' => 'view', $workinghour->worktype->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Date') ?></th>
-            <td><?= h($workinghour->date->format('d.m.Y')) ?></tr>
         </tr>
     </table>
 </div>
