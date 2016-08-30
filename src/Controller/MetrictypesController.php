@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
+// If you add or delete metrictypes or change their descriptions,
+// update the code in WeeklyreportsController (view function).
 class MetrictypesController extends AppController
 {
     public function index()

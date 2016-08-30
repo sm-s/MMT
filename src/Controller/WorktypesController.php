@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
+// If you add or delete worktypes or change their descriptions,
+// update the code in view.ctp for Members.
 class WorktypesController extends AppController
 {
 
