@@ -39,10 +39,12 @@ class WeeklyreportsController extends AppController
         if ($admin || $supervisor) {
         	// admin/superv. can access without conditions
         	$weeklyreport = $this->Weeklyreports->get($id, [
-        		'contain' => ['Projects', 'Metrics', 'Weeklyhours'] ]);
+        		//'contain' => ['Projects', 'Metrics', 'Weeklyhours'] ]);
+                        'contain' => ['Projects', 'Metrics', 'Workinghours'] ]);
         } else {
         	$weeklyreport = $this->Weeklyreports->get($id, [
-        			'contain' => ['Projects', 'Metrics', 'Weeklyhours'],
+        			//'contain' => ['Projects', 'Metrics', 'Weeklyhours'],
+                                'contain' => ['Projects', 'Metrics', 'Workinghours'],
         			'conditions' => array('Weeklyreports.project_id' => $project_id) ]);
         }
         
@@ -50,6 +52,7 @@ class WeeklyreportsController extends AppController
         $members = TableRegistry::get('Members');
         // list of members so we can display usernames instead of id's
         $memberlist = $members->getMembers($project_id);
+        /*
         foreach($weeklyreport->weeklyhours as $weeklyhours){
             foreach($memberlist as $member){
                 // if the id's match add the correct name
@@ -58,12 +61,14 @@ class WeeklyreportsController extends AppController
                 }
             }
         }
+*/ /*
         // get descriptions for the metrics
         $metrictypes = TableRegistry::get('Metrictypes');
         $query = $metrictypes
             ->find()
             ->select(['id','description'])
             ->toArray();
+        
         foreach($weeklyreport->metrics as $metrics){
             foreach($query as $metrictypes){
                 // if the id's match add the correct description
@@ -71,11 +76,39 @@ class WeeklyreportsController extends AppController
                    $metrics['metric_description'] = $metrictypes->description;
                 }
             }
-        }
-		
-		// comments stuff
-		
-		
+        } */
+        
+        // If metrictypes are chanded, this bit need to be updated.
+        foreach($weeklyreport->metrics as $metrics) {
+            if($metrics->metrictype_id == 1) {
+                $metrics['metric_description'] = "Current phase";
+            }
+            if($metrics->metrictype_id == 2) {
+                $metrics['metric_description'] = "Total number of planned phases";
+            }
+            if($metrics->metrictype_id == 3) {
+                $metrics['metric_description'] = "New requirements";
+            }
+            if($metrics->metrictype_id == 4) {
+                $metrics['metric_description'] = "Requirements in progress";
+            }
+            if($metrics->metrictype_id == 5) {
+                $metrics['metric_description'] = "Closed requirements";
+            }
+            if($metrics->metrictype_id == 6) {
+                $metrics['metric_description'] = "Rejected requirements";
+            }
+            if($metrics->metrictype_id == 7) {
+                $metrics['metric_description'] = "Commits to the source code repository";
+            }
+            if($metrics->metrictype_id == 8) {
+                $metrics['metric_description'] = "Passed test cases";
+            }
+            if($metrics->metrictype_id == 9) {
+                $metrics['metric_description'] = "Total number of test cases";
+            }             
+        }	
+	// comments stuff
         $this->set('weeklyreport', $weeklyreport);
         $this->set('_serialize', ['weeklyreport']);
     }
@@ -110,7 +143,7 @@ class WeeklyreportsController extends AppController
             }
         }
         $this->set(compact('weeklyreport', 'projects'));
-        $this->set('_serialize', ['weeklyreport']);    
+        $this->set('_serialize', ['weeklyreport']);
     }
     
     public function edit($id = null)
