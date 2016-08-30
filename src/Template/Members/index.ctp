@@ -25,8 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php // Total of team's working hours
-            $total = 0;?>
+            <?php $total = 0;?>
             <?php foreach ($members as $member): ?>
 
             <tr>
@@ -42,7 +41,6 @@
                         $sum = array_sum($hours);   
                     }
                 }
-                // If the member doesn't have workinghours
                 else {
                     $sum = "";
                 }
@@ -63,8 +61,7 @@
             </tr>
             <?php endforeach; ?>
             
-            <?php // Total of team's workinghours is placed on the bottom row of the table
-            if (!empty($member->project_id)) { ?>
+            <?php if (!empty($member->project_id)) { ?>
             <tr style="border-top: 2px solid black;">
                 <td><b><?= __('Total') ?></b></td>
                 <td></td>

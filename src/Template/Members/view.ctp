@@ -1,16 +1,16 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        
         <?php
-
-// SUMMER MMT
-        // Link not visible to devs or managers
+        // Edit link not visible to devs or managers
         $admin = $this->request->session()->read('is_admin');
         $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;       
         if ($admin || $supervisor ) { ?>
             <li><?= $this->Html->link(__('Edit Member'), ['action' => 'edit', $member->id]) ?> </li>
-        <?php } ?>        
+        <?php } 
+        // since clients and supervisors don't log time, no need to show a link to their hour 
+        if (($member->project_role == 'developer') || ($member->project_role == 'manager')) { ?>
+            <li><?= $this->Html->link(__('Logged tasks'), ['controller' => 'Members', 'action' => 'tasks', $member->id]) ?> </li>
+        <?php } ?>
     </ul>
 </nav>
 <div class="members view large-8 medium-16 columns content float: left">
@@ -45,8 +45,8 @@
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Working hours') ?></h4>
         <?php if (!empty($member->workinghours)): ?>
+        <h4><?= __('Working hours') ?></h4>
             <table cellpadding="0" cellspacing="0">
 
                 <tr>
@@ -57,12 +57,11 @@
                 <?php         
                 $query = $member->workinghours;
                 $memberID = $member->id;
-                // Total of workinghours
+               
                 foreach ($query as $key) {
                    $hours[] = $key->duration;
                    $sum = array_sum($hours);  
                 }
-                // Hours per worktype
                 // Fill array with zeros to avoid a bug if there are no workinghours of some work type
                 $sums = array();
                 $sums = array_fill(1, 5, 0);
@@ -134,79 +133,6 @@
                     <td><b><?= h($sum) ?></b></td>
                 </tr>    
             </table>
-        <?php endif; ?>
-
-        <h4><?= __('Logged tasks') ?></h4>
-        <?php if (!empty($member->workinghours)): ?>
-            <table cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>                  
-                    <th><?= __('Date') ?></th>                    
-                    <th style="width:220px;"><?= __('Description') ?></th>
-                    <th style="width:70px;"><?= __('Duration') ?></th>
-                    <th><?= __('Worktype') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-                <?php foreach ($member->workinghours as $workinghours): 
-                	$query = Cake\ORM\TableRegistry::get('Worktypes')
-                		->find()
-                		->where(['id =' => $workinghours->worktype_id])
-                		->toArray();
-                	$worktype = $query[0];
-                ?>
-                <tr>
-                    <td><?= h($workinghours->date->format('d.m.Y')) ?></td>
-                    <?php 
-                    /*<td><?= h(Cake\Utility\Text::wrap($workinghours->description, ['width' => 15, 'wordWrap' => false])) ?></td>*/ ?>
-                    <td><?= h(wordwrap($workinghours->description,33,"\n",TRUE)) ?></td>
-                    <td style="text-align:center;"><?= $this->Number->format($workinghours->duration) ?></td>
-	                <td><?= h($worktype->description) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['controller' => 'Workinghours', 'action' => 'view', $workinghours->id]) ?>
-                    <?php
-                        $admin = $this->request->session()->read('is_admin');
-                        $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-                        $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
-                        
-                        // the week and the year of the workinghour
-                        $week= $workinghours->date->format('W');
-                        $year= $workinghours->date->format('Y');
-                        $firstWeeklyReport = false;
-                        // the week and year of the last weekly report
-                        $project_id = $this->request->session()->read('selected_project')['id'];
-                        $query = Cake\ORM\TableRegistry::get('Weeklyreports')
-                            ->find()
-                            ->select(['year','week']) 
-                            ->where(['project_id =' => $project_id])
-                            ->toArray();
-                        if ($query != null) {
-                            // picking out the week of the last weeklyreport from the results
-                            $max = max($query);
-                            $maxYear = $max['year'];
-                            $maxWeek = $max['week'];
-                        }
-                        else {
-                            $firstWeeklyReport = true;
-                        }
-
-                        // edit and delete are only shown if the weekly report is not sent
-                        // edit and delete can also be viewed by the developer who owns them
-
-			// IF (you are the owning user or a manager) AND workinghour isn't from previous weeks
-			// OR you are an admin or a supervisor
-			 
-                        if ( ( ($member->user_id == $this->request->session()->read('Auth.User.id') || $manager)                        
-                                && ($firstWeeklyReport || (($year >= $maxYear) && ($week > $maxWeek) ) ) ) 
-                                                || ($admin || $supervisor) ) { ?>
-                            <?= $this->Html->link(__('Edit'), ['controller' => 'Workinghours', 'action' => 'edit', $workinghours->id]) ?>
-
-                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Workinghours', 'action' => 'delete', $workinghours->id], ['confirm' => __('Are you sure you want to delete # {0}?', $workinghours->id)]) ?> 
-                    <?php } ?>
-                </td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-    </div>
+        <?php endif; ?>          
+    </div>   
 </div>

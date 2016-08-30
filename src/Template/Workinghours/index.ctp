@@ -1,17 +1,19 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
         <?php
             use Cake\I18n\Time;
             
             $admin = $this->request->session()->read('is_admin');
             $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
             $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
-            if ( !($supervisor) ) {
+            $developer = ( $this->request->session()->read('selected_project_role') == 'developer' ) ? 1 : 0;
+            // link not visible to supervisors and clients
+            if ($admin || $manager || $developer) {
             ?>
             <li><?= $this->Html->link(__('Log time'), ['action' => 'add']) ?></li>
             <?php 
             } 
+            // link not visible to devs and clients
             if($admin || $supervisor || $manager) {
             ?>
             <li><?= $this->Html->link(__('Log time for another member'), ['action' => 'adddev']) ?></li>
@@ -20,14 +22,19 @@
 </nav>
 <div class="workinghours index large-9 medium-18 columns content float: left">
     <h3><?= __('Logged time') ?></h3>
+    <?php // the code for the menu is the same as in adddev.ctp 
+    //echo $this->Form->input('member_id', ['options' => $members, 'label' => 'Show hours for', 'empty' => '']) . $this->Form->button(__('Submit'));
+    ?>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th><?= $this->Paginator->sort('member_id') ?></th>
-                <th><?= $this->Paginator->sort('duration') ?></th>
-                <th><?= $this->Paginator->sort('date') ?></th>    
+                <th style="width:130px;"><?= $this->Paginator->sort('member_id') ?></th>
+                <th style="width:75px;"><?= $this->Paginator->sort('date') ?></th>
+                <th style="width:60px;"><?= __('Week') ?></th>
+                <th colspan="2"><?= __('Description') ?></th>
+                <th style="width:65px;"><?= $this->Paginator->sort('duration') ?></th>
                 <th><?= $this->Paginator->sort('worktype_id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th style="width:70px;" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -40,10 +47,17 @@
                         }
                     }
                 ?>
-                <td><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Members', 'action' => 'view', $workinghour->member->id]) : '' ?></td>
-                <td><?= $this->Number->format($workinghour->duration) ?></td>
+                <td ><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Members', 'action' => 'view', $workinghour->member->id]) : '' ?></td>  
                 <td><?= h($workinghour->date->format('d.m.Y')) ?></td>
-                <td><?= $workinghour->has('worktype') ? $this->Html->link($workinghour->worktype->description, ['controller' => 'Worktypes', 'action' => 'view', $workinghour->worktype->id]) : '' ?></td>
+                <td style="text-align: center;"><?= h($workinghour->date->format('W')) ?></td>
+                <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghour->description,20,"\n",TRUE)) ?></td>
+                <td style="text-align: center;"><?= $this->Number->format($workinghour->duration) ?></td>  
+                <?php // link for admin, text for others
+                if ($admin) { ?>
+                    <td><?= $workinghour->has('worktype') ? $this->Html->link($workinghour->worktype->description, ['controller' => 'Worktypes', 'action' => 'view', $workinghour->worktype->id]) : '' ?></td>
+                <?php } else { ?>
+                    <td><?= h($workinghour->worktype->description) ?></td>
+                <?php } ?>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $workinghour->id]) ?>
                     <?php
