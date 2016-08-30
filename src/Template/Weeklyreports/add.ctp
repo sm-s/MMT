@@ -1,7 +1,5 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-    </ul>
+    <ul class="side-nav"></ul>
 </nav>
 <div class="weeklyreports form large-8 medium-16 columns content float: left">
     <?= $this->Form->create($weeklyreport) ?>
@@ -17,7 +15,7 @@
                 echo $this->Form->input('year', array('value' => $current_weeklyreport['year'], 'style' => 'width: 35%;'));
                 echo $this->Form->input('meetings', array('value' => $current_weeklyreport['meetings']));
                 echo $this->Form->input('reglink', array('value' => $current_weeklyreport['reglink'], 'label' => 'Requirements link' ));
-                echo $this->Form->input('problems', array('value' => $current_weeklyreport['problems']));
+                echo $this->Form->input('problems', array('value' => $current_weeklyreport['problems'], 'label' => 'Challenges, issues, etc.'));
                 echo $this->Form->input('additional', array('value' => $current_weeklyreport['additional'], 'label' => 'Additional information'));
             }
             else{
@@ -33,7 +31,7 @@
                 echo $this->Form->input('year', array('value' => $now->year, 'style' => 'width: 35%;'));
                 echo $this->Form->input('meetings');
                 echo $this->Form->input('reglink', array('label' => 'Requirements link'));
-                echo $this->Form->input('problems');
+                echo $this->Form->input('problems', array('label' => 'Challenges, issues, etc.'));
                 echo $this->Form->input('additional', array('label' => 'Additional information'));
             }
 			echo $this->Form->button(__('Next page'));
