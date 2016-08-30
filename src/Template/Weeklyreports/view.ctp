@@ -47,6 +47,7 @@
 	$admin = $this->request->session()->read('is_admin');
 	$supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
 	$manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
+        $developer = ( $this->request->session()->read('selected_project_role') == 'developer' ) ? 1 : 0;
 	
 	if ( $admin || $supervisor ) {
 		// fetch the ID of relevant project
@@ -80,12 +81,27 @@
 	}
 ?>
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-		<?php
-			if ($admin || $supervisor || $manager) { ?>
-				<li><?= $this->Html->link(__('Edit Weeklyreport'), ['action' => 'edit', $weeklyreport->id]) ?> </li>
-		<?php } ?>
+    <ul class="side-nav">	
+           <?php
+            // link not visible to devs and clients
+            if ($admin || $supervisor || $manager) { ?>
+                <li><?= $this->Html->link(__('Edit Weeklyreport'), ['action' => 'edit', $weeklyreport->id]) ?> </li>
+            <?php }
+            // Logging time is allowed for the last weeklyreport
+            // link not visible to supervisors and clients
+            $queryForMax = Cake\ORM\TableRegistry::get('Weeklyreports')
+		->find()
+		->select(['year', 'week'])
+		->where(['project_id =' => $weeklyreport['project_id']])
+		->toArray();
+            if(!empty($queryForMax)) {
+                    $lastReport = max($queryForMax);
+            }
+            if (($weeklyreport->year >= $lastReport['year']) && ($weeklyreport->week >= $lastReport['week'])) {
+                if ($admin || $manager || $developer) { ?>
+                <li><?= $this->Html->link(__('Log time late'), ['controller' => 'Workinghours', 'action' => 'addlate']) ?></li>            
+            <?php } 
+            }?>
     </ul>
 </nav>
 <div class="weeklyreports view large-8 medium-16 columns content float: left">
@@ -132,66 +148,86 @@
 		} ?></td>
     </table>
     <div class="related">
-        <h4><?= __('Related Weeklyhours') ?></h4>
-            <?php if (!empty($weeklyreport->weeklyhours)): ?>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <th><?= __('Name / project role') ?></th>
-                    <th><?= __('Duration') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-                <?php foreach ($weeklyreport->weeklyhours as $weeklyhours): ?>
-                <tr>
-                    <td><?php
-						// member infos need refreshing before it can be displayed
-						if (empty($weeklyhours->member_name)) {
-							header("Refresh: 0");
-						}
-						echo h($weeklyhours->member_name);
-					?></td>
-                    <td><?= h($weeklyhours->duration) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['controller' => 'Weeklyhours', 'action' => 'view', $weeklyhours->id]) ?>
-                        <?php
-                        $admin = $this->request->session()->read('is_admin');
-                        $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-                        // $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
-                        // if($admin || $supervisor || $manager) {
-                        if($admin || $supervisor) {
-                        ?>
-                        <?= $this->Html->link(__('Edit'), ['controller' => 'Weeklyhours', 'action' => 'edit', $weeklyhours->id]) ?>
+        <h4><?= __('Working hours for week ') . $weeklyreport->week ?></h4>
+        
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th colspan="2"><?= __('Name') ?></th>
+                <th><?= __('Project role') ?></th>                    
+                <th><?= __('Working hours') ?></th>
+            </tr>
 
-                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Weeklyhours', 'action' => 'delete', $weeklyhours->id], ['confirm' => __('Are you sure you want to delete # {0}?', $weeklyhours->id)]) ?>
-                        <?php } ?> 
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-        <h4><?= __('Related Metrics') ?></h4>
+            
+            <?php
+            // Finding members who are not supervisors or clients
+            $members = Cake\ORM\TableRegistry::get('Members')->find()
+				->select()
+				->where(['project_id =' => $projid, 'project_role =' => 'developer'])
+                                ->orWhere(['project_id =' => $projid, 'project_role =' => 'manager'])
+				->toArray();
+            
+            foreach ($members as $member): ?>
+                <tr>
+                <?php 
+                $m_id = $member->id;
+                $u_id = $member->user_id;
+                $queryForHours = Cake\ORM\TableRegistry::get('Workinghours')->find()
+				->select()
+				->where(['member_id =' => $m_id])
+				->toArray();
+                $queryForName = Cake\ORM\TableRegistry::get('Users')->find()
+     				->select(['first_name', 'last_name'])
+				->where(['id =' => $u_id])
+				->toArray();                   
+                if(!empty($queryForHours)) {
+                    $hours = array();
+                    $sum = 0;
+                    // Get member's hours for the week
+                    foreach ($queryForHours as $key) {
+                        if ($weeklyreport->week == $key->date->format('W')) {                        
+                            $hours[] = $key->duration;
+                            $sum = array_sum($hours); 
+                        }
+                    } 
+                } 
+                // finding member's full name
+                if(!empty($queryForName)) {
+                    foreach ($queryForName as $name) {
+                        $fullName = $name->first_name . " " . $name->last_name;        
+                    }
+                }?>
+			
+                <td colspan="2"><?= h($fullName) ?></td>
+                <td><?= h($member->project_role) ?></td> 
+                <td><?= h($sum) ?></td> 
+            
+        </tr>
+        <?php endforeach; ?>
+        </table>
+        
+        
+        <h4><?= __('Metrics') ?></h4>
             <?php if (!empty($weeklyreport->metrics)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <th><?= __('Metrictype Id') ?></th>
-                    <th><?= __('Date') ?></th>
+                    <th colspan="2"><?= __('Metrictype') ?></th>                 
                     <th><?= __('Value') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th><?= __('Date') ?></th>
+                    <?php if($admin || $supervisor) { ?>
+                        <th class="actions"><?= __('Actions') ?></th>
+                    <?php } ?>
                 </tr>
                 <?php foreach ($weeklyreport->metrics as $metrics): ?>
                 <tr>
-                    <td><?= h($metrics->metric_description) ?></td>
-                    <td><?= h($metrics->date->format('d.m.Y')) ?></td>
+                    <td colspan="2"><?= h($metrics->metric_description) ?></td>
                     <td><?= h($metrics->value) ?></td>
-                    <td class="actions">
-                         <?php
-                        // only admins and supervisors can edit metrics
-                        $admin = $this->request->session()->read('is_admin');
-                        $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-                        if($admin || $supervisor) {
-                        ?>
-                        <?= $this->Html->link(__('Edit'), ['controller' => 'Metrics', 'action' => 'edit', $metrics->id]) ?>
-                         <?php } ?>
-                    </td>
+                    <td><?= h($metrics->date->format('d.m.Y')) ?></td>                  
+                    <?php // only admins and supervisors can edit metrics
+                    if($admin || $supervisor) { ?>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Edit'), ['controller' => 'Metrics', 'action' => 'edit', $metrics->id]) ?>  
+                        </td> 
+                    <?php } ?>
                 </tr>
                 <?php endforeach; ?>
             </table>
