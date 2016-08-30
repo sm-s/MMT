@@ -300,7 +300,7 @@
 			color: #09A7DB;
 			font-size: 0.85em;
 		}
-		
+	
 #faq {
 	margin: 0 auto;
 }
@@ -412,14 +412,13 @@
 
 	.side-nav li a:not(.button) {
 	  color: #15848F;
-	  
 	  margin-left: 0.8em;
 	}
 
 	.side-nav li a:not(.button):hover {
 	  color: #15848F;
 	}
-
+        
 	header {
 	  background-color: #15848F;
 	  color: #ffffff;
@@ -769,8 +768,6 @@
 	  margin-right: 9px;
 	}
 
-
-
 	.side-nav li.heading {
 	  color: #1798A5;
 	  font-size: 0.875rem;
@@ -778,7 +775,7 @@
 	  text-transform: uppercase;
 	  padding: 0.4375rem 0.875rem;
 	}
-
+        
 	#actions-sidebar {
 	  background: #fafafa;
 	  padding-bottom: 1.2em;
@@ -983,4 +980,11 @@
 	  width: 11em;
 	  background-color: white;
 	}
-
+        /** 
+         * Text field for feedback in Notes/add.ctp
+         */
+        input.feedback {
+            width:600px; 
+            height:200px;
+        } 
+     
