@@ -58,18 +58,18 @@
                 $query = $member->workinghours;
                 $memberID = $member->id;
                
-                foreach ($query as $key) {
-                   $hours[] = $key->duration;
+                foreach ($query as $temp) {
+                   $hours[] = $temp->duration;
                    $sum = array_sum($hours);  
                 }
                 // Fill array with zeros to avoid a bug if there are no workinghours of some work type
                 $sums = array();
                 $sums = array_fill(1, 5, 0);
                 $id = 0;
-                foreach($query as $key) {
+                foreach($query as $temp) {
                     $hour = 0;
-                    if ($key->worktype_id === 1) {
-                        $hour = $key->duration;
+                    if ($temp->worktype_id === 1) {
+                        $hour = $temp->duration;
                         if (!(isset($sums[1]))) {
                             $sums[1] = $hour;
                         }
@@ -77,8 +77,8 @@
                             $sums[1] += $hour;
                         }
                     }
-                    if ($key->worktype_id === 2) {
-                        $hour = $key->duration;
+                    if ($temp->worktype_id === 2) {
+                        $hour = $temp->duration;
                         if (!(isset($sums[2]))) {
                             $sums[2] = $hour;
                         }
@@ -86,8 +86,8 @@
                             $sums[2] += $hour;
                         }
                     }
-                    if ($key->worktype_id === 3) {
-                        $hour = $key->duration;
+                    if ($temp->worktype_id === 3) {
+                        $hour = $temp->duration;
                         if (!(isset($sums[3]))) {
                             $sums[3] = $hour;
                         }
@@ -95,8 +95,8 @@
                             $sums[3] += $hour;
                         } 
                     }
-                    if ($key->worktype_id === 4) {
-                        $hour = $key->duration;
+                    if ($temp->worktype_id === 4) {
+                        $hour = $temp->duration;
                         if (!(isset($sums[4]))) {
                             $sums[4] = $hour;
                         }
@@ -104,8 +104,8 @@
                             $sums[4] += $hour;
                         }
                     }
-                    if ($key->worktype_id === 5) {
-                        $hour = $key->duration;
+                    if ($temp->worktype_id === 5) {
+                        $hour = $temp->duration;
                         if (!(isset($sums[5]))) {
                             $sums[5] = $hour;
                         }
