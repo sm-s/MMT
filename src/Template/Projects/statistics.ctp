@@ -19,7 +19,7 @@
 	<table border="1">
         <tbody>
             <tr>
-				<!-- empty cell -->
+		<!-- empty cell -->
                 <td colspan="2"></td>
 
                 <?php 
@@ -32,22 +32,17 @@
                 if ( $max < 1 )  $max = 1;
                 if ( $max > 52 ) $max = 52;
                 if ( $max < $min ) { 
-					$temp = $max;
+			$temp = $max;
                 	$max = $min;
                 	$min = $temp;
                 }
 				
-				/* REMOVED after deemed too restricting. If you want to implement this again, find and change
-				 * this piece of code also in ProjectsController
-				 * 
-
-				// for clear displaying purposes, amount of columns is limited to 11 (name + 10 weeks)
-				if ( ($max - $min) > 9 ) {
-					$max = $min + 9;
-				}
-				 * 
-				 * 
-				 */
+		/* REMOVED after deemed too restricting. If you want to implement this again, 
+                 * find and change this piece of code also in ProjectsController.
+		// for clear displaying purposes, amount of columns is limited to 11 (name + 10 weeks)
+		if ( ($max - $min) > 9 ) {
+			$max = $min + 9;
+		} */
 
                 for ($x = $min; $x <= $max; $x++) {
                     echo "<td>$x</td>";
@@ -59,71 +54,69 @@
                 <tr>
                     <td colspan="2"><?= h($project['project_name']) ?></td>
                     <?php                    
-						$admin = $this->request->session()->read('is_admin');
-						$supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
+			$admin = $this->request->session()->read('is_admin');
+			$supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
 
-						// query iterator, resets after finishing one row
-						$i = 0;
+			// query iterator, resets after finishing one row
+			$i = 0;
 
                     	foreach ($project['reports'] as $report):
-                    		// if current project is already finished (= non-empty finished_date), print empty data cells in else
-			            	if ( empty( $project['finished_date'] ) ) {
-					?>
-		                        <td>
-		                        <?php
-		                        	// missing ones print normally
-		                        	if ( $report == '-' ) { ?>
-		                        		<?= h($report) ?>
-		                        <?php
-		                        	}
-		                        	// adding link to X's if admin or supervisor
-		                        	// BUG FIX 31.3.: links to weeklyreports now actually link to correct reports
-		                        	elseif ( ($report == 'X' || $report == 'L') && ($admin || $supervisor) ) { 
-		                        		// fetching the ID for current weeklyreport's view-page
-		                        		$query = Cake\ORM\TableRegistry::get('Weeklyreports')
-											->find()
-											->select(['id'])
-											->where(['project_id =' => $project['id'], 
-											         'week >=' => $min])
-											->toArray();
-										// transforming returned query item to integer
-										$reportId = $query[$i++]->id;
+                    	// if current project is already finished (= non-empty finished_date), print empty data cells in else
+			    if ( empty( $project['finished_date'] ) ) {
+                                ?>
+		                <td>
+		                <?php
+		                // missing ones print normally
+		                if ( $report == '-' ) { ?>
+		                    <?= h($report) ?>
+		                <?php
+                                }
+		                // adding link to X's if admin or supervisor
+		                // BUG FIX 31.3.: links to weeklyreports now actually link to correct reports
+                                elseif ( ($report == 'X' || $report == 'L') && ($admin || $supervisor) ) { 
+                                    // fetching the ID for current weeklyreport's view-page
+                                    $query = Cake\ORM\TableRegistry::get('Weeklyreports')
+                                            ->find()
+                                            ->select(['id'])
+                                            ->where(['project_id =' => $project['id'], 
+                                                    'week >=' => $min])
+                                            ->toArray();
+                                    // transforming returned query item to integer
+                                    $reportId = $query[$i++]->id;
 										
-										// X's have normal link color so they echo normally
-										if ($report == 'X') {
-											echo $this->Html->link(__($report.' (view)'), [
-																						  'controller' => 'Weeklyreports',
-																						  'action' => 'view',
-																						  $reportId ]);
-											// unread weeklyreports have some mark indicating it
-											$userid = $this->request->session()->read('Auth.User.id');
-											$newreps = Cake\ORM\TableRegistry::get('Newreports')->find()
-														->select()
-														->where(['user_id =' => $userid, 'weeklyreport_id =' => $reportId])
-														->toArray();
-											if ( sizeof($newreps) > 0 ) {
-												echo "<div class='unread'>unread</div>";
-											}
+                                    // X's have normal link color so they echo normally
+                                    if ($report == 'X') {
+                                        echo $this->Html->link(__($report.' (view)'), [
+                                            'controller' => 'Weeklyreports',
+                                            'action' => 'view',
+                                            $reportId ]);
+                                            // unread weeklyreports have some mark indicating it
+                                            $userid = $this->request->session()->read('Auth.User.id');
+                                            $newreps = Cake\ORM\TableRegistry::get('Newreports')->find()
+                                                    ->select()
+                                                    ->where(['user_id =' => $userid, 'weeklyreport_id =' => $reportId])
+                                                    ->toArray();
+                                            if ( sizeof($newreps) > 0 ) {
+                                                    echo "<div class='unread'>unread</div>";
+                                            }
 											
-										} else {
-											echo $this->Html->link(__($report.' (view)'), [
-																						  'controller' => 'Weeklyreports',
-																						  'action' => 'view',
-																						  $reportId ], ['style'=>'color: orange;']);
-										}
-										?>
-		                        <?php
-		                        	// displays X without a link to other users
-		                        	} else { ?>
-		                        		<?= h($report) ?>
-		                        <?php
-		                        	} ?>
-		                        </td>
+                                    } else {
+                                        echo $this->Html->link(__($report.' (view)'), [
+                                            'controller' => 'Weeklyreports',
+                                            'action' => 'view',
+                                            $reportId ], ['style'=>'color: orange;']);
+                                    } ?>
+		                <?php
+		                // displays X without a link to other users
+		                } else { ?>
+		                        <?= h($report) ?>
+		                <?php } ?>
+                                    </td>
 	                        <?php
-                        	} // end if (else = print empty data cells)
-                        	else { ?>
-                        		<td></td>
-                        	<?php } ?>
+                            } // end if (else = print empty data cells)
+                            else { ?>
+                        	<td></td>
+                            <?php } ?>
                     <?php endforeach; ?>
                 </tr>
             <?php endforeach; ?>
