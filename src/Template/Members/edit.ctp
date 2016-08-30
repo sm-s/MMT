@@ -6,7 +6,6 @@ echo $this->Html->script('jquery-ui.min');
 
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $member->id],
@@ -18,13 +17,22 @@ echo $this->Html->script('jquery-ui.min');
 <div class="members form large-8 medium-16 columns content float: left">
     <?= $this->Form->create($member) ?>
     <fieldset>
-        <legend><?= __('Edit Member') ?></legend>
-        <?php
+        <?php 
+        $userid = $member->user_id;
+        $queryName = Cake\ORM\TableRegistry::get('Users')
+            ->find()
+            ->select(['first_name','last_name'])          	
+            ->where(['id =' => $userid])
+            ->toArray(); 
+            
+            if ($queryName != null) { ?>
+                <legend><?= __('Edit member: ') . $queryName[0]['first_name'] . " " . $queryName[0]['last_name'] ?></legend>    
+            <?php } 
             
             // echo $this->Form->input('user_id', ['options' => $users]);
             
             echo $this->Form->input('project_role', 
-                ['options' => array('developer' => 'developer', 'manager' => 'manager', 'supervisor' => 'supervisor')]);
+                ['options' => array('developer' => 'developer', 'manager' => 'manager', 'supervisor' => 'supervisor', 'client' => 'client')]);
             
             // echo $this->Form->input('starting_date', ['empty' => true, 'default' => '']);
             // echo $this->Form->input('ending_date', ['empty' => true, 'default' => '']);
