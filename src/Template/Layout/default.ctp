@@ -46,7 +46,6 @@ $cakeDescription = 'MMT';
     <?= $this->fetch('script') ?>
 </head>
 <!-- onmousemove will make any Flash messages disappear -->
-<!-- delay of 1000 was way too fast, back to 2500 -->
 <body onmousemove="$('.message').delay(2500).fadeOut(1000);">
 <?php
 	$admin = $this->request->session()->read('is_admin');
@@ -63,7 +62,7 @@ $cakeDescription = 'MMT';
 		$this->request->session()->write('selected_project_role', 'supervisor');
 		$supervisor = 1;
 	}
-
+        
 ?>
 <div id="area51">
 	<!-- This area is meant for notifications about new messages -->
@@ -296,6 +295,7 @@ $cakeDescription = 'MMT';
 					<?php
 						// if not a member, particular links are not shown 
 						if ( $this->request->session()->read('selected_project_role') != 'notmember' ) { ?>
+                                        <li class="navbutton"><?= $this->Html->link(__('Members'), ['controller' => 'Members', 'action' => 'index']) ?></li>
 			                <li class="navbutton"><?= $this->Html->link(__('Reports'), ['controller' => 'Weeklyreports', 'action' => 'index']) ?></li>
 			                <li class="navbutton"><?= $this->Html->link(__('Log time'), ['controller' => 'Workinghours', 'action' => 'index']) ?></li>
 					<?php } ?>
@@ -335,7 +335,7 @@ $cakeDescription = 'MMT';
 			<ul>
 				<li><?= $this->Html->link(__('Home'), ['controller' => 'Projects', 'action' => 'index']) ?></li>
 				<li><?= $this->Html->link(__('Public statistics'), ['controller' => 'Projects', 'action' => 'statistics']) ?> </li>
-				<li><?= $this->Html->link(__('FAQ'), ['controller' => 'Projects', 'action' => 'faq']) ?> </li>
+				<li><?= $this->Html->link(__('FAQ'), ['controller' => 'Projects', 'action' => 'faq']) ?> </li>                   
 			</ul>
 			<h6>OTHER RESOURCES</h6>
 			<ul>
@@ -351,6 +351,13 @@ $cakeDescription = 'MMT';
 			<ul>
 				<li><a href="http://mmttest.sis.uta.fi/" target="_blank">MMT's test page</a></li>
 			</ul>
+                        <!--
+                        <h6>SHORTCUTS</h6>
+                        <ul>
+                                <li><?= $this->Html->link(__('Log in'), ['controller' => 'Users', 'action' => 'login']) ?>
+                                    <?php echo " / ";?>
+				<?= $this->Html->link(__('Log out'), ['controller' => 'Users', 'action' => 'logout']) ?></li>
+			</ul>-->
 		</div>
 	</div>
 </footer>
