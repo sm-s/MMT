@@ -23,8 +23,20 @@ class WorkinghoursController extends AppController
         // list of members so we can display usernames instead of id's
         $memberlist = $membersTable->getMembers($project_id);
 
+        //$now = Time::now();
+        $members = $this->Workinghours->Members->find('list',[ 
+              'conditions' => ['Members.project_id' => $project_id, 
+                                'Members.project_role !=' => 'supervisor',
+                                'and' => array('Members.project_role !=' => 'client')],                                 
+                               //'Members.project_role !=' => 'supervisor', 
+                               //'or' => array(''Members.ending_date >' => $now,'Members.ending_date IS' => NULL)],
+              'contain' => ['Users'], 
+              'keyField' => 'id', 
+              'valueField' => 'user.full_name',
+              'limit' => 200]);
+        
         $this->set('workinghours', $this->paginate($this->Workinghours));
-        $this->set(compact('memberlist'));
+        $this->set(compact('memberlist', 'members'));               
         $this->set('_serialize', ['workinghours']);
     }
 
@@ -49,8 +61,32 @@ class WorkinghoursController extends AppController
         $this->set('workinghour', $workinghour);
         $this->set('_serialize', ['workinghour']);
     }
-
+    
+    
     public function add()
+    {
+        $workinghour = $this->Workinghours->newEntity();
+        if ($this->request->is('post')) {
+            // get data from the form
+            $workinghour = $this->Workinghours->patchEntity($workinghour, $this->request->data);  
+            // only allow members to add workinghours for themself
+            $workinghour['member_id'] = $this->request->session()->read('selected_project_memberid');
+            
+            if ($this->Workinghours->save($workinghour)) {
+                $this->Flash->success(__('The workinghour has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The workinghour could not be saved. Please, try again.'));
+            }
+        }
+        $project_id = $this->request->session()->read('selected_project')['id'];
+        $worktypes = $this->Workinghours->Worktypes->find('list', ['limit' => 200]);
+        $members = $this->Workinghours->Members->find('list', ['limit' => 200, 'conditions' => array('Members.project_id' => $project_id)]);
+        $this->set(compact('workinghour', 'members', 'worktypes'));
+        $this->set('_serialize', ['workinghour']);
+    }
+    
+    public function addlate()
     {
         $workinghour = $this->Workinghours->newEntity();
         if ($this->request->is('post')) {
@@ -90,9 +126,11 @@ class WorkinghoursController extends AppController
         $worktypes = $this->Workinghours->Worktypes->find('list', ['limit' => 200]);
         $now = Time::now();
         $members = $this->Workinghours->Members->find('list',[ 
-              'conditions' => ['Members.project_id' => $project_id, 
-                               'Members.project_role !=' => 'supervisor',
-                               'or' => array('Members.ending_date >' => $now,'Members.ending_date IS' => NULL)],
+              'conditions' => ['Members.project_id' => $project_id,
+                                'Members.project_role !=' => 'supervisor',
+                                'and' => array('Members.project_role !=' => 'client')],  
+                                //'Members.project_role !=' => 'supervisor',
+                               //'or' => array('Members.ending_date >' => $now,'Members.ending_date IS' => NULL)],
               'contain' => ['Users'], 
               'keyField' => 'id', 
               'valueField' => 'user.full_name',
@@ -152,7 +190,7 @@ class WorkinghoursController extends AppController
         if ($this->request->action === 'add') 
         {
             // supervisor cannot have workinghours, and the add function simply takes the member_id of the current user
-            if($project_role != "notmember" && $project_role != "supervisor"){
+            if($project_role != "notmember" && $project_role != "supervisor" && $project_role != "client"){
                 return True;
             }
             return False;
@@ -168,8 +206,7 @@ class WorkinghoursController extends AppController
                     ->toArray();
                 
                 /* Bug fix 8.3.2016 : members were unable to edit themselves because of false comparison (userID vs. memberID)
-                   Requirement ID = 17
-				*/
+                   Requirement ID = 17 */
                 
                 // fetching the Members-table from database
                 $members = TableRegistry::get('Members');
@@ -189,6 +226,14 @@ class WorkinghoursController extends AppController
         }
 
         //special rule for workinghours controller.
+        
+        // supervisors cannot log time late
+        if ($this->request->action === 'addlate') 
+        {
+            if($project_role == "manager" || $project_role == "developer"){
+                return True;
+            }
+        }    
         // all members can add edit and delete workinghours
         if ($this->request->action === 'adddev' || $this->request->action === 'edit'
             || $this->request->action === 'delete') 

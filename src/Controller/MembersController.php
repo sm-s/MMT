@@ -11,6 +11,7 @@ class MembersController extends AppController
         // Only members of the current project are loaded
         $project_id = $this->request->session()->read('selected_project')['id'];   
         $this->paginate = [
+            //'contain' => ['Users', 'Projects', 'Workinghours', 'Weeklyhours'],
             'contain' => ['Users', 'Projects', 'Workinghours'],
             'conditions' => array('Members.project_id' => $project_id)
         ];
@@ -26,6 +27,21 @@ class MembersController extends AppController
         $project_id = $this->request->session()->read('selected_project')['id'];
         $member = $this->Members->get($id, [
             'contain' => ['Users', 'Projects', 'Workinghours', 'Weeklyhours'],
+            'conditions' => array('Members.project_id' => $project_id)
+        ]);
+        $this->set('member', $member);
+        $this->set('_serialize', ['member']);
+    }
+    
+    // For listing member's logged tasks
+    // Similar to view() function
+    public function tasks($id = null)
+    {
+        // The member with the id "$id" is loaded
+        // IF the member is a part of the currently selected project
+        $project_id = $this->request->session()->read('selected_project')['id'];
+        $member = $this->Members->get($id, [
+            'contain' => ['Users', 'Projects', 'Workinghours'],
             'conditions' => array('Members.project_id' => $project_id)
         ]);
         $this->set('member', $member);
@@ -111,6 +127,12 @@ class MembersController extends AppController
         
         // special rules for members controller.
         
+        if ($this->request->action === 'tasks') 
+        {
+            if($project_role == "manager" || $project_role == "supervisor" || $project_role == "developer" || $project_role == "client"){
+                return True;
+            }
+        }
         // managers can add members, but cannot add new supervisors
         if ($this->request->action === 'add') 
         {

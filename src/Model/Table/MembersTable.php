@@ -45,7 +45,8 @@ class MembersTable extends Table
             ->requirePresence('project_role', 'create')
             ->notEmpty('project_role')
             ->add('project_role', 'inList', [
-                'rule' => ['inList', ['developer', 'manager', 'supervisor']],
+                //'rule' => ['inList', ['developer', 'manager', 'supervisor']],
+                'rule' => ['inList', ['developer', 'manager', 'supervisor', 'client']],
                 'message' => 'Please enter a valid project role'
                 ]);
         
@@ -72,13 +73,15 @@ class MembersTable extends Table
         // returns an array with project members
         // the info is the members id, project role and email from user
         $memberinfo = array();
-        $now = Time::now();
+        //$now = Time::now();
         $members = TableRegistry::get('Members');   
         $query = $members
             ->find()
-            ->select(['id', 'project_role', 'user_id'])
-            ->where(['project_id' => $project_id, 'project_role !=' => 'supervisor', 'ending_date >' => $now])
-            ->orWhere(['project_id' => $project_id, 'project_role !=' => 'supervisor', 'ending_date IS' => NULL])
+            ->select(['id', 'project_role', 'user_id'])    
+            ->where(['project_id' => $project_id, 'project_role !=' => 'supervisor'])
+            ->andWhere(['project_id' => $project_id, 'project_role !=' => 'client'])
+            //->where(['project_id' => $project_id, 'project_role !=' => 'supervisor', 'ending_date >' => $now])
+            //->orWhere(['project_id' => $project_id, 'project_role !=' => 'supervisor', 'ending_date IS' => NULL])
             ->toArray();
         
         $users = TableRegistry::get('Users'); 
