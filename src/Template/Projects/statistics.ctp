@@ -15,7 +15,7 @@
 </nav>
 <div class="projects view large-9 medium-18 columns content float: left">
     <h3><?= h('Public statistics') ?></h3>
-    <h4><?= h('Weeklyreports') ?></h4>
+    <h4><?= h('Weekly reports') ?></h4>
 	<table border="1">
         <tbody>
             <tr>
@@ -123,7 +123,7 @@
         </tbody>
     </table>
     <table border="1" style="width:50%;">
-        <h4><?= h('Total number of working hours') ?></h4>
+        <h4><?= h('Total numbers of working hours') ?></h4>
         <tbody>
             <?php foreach ($projects as $project): ?>
                 <tr>
