@@ -58,6 +58,14 @@
 	        <?php echo $this->Highcharts->render($testcaseChart, 'testcasechart'); ?>
         </div>
     </div>
+
+    <div class="chart">
+        <h4>Weeklyhour Chart</h4>
+        <h5>This will be removed soon.</h5>
+        <div id="weeklyhourwrapper">
+	        <?php echo $this->Highcharts->render($weeklyhourChart, 'weeklyhourchart'); ?>
+		</div>
+    </div>
     
     <div class="chart">
         <h4>Working hours</h4>
@@ -72,14 +80,6 @@
 	</div>
     </div>
     
-    <div class="chart">
-        <h4>Weeklyhour Chart</h4>
-        <h5>This will be removed soon.</h5>
-        <div id="weeklyhourwrapper">
-	        <?php echo $this->Highcharts->render($weeklyhourChart, 'weeklyhourchart'); ?>
-		</div>
-    </div>
-
     <?php 
     // The chart for derived metrics is visible only to admins
     $admin = $this->request->session()->read('is_admin');
