@@ -4,38 +4,69 @@
      goes backwards on the page the current values are saved.
 -->
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-    </ul>
+    <ul class="side-nav"></ul>
 </nav>
 <div class="weeklyhours form large-6 medium-12 columns content float: left">
     <?= $this->Form->create($weeklyhours) ?>
     <fieldset>
         <legend><?= __('Add Weeklyhours, Page 3/3') ?></legend>
+        <table>
+            <tr>
+                <th><?= __('Name - Project role') ?></th> 
+                <th><?= __('Hours') ?></th>
+            </tr> 
         <?php
             $current_weeklyhours = $this->request->session()->read('current_weeklyhours');
             // if its not the first time the user visits this page in the same report
             // then previous values are loaded
             // else the pre calculated hours are added
+            
             if(!is_null($current_weeklyhours)){
-                echo "<tr>";
-                for($count = 0; $count < count($memberlist); $count++){
-                    print_r($memberlist[$count]['member_name']);
-                    echo "<td>";
-                    echo $this->Form->input("{$count}.duration", array('value' => $current_weeklyhours[$count]['duration']));
-                    echo "</td>";
-                }
-                echo "</tr>";
+
+                for($count = 0; $count < count($memberlist); $count++){ ?>
+                    <tr>
+                        <td><?= h($memberlist[$count]['member_name']) ?></td>
+                        <td><?= h($current_weeklyhours[$count]['duration']) ?></td>
+                    </tr>        
+                <?php }
             }
             else{
-                echo "<tr>";
+                for($count = 0; $count < count($memberlist); $count++){ ?>
+                    <tr>
+                        <td><?= h($memberlist[$count]['member_name']) ?></td>
+                        <td><?= h($hourlist[$count]) ?></td>
+                    </tr>        
+                <?php }
+            }
+        ?>
+        </table>        
+        <?php
+
+            // For the time being, the weeklyhours are merely hidden.
+
+            $current_weeklyhours = $this->request->session()->read('current_weeklyhours');
+            // if its not the first time the user visits this page in the same report
+            // then previous values are loaded
+            // else the pre calculated hours are added
+            if(!is_null($current_weeklyhours)){
+                //echo "<tr>";
                 for($count = 0; $count < count($memberlist); $count++){
-                    print_r($memberlist[$count]['member_name']);
-                    echo "<td>";
-                    echo $this->Form->input("{$count}.duration", array('value' => $hourlist[$count]));
-                    echo "</td>";
+                    //print_r($memberlist[$count]['member_name']);
+                    //echo "<td>";
+                    echo $this->Form->hidden("{$count}.duration", array('value' => $current_weeklyhours[$count]['duration']));
+                    //echo "</td>";
                 }
-                echo "</tr>";
+                //echo "</tr>";
+            }
+            else{
+                //echo "<tr>";
+                for($count = 0; $count < count($memberlist); $count++){
+                    //print_r($memberlist[$count]['member_name']);
+                    //echo "<td>";
+                    echo $this->Form->hidden("{$count}.duration", array('value' => $hourlist[$count]));
+                    //echo "</td>";
+                }
+                //echo "</tr>";
             }
         ?>
         <div style="margin-top: 2em">
