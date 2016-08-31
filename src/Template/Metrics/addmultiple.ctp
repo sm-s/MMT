@@ -2,9 +2,7 @@
      $current_metrics is what was previously placed in the form if the user visits this page a second time
 -->
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-    </ul>
+    <ul class="side-nav"></ul>
 </nav>
 <div class="metrics form large-6 medium-12 columns content float: left">
     <?= $this->Form->create($metric) ?>
@@ -16,7 +14,7 @@
             echo $this->Form->input('phase', 
                 array('value' => $current_metrics[0]['value'], 'label' => 'Current phase','type' => 'number', 'required'=>true));
             echo $this->Form->input('totalPhases', 
-                array('value' => $current_metrics[1]['value'], 'label' => 'Total phases','type' => 'number', 'required'=>true));
+                array('value' => $current_metrics[1]['value'], 'label' => 'Total number of planned phases','type' => 'number', 'required'=>true));
             echo $this->Form->input('reqNew', 
                 array('value' => $current_metrics[2]['value'], 'label' => 'New requirements','type' => 'number', 'required'=>true));
             echo $this->Form->input('reqInProgress', 
@@ -30,7 +28,7 @@
             echo $this->Form->input('passedTestCases', 
                 array('value' => $current_metrics[7]['value'], 'label' => 'Passed test cases','type' => 'number', 'required'=>true));
             echo $this->Form->input('totalTestCases', 
-                array('value' => $current_metrics[8]['value'], 'label' => 'Total test cases','type' => 'number', 'required'=>true));
+                array('value' => $current_metrics[8]['value'], 'label' => 'Total number of test cases','type' => 'number', 'required'=>true));
 		?>
 		<div style="margin-top: 2em;">
 	        <?php
