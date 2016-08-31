@@ -124,6 +124,7 @@ class ProjectsController extends AppController
             $project['reports'] = $this->Projects->getWeeklyreportWeeks($project['id'], 
                                   $statistics_limits['weekmin'], $statistics_limits['weekmax'], $statistics_limits['year']);
             $project['duration'] = $this->Projects->getWeeklyhoursDuration($project['id']);
+            $project['sum'] = $this->Projects->getHoursDuration($project['id']);
             $projects[] = $project;
         }
         // the projects and their data are made visible in the "statistics.php" page

@@ -97,7 +97,10 @@ class WorkinghoursController extends AppController
             
             if ($this->Workinghours->save($workinghour)) {
                 $this->Flash->success(__('The workinghour has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                // redirect back to the weeklyreport
+                echo "<script>
+                        window.history.go(-2);
+                </script>";
             } else {
                 $this->Flash->error(__('The workinghour could not be saved. Please, try again.'));
             }
