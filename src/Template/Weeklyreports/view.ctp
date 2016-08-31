@@ -129,7 +129,7 @@
             <td><?= h($weeklyreport->reglink) ?></td>
         </tr>
         <tr>
-            <th><?= __('Problems') ?></th>
+            <th><?= __('Challenges, issues, etc.') ?></th>
             <td><?= h($weeklyreport->problems) ?></td>
         </tr>
         <tr>

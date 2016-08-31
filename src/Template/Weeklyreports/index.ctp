@@ -9,7 +9,7 @@
         	<li><?= $this->Html->link(__('New Weeklyreport'), ['action' => 'add']) ?></li>
         <?php } 
         // link eventually be weeklyhours should be deleted
-        if($admin || $supervisor) { ?>
+        if($admin) { ?>
             <li><?= $this->Html->link(__('Weeklyhours'), ['controller' => 'Weeklyhours', 'action' => 'index']) ?> </li> 
         <?php } ?>
     </ul>
@@ -20,9 +20,8 @@
         <thead>
             <tr>
                 <th colspan="2"><?= __('Title') ?></th>
-                <th><?= __('Week') ?></th>
-                <th><?= __('Year') ?></th>
-				
+                <th style="text-align: center"><?= __('Week') ?></th>
+                <th style="text-align: center"><?= __('Year') ?></th>
                 <th><?= $this->Paginator->sort('created_on') ?></th>
 
                 <th class="actions"><?= __('Actions') ?></th>
@@ -32,9 +31,8 @@
             <?php foreach ($weeklyreports as $weeklyreport): ?>
             <tr>
                 <td colspan="2"><?= h($weeklyreport->title) ?></td>
-                <td><?= h($weeklyreport->week) ?></td>
-                <td><?= h($weeklyreport->year) ?></td>
-				
+                <td style="text-align: center"><?= h($weeklyreport->week) ?></td>
+                <td style="text-align: center"><?= h($weeklyreport->year) ?></td>		
                 <td><?= h($weeklyreport->created_on->format('d.m.Y')) ?></td>
                 <!--
                 <td><?php 

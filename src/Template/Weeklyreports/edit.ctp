@@ -1,6 +1,5 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $weeklyreport->id],
@@ -19,7 +18,7 @@
             echo $this->Form->input('year', array('style' => 'width: 35%;'));
             echo $this->Form->input('meetings');
             echo $this->Form->input('reglink', ['label' => 'Requirements link']);
-            echo $this->Form->input('problems');
+            echo $this->Form->input('problems', array('label' => 'Challenges, issues, etc.'));
             echo $this->Form->input('additional');
 			echo $this->Form->button(__('Submit'));
         ?>
