@@ -123,12 +123,12 @@
         </tbody>
     </table>
     <table border="1" style="width:50%;">
-        <h4><?= h('Total weeklyhours') ?></h4>
+        <h4><?= h('Total number of working hours') ?></h4>
         <tbody>
             <?php foreach ($projects as $project): ?>
                 <tr>
                     <td><?= h($project['project_name']) ?></td>
-                    <td><?= h($project['duration']) ?></td>
+                    <td><?= h($project['sum']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody> 

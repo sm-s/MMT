@@ -26,8 +26,9 @@
     <p>
     For developers and managers:
           <ul >
-             <li>Week 38 is the first weekly report week thus the first week to log time for.</li>
-             <li>Since you cannot log lectures on the actual dates, you can log those hours on this week.</li>
+             <li>The projects will be created in the beginning of week 38.</li>
+             <li>Week 38 is the first week you can log time for and write a weekly report for.</li>
+             <li>Since you cannot log lectures on the actual dates, you can include those hours to week 38 (or later).</li>
           </ul>
     For managers:
       	<ul >
@@ -68,23 +69,24 @@
       As a project manager:
       	<ul >
            <li>create a user ID for yourself by signing up in MMT</li>
-	   <li>contact your course supervisor and 1) provide him/her with your user ID 2) ask him/her to create your project in MMT with you as a project manager</li>
+	   <li>contact your course supervisor, provide him/her with your user ID and ask him/her to create your project in MMT with you as a project manager</li>
 	   <li>add your team members as developers to your project - and you are good to go!</li>
         </ul>
       As a developer:
       	<ul >
            <li>create a user ID for yourself by signing up in MMT</li>
-	   <li>contact your project manager and 1) provide him/her with your user ID 2) ask him/her to add you as a developer to your project</li>
+	   <li>contact your project manager, provide him/her with your user ID and ask him/her to add you as a developer to your project</li>
+
         </ul>      
       <a href="#">[back to the top]</a>
     </p>
 
     <h4 id="Q4">4. I forgot my password. How do I get a new one?</h4>
     <p>
-      Contact the MMT administrator Pekka Mäkiaho at pekka.makiaho(at)uta.fi, who will send you a new password.<br /> 
-      Remember to change the password after the first log in! For changing your password see <a accesskey="alt+4" href="#Q4">How can I change my password/edit my profile?</a></li>
-       <br />  
-       <br /> 
+        <ul>
+            <li>Contact the MMT administrator Pekka Mäkiaho at pekka.makiaho(at)uta.fi, who will send you a new password.</li>
+            <li>Remember to change the password after the first log in! For changing your password see <a accesskey="alt+4" href="#Q4">How can I change my password/edit my profile?</a></li>
+       </ul>
        <a href="#">[back to the top]</a>
     </p>
 
@@ -108,16 +110,14 @@
       	<ul>
            <li>log in and select the project you want to enter a weekly report for</li>
 	   <li>click the "Weeklyreports" tab at the top of the screen</li>
-	   <li>click the "New Weeklyreport" link in the Actions pane on the left hand side</li>
-	   <li>enter the weekly report data 
+	   <li>click the "New Weeklyreport" link on the left hand side</li>
+	   <li>weekly report form consists of
                 <ul>
-                    <li>page 1: the basic data</li>
-                    <li>page 2: the metric data</li>
-                    <li>page 3: the working hours of your team members</li>
+                    <li>page 1: enter the basic data</li>
+                    <li>page 2: enter the metric data</li>
+                    <li>page 3: preview of working hours of your team members</li>
                 </ul>
            </li>
-	   <li>if your team logs the daily working time in MMT (see <a accesskey="alt+6" href="#Q6">
-	   How do I log my daily working time?</a>), the page 3 will automatically suggest the working hours of your team members</li>
 	   <li>click "Submit" once you are done, and your weekly report is saved</li>
         </ul> 
       <a href="#">[back to the top]</a>
@@ -125,7 +125,8 @@
 
     <h4 id="Q7">7. How do I log my daily working time?</h4>
     <p>
-        You log time between Monday that follows the last weekly report week and the current day. 
+        Working hours can be logged starting from Monday 
+        that follows the week that is covered by last weekly report. 
         However, the first week may be different 
         as then the week starts from the day project was created instead of Monday.
     </p>
@@ -154,20 +155,23 @@
 
     <h4 id="Q8">8. Where can I find team's/member's working hours and the total number of working hours?</h4>
        <p>
-           You can view the working hours and the total numbers of hours as follows. 
+           You can view the working hours and the total numbers of hours as follows 
             <ul>
                 <li>log in and select your project</li>
-                <li>to view the total numbers of hours per team and per member: 
-                    <ul>click the "Members" link on the left hand side menu on the project's front page</ul>
-                </li>
-                <li>to view the total number of hours by worktype (per member): 
-                    <ul>click the "View" link in the Actions column of the "Members" table</ul>
-                </li>
-                <li>to view member's working hours: 
-                    <ul>click the "Logged tasks" link on the left hand side menu on member's page</ul>
-                </li>
                 <li>to view team's working hours: 
                     <ul>click the "Log time" tab at the top menu</ul>
+                </li>
+                <li>to view the total numbers of working hours per team and per member: 
+                    <ul>click the "Members" tab at the top menu</ul>
+                </li>
+                <li>to view member's working hours:
+                    <ul>click the "Members" tab at the top menu</ul>
+                    <ul>click the "View" link in the Actions column of the "Members" table</ul> 
+                    <ul>click the "Logged tasks" link on the left hand side of member's page</ul>
+                </li>
+                <li>to view the total numbers of member's working hours by worktype:
+                    <ul>click the "Members" tab at the top menu</ul> 
+                    <ul>click the "View" link in the Actions column of the "Members" table</ul>
                 </li>
             </ul>
         <a href="#">[back to the top]</a>
