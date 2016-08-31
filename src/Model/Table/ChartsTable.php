@@ -316,6 +316,46 @@ class ChartsTable extends Table
         return $data;
     }
     
+    public function hoursperweekData($project_id, $idlist, $weeklist) {
+        
+        $members = TableRegistry::get('Members');
+        
+        // get a list of the members in the project
+        $query = $members
+                ->find()
+                ->select(['id'])
+                ->where(['project_id =' => $project_id])
+                ->toArray();
+        $memberlist = array();
+        foreach($query as $temp){
+            $memberlist[] = $temp->id;
+        }
+        
+        $workinghours = TableRegistry::get('Workinghours');
+        
+        $query = $workinghours
+                    ->find()
+                    ->select(['date', 'duration'])
+                    ->where(['member_id IN' => $memberlist])
+                    ->toArray();
+        
+        $data = array();
+        foreach($weeklist as $temp){
+            
+            $sum = 0;
+            foreach($query as $result) {
+                $weekForHour = date('W', strtotime($result['date']));
+                
+                if ($temp == $weekForHour) {
+                    $sum += $result['duration'];
+                }        
+            }
+            $data[] = $sum;
+        }
+
+        return $data;
+    }
+    
     public function weeklyhourAreaData($idlist){
         $weeklyhours = TableRegistry::get('Weeklyhours');
         

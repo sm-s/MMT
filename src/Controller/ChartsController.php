@@ -55,8 +55,8 @@ class ChartsController extends AppController
         $testcaseChart = $this->testcaseChart();
         $hoursChart = $this->hoursChart();
         $weeklyhourChart = $this->weeklyhourChart();
+        $hoursPerWeekChart = $this->hoursPerWeekChart();
         $reqPercentChart = $this->reqPercentChart();
-        // Chart for derived metrics
         $derivedChart = $this->derivedChart();
         
         // Get all the data for the charts, based on the chartlimits
@@ -67,6 +67,7 @@ class ChartsController extends AppController
         $commitData = $this->Charts->commitAreaData($weeklyreports['id']);
         $testcaseData = $this->Charts->testcaseAreaData($weeklyreports['id']);
         $hoursData = $this->Charts->hoursData($project_id);
+        $hoursperweekData = $this->Charts->hoursPerWeekData($project_id, $weeklyreports['id'], $weeklyreports['weeks']);
         $weeklyhourData = $this->Charts->weeklyhourAreaData($weeklyreports['id']);
         
         // Insert the data in to the charts, one by one
@@ -128,11 +129,18 @@ class ChartsController extends AppController
             )
         );
         
-        // weeklyhourChart
+        // weeklyhourChart 
         $weeklyhourChart->xAxis->categories = $weeklyreports['weeks'];    
         $weeklyhourChart->series[] = array(
             'name' => 'weekly hours',
             'data' => $weeklyhourData
+        );
+        
+        //workinghours per week  
+        $hoursPerWeekChart->xAxis->categories = $weeklyreports['weeks'];
+        $hoursPerWeekChart->series[] = array(
+            'name' => 'Working hours per week',
+            'data' => $hoursperweekData
         );
         
         // reqPercentChart
@@ -153,8 +161,7 @@ class ChartsController extends AppController
             'name' => 'Rejected',
             'data' => $reqData['rejected']
         );
-        
-// MMT SUMMER        
+              
         // chart for derived metrics
         $derivedChart->xAxis->categories = $weeklyreports['weeks'];
         $derivedChart->series[] = array(
@@ -166,7 +173,8 @@ class ChartsController extends AppController
             'data' => $testcaseData['testsPassed']
         );
         // This sets the charts visible in the actual charts page "Charts/index.php"
-        $this->set(compact('phaseChart', 'reqChart', 'commitChart', 'testcaseChart', 'hoursChart', 'weeklyhourChart', 'reqPercentChart', 'derivedChart'));
+        $this->set(compact('phaseChart', 'reqChart', 'commitChart', 'testcaseChart', 'hoursChart', 'weeklyhourChart', 'hoursPerWeekChart', 'reqPercentChart', 'derivedChart'));
+
     }
     // All the following functions are similar
     // They create a custom chart object and return it
@@ -421,6 +429,45 @@ class ChartsController extends AppController
     
     	return $myChart;
     }
+    public function hoursPerWeekChart(){
+    	$myChart = $this->Highcharts->createChart();
+    	$myChart->chart->renderTo = 'hoursperweekwrapper';
+    	$myChart->chart->type = 'area';
+
+    
+    	$myChart->title = array(
+        	'text' => 'Working hours',
+        	'y' => 20,
+        	'align' => 'center',
+        	'styleFont' => '18px Metrophobic, Arial, sans-serif',
+        	'styleColor' => '#0099ff',
+        );
+    	$myChart->subtitle->text = "per week";
+    
+    	// body of the chart
+    	$myChart->chart->width =  800;
+    	$myChart->chart->height = 500;
+
+    	// $myChart->chart->alignTicks = FALSE;
+    	$myChart->chart->backgroundColor->linearGradient = array(0, 0, 0, 300);
+    	$myChart->chart->backgroundColor->stops = array(array(0, 'rgb(217, 217, 255)'), array(1, 'rgb(255, 255, 255)'));
+    	// this chart doesn't need a legend
+    	$myChart->legend->enabled = false;
+    	
+        // labels of axes
+    	
+        $myChart->xAxis->title->text = 'Week number';
+	$myChart->yAxis->title->text = 'Total amount of working hours';
+    	
+	// tooltips etc
+    	$myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {
+        return 'Total hours: ' +' <b>'+
+        Highcharts.numberFormat(this.y, 0) +'</b><br/>Week number: '+ this.x;}");
+    	$myChart->plotOptions->area->marker->enabled = false;
+    
+    	return $myChart;
+    }
+    
     public function weeklyhourChart(){
 		$myChart = $this->Highcharts->createChart();
 		$myChart->chart->renderTo = 'weeklyhourwrapper';
