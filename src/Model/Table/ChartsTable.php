@@ -327,13 +327,14 @@ class ChartsTable extends Table
                 ->where(['project_id =' => $project_id])
                 ->toArray();
         $memberlist = array();
-        foreach($query as $temp){
-            $memberlist[] = $temp->id;
+        if(!empty($query)) {
+            foreach($query as $temp){
+                $memberlist[] = $temp->id;
+            }
         }
-        
         $workinghours = TableRegistry::get('Workinghours');
         
-        $query = $workinghours
+        $queryW = $workinghours
                     ->find()
                     ->select(['date', 'duration'])
                     ->where(['member_id IN' => $memberlist])
@@ -343,12 +344,14 @@ class ChartsTable extends Table
         foreach($weeklist as $temp){
             
             $sum = 0;
-            foreach($query as $result) {
-                $weekForHour = date('W', strtotime($result['date']));
-                
-                if ($temp == $weekForHour) {
-                    $sum += $result['duration'];
-                }        
+            if(!empty($queryW)) {
+                foreach($queryW as $result) {
+                    // date of workinghours need to be turned to week
+                    $weekWH = date('W', strtotime($result['date']));
+                    if ($temp == $weekWH) {
+                        $sum += $result['duration'];
+                    }        
+                }
             }
             $data[] = $sum;
         }
