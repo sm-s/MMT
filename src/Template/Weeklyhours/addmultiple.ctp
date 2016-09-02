@@ -9,11 +9,11 @@
 <div class="weeklyhours form large-6 medium-12 columns content float: left">
     <?= $this->Form->create($weeklyhours) ?>
     <fieldset>
-        <legend><?= __('Add Weeklyhours, Page 3/3') ?></legend>
+        <legend><?= __('Preview of working hours, Page 3/3') ?></legend>
         <table>
             <tr>
-                <th><?= __('Name - Project role') ?></th> 
-                <th><?= __('Hours') ?></th>
+                <th colspan="2"><?= __('Name - Project role') ?></th> 
+                <th><?= __('Working hours') ?></th>
             </tr> 
         <?php
             $current_weeklyhours = $this->request->session()->read('current_weeklyhours');
@@ -25,7 +25,7 @@
 
                 for($count = 0; $count < count($memberlist); $count++){ ?>
                     <tr>
-                        <td><?= h($memberlist[$count]['member_name']) ?></td>
+                        <td colspan="2"><?= h($memberlist[$count]['member_name']) ?></td>
                         <td><?= h($current_weeklyhours[$count]['duration']) ?></td>
                     </tr>        
                 <?php }
@@ -33,7 +33,7 @@
             else{
                 for($count = 0; $count < count($memberlist); $count++){ ?>
                     <tr>
-                        <td><?= h($memberlist[$count]['member_name']) ?></td>
+                        <td colspan="2"><?= h($memberlist[$count]['member_name']) ?></td>
                         <td><?= h($hourlist[$count]) ?></td>
                     </tr>        
                 <?php }

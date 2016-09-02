@@ -56,7 +56,7 @@
                             // Links to unread weeklyreports are visible to supervisors
                             // admin can only see the column (no links)
                             // code is the same as in Statistics.ctp
-                            if ($admin || $super) {
+                            if ($admin || $super || $supervisor) {
                                 
                                 $userid = $this->request->session()->read('Auth.User.id');
                                 $query = Cake\ORM\TableRegistry::get('Weeklyreports')

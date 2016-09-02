@@ -14,7 +14,7 @@
 
 		// if current weeklyreport's ID is in notifications, remove the row where current member's id is
 		// again, I can't be bothered to try getting along with CakePHP, so I'll use MySQL from PHP
-		if ( $connection = mysqli_connect("localhost", "user", "pass", "db") ) {
+		if ( $connection = mysqli_connect("localhost", "root", "root", "mmt2016") ) {
 			$delete = "DELETE FROM notifications"
 					. " WHERE member_id = $memid"
 					. " AND weeklyreport_id = $wrid";
@@ -22,33 +22,37 @@
 			if (!mysqli_query($connection, $delete)) {
 				exit;
 			}
-			
-			// let's also remove data about unread weeklyreports
-			if ( $this->request->session()->read('selected_project_role') == 'supervisor' ) {
-				$newreps = Cake\ORM\TableRegistry::get('Newreports')->find()
-							->select()
-							->where(['user_id =' => $userid, 'weeklyreport_id =' => $wrid])
-							->toArray();
-				if ( sizeof($newreps) > 0 ) {
-					$delete = "DELETE FROM newreports"
-							. " WHERE user_id = $userid"
-							. " AND weeklyreport_id = $wrid";
-
-					if (!mysqli_query($connection, $delete)) {
-						exit;
-					}
-				}
-			}
-		}
+                }        
 		mysqli_close( $connection );
 	}
-		
+        // let's also remove data about unread weeklyreports
+        $supervisor = ($this->request->session()->read('selected_project_role') == 'supervisor') ? 1 : 0;
+	$super = $this->request->session()->read('is_supervisor');
+	//if ( $this->request->session()->read('selected_project_role') == 'supervisor' ) {
+        if ($super || $supervisor) {
+            $newreps = Cake\ORM\TableRegistry::get('Newreports')->find()
+		->select()
+		->where(['user_id =' => $userid, 'weeklyreport_id =' => $wrid])
+		->toArray();
+		if ( sizeof($newreps) > 0 ) {
+                    if ( $connection = mysqli_connect("localhost", "root", "root", "mmt2016") ) {
+				$delete = "DELETE FROM newreports"
+                                            . " WHERE user_id = $userid"
+                                            . " AND weeklyreport_id = $wrid";
+
+			if (!mysqli_query($connection, $delete)) {
+				exit;
+			}
+                    }
+                    mysqli_close( $connection );
+                }
+	}
+	
 	// if you're an admin or supervisor, we'll force you to change to the project the weeklyreport is from
 	$admin = $this->request->session()->read('is_admin');
-	$supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
 	$manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
         $developer = ( $this->request->session()->read('selected_project_role') == 'developer' ) ? 1 : 0;
-	
+
 	if ( $admin || $supervisor ) {
 		// fetch the ID of relevant project
 		$query = Cake\ORM\TableRegistry::get('Weeklyreports')
@@ -160,13 +164,14 @@
             
             <?php
             // Finding members who are not supervisors or clients
-            $members = Cake\ORM\TableRegistry::get('Members')->find()
+            $p_id = $this->request->session()->read('selected_project')['id'];
+            $mlist = Cake\ORM\TableRegistry::get('Members')->find()
 				->select()
-				->where(['project_id =' => $projid, 'project_role =' => 'developer'])
-                                ->orWhere(['project_id =' => $projid, 'project_role =' => 'manager'])
+				->where(['project_id =' => $p_id, 'project_role =' => 'developer'])
+                                ->orWhere(['project_id =' => $p_id, 'project_role =' => 'manager'])
 				->toArray();
             
-            foreach ($members as $member): ?>
+            foreach ($mlist as $member): ?>
                 <tr>
                 <?php 
                 $m_id = $member->id;
@@ -179,9 +184,9 @@
      				->select(['first_name', 'last_name'])
 				->where(['id =' => $u_id])
 				->toArray();                   
+                $sum = 0;
                 if(!empty($queryForHours)) {
                     $hours = array();
-                    $sum = 0;
                     // Get member's hours for the week
                     foreach ($queryForHours as $key) {
                         if ($weeklyreport->week == $key->date->format('W')) {                        
