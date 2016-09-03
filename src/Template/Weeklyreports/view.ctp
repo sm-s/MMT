@@ -14,7 +14,7 @@
 
 		// if current weeklyreport's ID is in notifications, remove the row where current member's id is
 		// again, I can't be bothered to try getting along with CakePHP, so I'll use MySQL from PHP
-		if ( $connection = mysqli_connect("localhost", "root", "root", "mmt2016") ) {
+		if ( $connection = mysqli_connect("localhost", "user", "pass", "db") ) {
 			$delete = "DELETE FROM notifications"
 					. " WHERE member_id = $memid"
 					. " AND weeklyreport_id = $wrid";
