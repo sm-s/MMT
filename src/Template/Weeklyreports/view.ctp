@@ -35,7 +35,7 @@
 		->where(['user_id =' => $userid, 'weeklyreport_id =' => $wrid])
 		->toArray();
 		if ( sizeof($newreps) > 0 ) {
-                    if ( $connection = mysqli_connect("localhost", "root", "root", "mmt2016") ) {
+                    if ( $connection = mysqli_connect("localhost", "user", "pass", "db") ) {
 				$delete = "DELETE FROM newreports"
                                             . " WHERE user_id = $userid"
                                             . " AND weeklyreport_id = $wrid";
