@@ -180,7 +180,7 @@ class WorkinghoursController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
-    
+
     public function isAuthorized($user)
     {   
         // admins can do anything
@@ -190,7 +190,7 @@ class WorkinghoursController extends AppController
         
         $project_role = $this->request->session()->read('selected_project_role');
         
-        if ($this->request->action === 'add') 
+        if  (($this->request->action === 'add') || ($this->request->action === 'getMinDate'))
         {
             // supervisor cannot have workinghours, and the add function simply takes the member_id of the current user
             if($project_role != "notmember" && $project_role != "supervisor" && $project_role != "client"){
@@ -208,8 +208,8 @@ class WorkinghoursController extends AppController
                     ->where(['id =' => $this->request->pass[0]])
                     ->toArray();
                 
-                /* Bug fix 8.3.2016 : members were unable to edit themselves because of false comparison (userID vs. memberID)
-                   Requirement ID = 17 */
+                //Bug fix 8.3.2016 : members were unable to edit themselves because of false comparison (userID vs. memberID)
+                //   Requirement ID = 17
                 
                 // fetching the Members-table from database
                 $members = TableRegistry::get('Members');
@@ -221,8 +221,11 @@ class WorkinghoursController extends AppController
                 	->where(['user_id =' => $user['id']])
                 	->toArray();
 
-                if($query[0]->member_id == $query2[0]->id ){
-                    return True;
+                foreach ($query2 as $temp) {
+                    
+                    if($query[0]->member_id == $temp->id ){
+                        return True;
+                    }
                 }
                 return False;
             }
@@ -236,8 +239,9 @@ class WorkinghoursController extends AppController
             if($project_role == "manager" || $project_role == "developer"){
                 return True;
             }
+            return False;
         }    
-        // all members can add edit and delete workinghours
+        //all members can add edit and delete workinghours
         if ($this->request->action === 'adddev' || $this->request->action === 'edit'
             || $this->request->action === 'delete') 
         {
