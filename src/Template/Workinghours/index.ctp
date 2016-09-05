@@ -84,7 +84,7 @@
                     else {
                         $firstWeeklyReport = true;
                     }
-      
+                    
                     // edit and delete are only shown if the weekly report is not sent
                     // edit and delete can also be viewed by the developer who owns them
 					
@@ -93,8 +93,8 @@
 			 * IF (you are the owning user or a manager) AND workinghour isn't from previous weeks
 			 * OR you are an admin or a supervisor
 			 */
-                    if ( ( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id') || $manager)
-                            && ($firstWeeklyReport || (($year >= $maxYear) && ($week > $maxWeek)))) 
+                    if (( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id') || $manager)
+                            && ($firstWeeklyReport || (($year == $maxYear) && ($week > $maxWeek)) || ($year > $maxYear) )) 
 					     || ($admin || $supervisor) ) { ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $workinghour->id]) ?>
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $workinghour->id], ['confirm' => __('Are you sure you want to delete # {0}?', $workinghour->id)]) ?> 

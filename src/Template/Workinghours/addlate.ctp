@@ -33,20 +33,42 @@ echo $this->Html->script('jquery-ui.min');
             	->where(['project_id =' => $project_id])
                 ->toArray(); 
             
-            if ($query1 != null) {
+            if (count($query1) >= 2) {
                 // picking out the week of the last weekly report from the results
                 $max = max($query1);
 
                 $maxYear = $max['year'];
                 $maxWeek = $max['week'];
                 
-                //$mDate: the first day of the new weeklyreport week (monday)
+                //$minDate: the first day of the new weeklyreport week (monday)
                 $monday = new DateTime();
                 $monday->setISODate($maxYear,$maxWeek,1);
-                $mDate1 = $monday->format('d M Y');
-                $mDate = date('d M Y', strtotime($mDate1));
+                $date1 = $monday->format('d M Y');
+                $minDate = date('d M Y', strtotime($date1));
             }
-			
+            /*
+             * If the weeklyreport is the first one
+             * The date project was created is fetched from the db.
+             */ 
+            else {
+                $project_id = $this->request->session()->read('selected_project')['id'];
+                $query2 = Cake\ORM\TableRegistry::get('Projects')
+                    ->find()
+                    ->select(['created_on']) 
+                    ->where(['id =' => $project_id])
+                    ->toArray(); 
+                
+                foreach($query2 as $result) {
+                    $temp = date_parse($result);
+                    $year = $temp['year'];
+                    $month = $temp['month'];
+                    $day = $temp['day'];
+                    
+                    // $mDate is the date project was created on  
+                    $minDate = date("d M Y", mktime(0,0,0, $month, $day, $year));
+                }
+            }
+            
             echo $this->Form->button(__('Submit'));
         ?>    
     </fieldset>
@@ -54,14 +76,12 @@ echo $this->Html->script('jquery-ui.min');
 </div>
 
 <script> 
-    /*
-     * Req 21:
-     * minDate is the monday of the week of the weeklyreport
+    /* minDate is either monday of the week of the weeklyreport or the date project was created
      * maxDate is the current day
-     */
+     * */
     $( "#date" ).datepicker({
         dateFormat: "MM d, yy",
-        minDate: new Date('<?php echo $mDate; ?>'),
+        minDate: new Date('<?php echo $minDate; ?>'),
         maxDate: '0', 
         firstDay: 1,
         showWeek: true,

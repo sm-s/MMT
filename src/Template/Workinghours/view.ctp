@@ -47,7 +47,7 @@
         </tr>
         <tr>
             <th><?= __('Description') ?></th>
-            <td><?= h(Cake\Utility\Text::wrap($workinghour->description, ['width' => 50, 'wordWrap' => false])) ?></td>
+            <td><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
         </tr>
         <tr>
             <th><?= __('Duration') ?></th>

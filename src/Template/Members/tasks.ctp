@@ -35,7 +35,6 @@
                     <td><?= h($workinghours->date->format('d.m.Y')) ?></td>
                     <td style="text-align: center;"><?= h($workinghours->date->format('W')) ?></td>
                     <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghours->description,25,"\n",TRUE)) ?></td>
-                    <!--<td><?= h(wordwrap($workinghours->description,33,"\n",TRUE)) ?></td>-->
                     <td style="text-align:center;"><?= $this->Number->format($workinghours->duration) ?></td>
 	                <td><?= h($worktype->description) ?></td>
                     <td class="actions">
