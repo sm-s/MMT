@@ -61,7 +61,7 @@ class WeeklyreportsController extends AppController
                 }
             }
         }
-*/ /*
+    */ /*
         // get descriptions for the metrics
         $metrictypes = TableRegistry::get('Metrictypes');
         $query = $metrictypes
@@ -116,27 +116,37 @@ class WeeklyreportsController extends AppController
     public function add()
     {
         $project_id = $this->request->session()->read('selected_project')['id'];
+        //
         $weeklyreport = $this->Weeklyreports->newEntity();
         if ($this->request->is('post')) {
             // read the form data and edit it
             $report = $this->request->data;  
             $report['project_id'] = $project_id;
             $report['created_on'] = Time::now();
+            
+            //$minWeek = $projectBdate->format('W');
+            //$minYear = $projectBdate->format('Y');
+
             // validate the data and apply it to the weeklyreport object
             $weeklyreport = $this->Weeklyreports->patchEntity($weeklyreport, $report);
-            
+  
             // if the object validated correctly and it is unique we can save it in the session
             // and move on to the next page
-            if($this->Weeklyreports->checkUnique($weeklyreport)){  
-                if(!$weeklyreport->errors()){
-                    $this->request->session()->write('current_weeklyreport', $weeklyreport);
-                    return $this->redirect(
-                        ['controller' => 'Metrics', 'action' => 'addmultiple']
-                    ); 
-                }
+            if($this->Weeklyreports->checkUnique($weeklyreport)){
+                if ($this->Weeklyreports->checkWhenProjectCreated($weeklyreport)) {
+                        if(!$weeklyreport->errors()){
+                            $this->request->session()->write('current_weeklyreport', $weeklyreport);
+                            return $this->redirect(
+                                ['controller' => 'Metrics', 'action' => 'addmultiple']
+                            ); 
+                        }
+                        else {
+                            $this->Flash->error(__('Report failed validation'));
+                        }
+                }    
                 else {
-                    $this->Flash->error(__('Report failed validation'));
-                }
+                    $this->Flash->error(__('Check week and/or year.'));
+                }    
             }
             else {
                 $this->Flash->error(__('This week already has a weeklyreport'));
@@ -169,11 +179,16 @@ class WeeklyreportsController extends AppController
             // but allow updating withouth changing the week number
             // checkUnique is in "WeeklyreportsTable.php"
             if($this->Weeklyreports->checkUnique($weeklyreport) || $old_weeknumber == $weeklyreport['week']){
-                if ($this->Weeklyreports->save($weeklyreport)) {
-                    $this->Flash->success(__('The weeklyreport has been saved.'));
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    $this->Flash->error(__('The weeklyreport could not be saved. Please, try again.'));
+                if ($this->Weeklyreports->checkWhenProjectCreated($weeklyreport)) {
+                    if ($this->Weeklyreports->save($weeklyreport)) {
+                        $this->Flash->success(__('The weeklyreport has been saved.'));
+                        return $this->redirect(['action' => 'index']);
+                    } else {
+                        $this->Flash->error(__('The weeklyreport could not be saved. Please, try again.'));
+                    }
+                }
+                else {
+                    $this->Flash->error(__('Check week and/or year.'));
                 }
             }
             else {

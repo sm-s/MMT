@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 
 use Cake\Filesystem\File;
 use Cake\I18n\Time;
+use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 
 class WeeklyreportsTable extends Table
@@ -59,7 +60,39 @@ class WeeklyreportsTable extends Table
         }
         return True;
     }
+    public function checkWhenProjectCreated($report) {
+        
+        $projects = TableRegistry::get('Projects');
+        $query = $projects
+                ->find()
+                ->select(['created_on'])
+                ->where(['id =' => $report['project_id']]);
 
+        foreach($query as $result) {
+            $temp = date_parse($result);
+            $minYear = $temp['year'];
+            $month = $temp['month'];
+            $day = $temp['day'];
+
+            $minWeek = date("W", mktime(0,0,0, $month, $day, $minYear));
+        }
+        
+        if ($report['year'] > $minYear) {
+            return True;
+        }
+        elseif ($report['year'] == $minYear) {
+            if ($report['week'] >= $minWeek) {
+                return True;
+            }
+            else {
+                return False;
+            }
+        }
+        else {
+            return False;
+        }
+
+    }
     public function validationDefault(Validator $validator)
     {
         $validator
