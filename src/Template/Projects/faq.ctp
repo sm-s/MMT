@@ -26,15 +26,27 @@
     <p>
     For developers and managers:
           <ul >
-             <li>The projects will be created in the beginning of week 38.</li>
-             <li>Week 38 is the first week you can log time for and write a weekly report for.</li>
-             <li>Since you cannot log lectures on the actual dates, you can include those hours to week 38 (or later).</li>
+             <li>The projects will be created in the beginning of week _____ </li>
+             <li>The first week you can log time for is week _____ </li>
           </ul>
     For managers:
-      	<ul >
-           <li>First weekly report deadline: September 26th (Monday)</li>
-	   <li>For all teams, the phase will be 0 in the first weekly report.</li>
+      	<ul>    
+            <li>The first week you'll need write a weekly report for is week 38.</li>
+            <li>Submit the first weekly report on Monday, 26th September 2016</li>
+            <li>For all teams, the phase will be 0 in the first weekly report.</li>
         </ul>
+
+       Video tutorials
+       <ul>
+        <li>Developer tutorial shows how to log time and view the progress of the project.</li>
+        <li>Manager tutorial shows how to add members and fill in the weekly report form.</li>
+        <li>New features have been added after the videos were made thus some features look different in the current version of MMT than in the videos.</li>
+
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/RE5sO55sDyk" frameborder="0" allowfullscreen></iframe>
+
+        
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/9Qx3TuLZZc8" frameborder="0" allowfullscreen></iframe>
+        </ul> 
         <a href="#">[back to the top]</a> 
     </p>
 	
@@ -60,8 +72,8 @@
         As a developer you can:
           <ul >
              <li>log your daily working time</li>
-          </ul>
-        <a href="#">[back to the top]</a> 
+          </ul>       
+    <a href="#">[back to the top]</a> 
     </p>
 
     <h4 id="Q3">3. How do I get started?</h4>

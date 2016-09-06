@@ -24,7 +24,7 @@
             echo $this->Form->input('reqRejected', 
                 array('value' => $current_metrics[5]['value'], 'label' => 'Rejected requirements','type' => 'number', 'required'=>true));
             echo $this->Form->input('commits', 
-                array('value' => $current_metrics[6]['value'], 'label' => 'Commits','type' => 'number', 'required'=>true));
+                array('value' => $current_metrics[6]['value'], 'label' => 'Total number of commits','type' => 'number', 'required'=>true));
             echo $this->Form->input('passedTestCases', 
                 array('value' => $current_metrics[7]['value'], 'label' => 'Passed test cases','type' => 'number', 'required'=>true));
             echo $this->Form->input('totalTestCases', 
