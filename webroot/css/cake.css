@@ -533,7 +533,7 @@
 	button {
 	  background: #083e7f;
 	  border-radius: 5px;
-		border: 1px ridge silver;
+          border: 1px ridge silver;
 	  margin-top: 1em;
 	}
 
@@ -547,7 +547,17 @@
 	  text-transform: uppercase;
 	  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.26);
 	}
-
+        #resetStart, #resetEnd {
+          background: #DCDCDC;
+	  border-radius: 5px;
+          border: 1px ridge silver;
+	  margin-top: 1em;
+          padding: 1em;
+          color: black;
+          float: right;  
+	  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.26);
+	}
+        
 	.form .error-message {
 	  display: block;
 	  padding: 0.375rem 0.5625rem 0.5625rem;
