@@ -33,16 +33,18 @@ echo $this->Html->script('jquery-ui.min');
             
             echo $this->Form->input('project_role', 
                 ['options' => array('developer' => 'developer', 'manager' => 'manager', 'supervisor' => 'supervisor', 'client' => 'client')]);
-            
-            // echo $this->Form->input('starting_date', ['empty' => true, 'default' => '']);
-            // echo $this->Form->input('ending_date', ['empty' => true, 'default' => '']);
-            
+     
             // Using jQuery UI datepicker
+            // Starting date
             echo $this->Form->input('starting_date', ['type' => 'text', 'readonly' => true, 'id' => 'datepicker1']);            
-            ?> </br>
-            <?php            
+            ?> <input type="button" value="Clear starting date" id="resetStart" />
+            </br>
+            <?php
+            // Ending date
             echo $this->Form->input('ending_date', ['type' => 'text', 'readonly' => true, 'id' => 'datepicker2']);
-           
+            ?> <input type="button" value="Clear ending date" id="resetEnd" />
+            </br></br>    
+            <?php
             // Fetching from the db the date when the project was created          
             $project_id = $this->request->session()->read('selected_project')['id'];
             $query = Cake\ORM\TableRegistry::get('Projects')
@@ -58,8 +60,8 @@ echo $this->Html->script('jquery-ui.min');
                 $day = $temp['day'];   
                 $mDate = date("d M Y", mktime(0,0,0, $month, $day, $year));
             }
-		echo $this->Form->button(__('Submit'));
-    ?>
+            echo $this->Form->button(__('Submit'));
+    ?>           
     </fieldset>
     <?= $this->Form->end() ?>
 </div>
@@ -88,5 +90,22 @@ echo $this->Html->script('jquery-ui.min');
         buttonImage: "../../webroot/img/glyphicons-46-calendar.png",
         buttonImageOnly: true,
         buttonText: "Select date"       
+    });
+    
+    // Resetting datepickers
+        var date1 = $("input[id$='datepicker1']");
+        var date2 = $("input[id$='datepicker2']");
+        $("#resetStart").on('click', function(){
+            date1.attr('value','');
+                date1.each(function(){
+                    $(this).datepicker('setDate', null); 
+                }); 
+    });
+        $("#resetEnd").on('click', function(){
+            date2.attr('value','');
+                date2.each(function(){
+                    $(this).datepicker('setDate', null); 
+                });
+     
     });
 </script>
