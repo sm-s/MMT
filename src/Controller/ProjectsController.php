@@ -122,7 +122,7 @@ class ProjectsController extends AppController
         // functions in "ProjectsTable.php"
         foreach($publicProjects as $project){
             $project['reports'] = $this->Projects->getWeeklyreportWeeks($project['id'], 
-                                  $statistics_limits['weekmin'], $statistics_limits['weekmax'], $statistics_limits['year']);
+            $statistics_limits['weekmin'], $statistics_limits['weekmax'], $statistics_limits['year']);
             $project['duration'] = $this->Projects->getWeeklyhoursDuration($project['id']);
             $project['sum'] = $this->Projects->getHoursDuration($project['id']);
             $projects[] = $project;
@@ -262,7 +262,7 @@ class ProjectsController extends AppController
             // find all the projects that the user is a member in
             $query = $members
                 ->find()
-                ->select(['project_id', 'ending_date', 'project_role'])
+                ->select(['project_id', 'ending_date', 'project_role'])  
                 ->where(['user_id =' => $this->Auth->user('id')])
                 ->toArray();
             
@@ -272,7 +272,7 @@ class ProjectsController extends AppController
             foreach($query as $temp){
                 // check if the user is a supervisor in any of the projects
                 // and add the projects to the projectlist
-                if($temp->ending_date < $time || $temp->ending_date == NULL){
+                if($temp->ending_date > $time || $temp->ending_date == NULL){
                     $project_list[] = $temp->project_id;
                     if($temp->project_role == 'supervisor'){
                         $is_supervisor = True;
@@ -316,7 +316,7 @@ class ProjectsController extends AppController
             // the idea is that the highest membership is saved, 
             // so if he or she is a developer and a supervisor, we save the latter
             foreach($query as $temp){
-                // if supervisor, overwrite all other memberships
+                // if supervisor, overwrite all other memberships     
                 if($temp->project_role == "supervisor" && ($temp->ending_date > $time || $temp->ending_date == NULL)){
                     $project_role = $temp->project_role;
                     $project_memberid = $temp->id;

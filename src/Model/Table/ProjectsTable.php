@@ -115,7 +115,7 @@ class ProjectsTable extends Table
         return $sum;
     }
     
-// new version of the function
+    // new version of the function
     public function getWeeklyhoursDuration($project_id){
         $weeklyreports = TableRegistry::get('Weeklyreports'); 
         $query = $weeklyreports
@@ -144,34 +144,6 @@ class ProjectsTable extends Table
         }    
         return $duration;
     } 
-    
-    // get the total weeklyhours of a project
-    /*
-    public function getWeeklyhoursDuration($project_id){
-        $weeklyreports = TableRegistry::get('Weeklyreports'); 
-        $query = $weeklyreports
-            ->find()
-            ->select(['id'])
-            ->where(['project_id' => $project_id])
-            ->toArray();
-        $ids = array();
-        foreach($query as $temp){
-            $ids[] = $temp->id;
-        }
-        
-        $weeklyhours = TableRegistry::get('Weeklyhours'); 
-        $query = $weeklyhours
-            ->find()
-            ->select(['duration'])
-            ->where(['weeklyreport_id IN' => $ids])
-            ->toArray();
-        $duration = 0;
-        foreach($query as $temp){
-            $duration += $temp->duration;
-        }
-        
-        return $duration;
-    } */
     
     // get a list with 'X', 'L' or ' ' for the weeks based on the limits
     // 'X' if that weeks report was returned
