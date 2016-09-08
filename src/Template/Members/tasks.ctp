@@ -10,12 +10,18 @@
     <div class="related">
     <h4><?= __('Logged tasks') ?></h4>
         <?php 
-        // reversing the array in order to get dates in descending order
-        $preserved = array_reverse($member->workinghours, true);
-        if (!empty($preserved)): ?>
+        // sorting the array in order to get dates in descending order
+
+        usort($member->workinghours, "cmp");
+        function cmp($a, $b) {
+            return strcmp($b['date'], $a['date']);
+        }
+
+        if (!empty($member->workinghours)):  ?>
             <table cellpadding="0" cellspacing="0">
             <thead>
-                <tr>                  
+                <tr>
+                    <!--<th><?= $this->Paginator->sort('Workinghours.date', 'Date') ?></th>-->
                     <th><?= __('Date') ?></th>
                     <th style="width:60px;"><?= __('Week') ?></th>                    
                     <th colspan="2"><?= __('Description') ?></th>
@@ -24,12 +30,14 @@
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
-                <?php foreach ($preserved as $workinghours): 
-                	$query = Cake\ORM\TableRegistry::get('Worktypes')
-                		->find()
-                		->where(['id =' => $workinghours->worktype_id])
-                		->toArray();
-                	$worktype = $query[0];
+                <?php 
+                    foreach ($member->workinghours as $workinghours):
+                    //foreach ($member->workinghours as $workinghours): 
+                    $query = Cake\ORM\TableRegistry::get('Worktypes')
+                	->find()
+                	->where(['id =' => $workinghours->worktype_id])
+               		->toArray();
+                    $worktype = $query[0];
                 ?>
                 <tr>
                     <td><?= h($workinghours->date->format('d.m.Y')) ?></td>
@@ -43,7 +51,7 @@
                         $admin = $this->request->session()->read('is_admin');
                         $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
                         $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
-                        
+                        /*
                         // the week and the year of the workinghour
                         $week= $workinghours->date->format('W');
                         $year= $workinghours->date->format('Y');
@@ -64,16 +72,17 @@
                         else {
                             $firstWeeklyReport = true;
                         }
-
+                        */    
                         // edit and delete are only shown if the weekly report is not sent
                         // edit and delete can also be viewed by the developer who owns them
 
 			// IF (you are the owning user or a manager) AND workinghour isn't from previous weeks
 			// OR you are an admin or a supervisor
-			 
+			/* 
                         if ( ( ($member->user_id == $this->request->session()->read('Auth.User.id') || $manager)                        
                                 && ($firstWeeklyReport || (($year >= $maxYear) && ($week > $maxWeek) ) ) ) 
-                                                || ($admin || $supervisor) ) { ?>
+                                                || ($admin || $supervisor) ) { */ 
+                        if ( ($member->user_id == $this->request->session()->read('Auth.User.id')) || $manager || $supervisor ||  $admin  ) { ?>
                             <?= $this->Html->link(__('Edit'), ['controller' => 'Workinghours', 'action' => 'edit', $workinghours->id]) ?>
 
                             <?= $this->Form->postLink(__('Delete'), ['controller' => 'Workinghours', 'action' => 'delete', $workinghours->id], ['confirm' => __('Are you sure you want to delete # {0}?', $workinghours->id)]) ?> 

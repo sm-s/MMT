@@ -1,8 +1,6 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">    
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('Home'), ['controller' => 'Projects', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('Public statistics'), ['controller' => 'Projects', 'action' => 'statistics']) ?> </li>
-        <li><?= $this->Html->link(__('FAQ'), ['controller' => 'Projects', 'action' => 'faq']) ?> </li>
     </ul>    
 </nav>
 
@@ -26,8 +24,11 @@
     <p>
     For developers and managers:
           <ul >
-             <li>The projects will be created in the beginning of week _____ </li>
-             <li>The first week you can log time for is week _____ </li>
+            <li>A weekly report covers a calendar week and the first week that is covered by a weekly report is week 38.</li>
+            <li>However, remember to log your working hours for weeks 36-37.</li>
+            <li>The working hours that are in the table on Members' page include all working hours, even the ones that are not covered by a weekly report.</li>
+            <li>In this version of MMT logging time is limited between the day the project was created and the current day.</li> 
+            <li>Make a habit of logging your working hours so you don't forget them.</li>    
           </ul>
     For managers:
       	<ul>    
@@ -38,21 +39,23 @@
 
        Video tutorials
        <ul>
-        <li>Developer tutorial shows how to log time and view the progress of the project.</li>
-        <li>Manager tutorial shows how to add members and fill in the weekly report form.</li>
-        <li>New features have been added after the videos were made thus some features look different in the current version of MMT than in the videos.</li>
-
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/RE5sO55sDyk" frameborder="0" allowfullscreen></iframe>
+            <li>Developer tutorial shows how to log time and view the progress of the project.</li>
+            <li>Manager tutorial shows how to add members and fill in the weekly report form.</li>
+            <li>New features have been added after the videos were made thus some features look different in the current version of MMT than in the videos.</li>
+       </ul>
+        <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/RE5sO55sDyk" frameborder="0" allowfullscreen></iframe>
 
         
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/9Qx3TuLZZc8" frameborder="0" allowfullscreen></iframe>
-        </ul> 
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/9Qx3TuLZZc8" frameborder="0" allowfullscreen></iframe>
+        </p>
+        <p>
         <a href="#">[back to the top]</a> 
     </p>
 	
     <h4 id="Q2">2. What can I use the Metrics Monitoring Tool (MMT) for?</h4>
     <p>
-    All project members can:
+    All project members (incl. clients) can:
         <ul>
             <li>view the progress of your project</li>
             <li>view the progress of other public projects</li>
@@ -113,9 +116,8 @@
 
     <h4 id="Q6">6. As a project manager, how do I do the weekly reporting of my project?</h4>
     <p>
-    A weekly report covers a calendar week. A report should be send on Monday following the weekly report week. 
-    For example, if a weekly report week covers week 40 (in 2016, from October 4th to 9th), 
-    the report should be sent on Monday (October 10th).
+        A weekly report covers a calendar week. 
+        A report should be send on Monday that follows the weekly report week. 
     </p>
     <p>
     You can enter the weekly project reports into MMT as follows:
@@ -137,18 +139,9 @@
 
     <h4 id="Q7">7. How do I log my daily working time?</h4>
     <p>
-        Working hours can be logged starting from Monday 
-        that follows the week that is covered by last weekly report. 
-        However, the first week may be different 
-        as then the week starts from the day project was created instead of Monday.
-    </p>
-    <p>
-        You can log time late but only for the week that is covered by the last weekly report. 
-        For example, if a report for week 40 was sent on Monday October 10th 2016, 
-        you can still log time for week 40. However, you need to use a 'Log time late' form. 
-    </p>
-    <p>  
-      You can log your daily working time in MMT as follows:
+        <!--Working hours can be logged starting from Monday 
+        that follows the week that is covered by last weekly report.--> 
+        You can log your daily working time in MMT as follows:
       	<ul >
            <li>log in and select the project you want to log time for</li>
 	   <li>click the "Log time" tab at the top of the screen</li>
@@ -156,12 +149,12 @@
 	   <li>enter the date, description, duration (hours) and work type for the time to be logged</li>
 	   <li>click "Submit" once you are done, and your logged time is saved</li>
          </ul>
-     Please note that you can log time late, but only for the week of the last weekly report.
+     <!--Please note that you can log time late, but only for the week of the last weekly report.
         <ul>
             <li>click the "Reports" tab at the top of the screen</li>
             <li>click the "View" link next to the last weekly report</li>
             <li>click the "Log time late" link on the left hand side menu</li>
-        </ul>
+        </ul>-->
       <a href="#">[back to the top]</a>
      </p>
 
@@ -196,18 +189,18 @@
            <li>log in and select the project whose progress you want to view</li>
 	   <li>click the "Charts" tab at the top of the screen</li>
 	   <li>you now see the progression of the selected project in charts, based on the provided weekly report data</li>
-	   <li>you can change the viewing period by amending the min and max weeks and years in the Edit limits section in the Actions pane on the left hand side</li>
+	   <li>you can change the viewing period by amending the min and max weeks and years in the Edit limits section on the left hand side</li>
 	</ul> 
       <a href="#">[back to the top]</a>
     </p>
 
     <h4 id="Q10">10. How can I view the progress of other projects?</h4>
     <p>
-      You can view the progress of other projects similarly as your own project in <a accesskey="alt+7" href="#Q7"> How can I view the progress of my project?</a>, 
+      You can view the progress of other projects similarly as your own project in <a accesskey="alt+9" href="#Q9"> How can I view the progress of my project?</a>, 
 	if the project is classified as "public" in the project's basic data by the administrator. 
       <br />
       Additionally, you can view the combined statistics of all public projects by clicking "Home" at the top of the screen, and then the "Public statistics"
-      in the Actions pane.
+      on the the left-hand side.
       <br />
       <br />
       <a href="#">[back to the top]</a>
