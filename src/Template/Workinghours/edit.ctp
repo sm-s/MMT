@@ -6,7 +6,6 @@ echo $this->Html->script('jquery-ui.min');
 
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $workinghour->id],
@@ -46,8 +45,9 @@ echo $this->Html->script('jquery-ui.min');
         
         <?php
 
-            // ISSUE TO FIX
-            // format the date that is in the field when the page is opened
+            // change the format of the date that comes from the db
+            Cake\I18n\Date::setToStringFormat('MMMM d, yyyy');
+            
             echo $this->Form->input('date', ['type' => 'text', 'readonly' => true]);
             ?> </br>
         <?php  
@@ -64,6 +64,7 @@ echo $this->Html->script('jquery-ui.min');
              */ 
            
             $project_id = $this->request->session()->read('selected_project')['id'];
+            /*
             $query = Cake\ORM\TableRegistry::get('Weeklyreports')
                 ->find()
            	->select(['year','week']) 
@@ -82,9 +83,9 @@ echo $this->Html->script('jquery-ui.min');
                 $monday->setISODate($maxYear,$maxWeek,8);
                 $mDate1 = $monday->format('d M Y');
                 $mDate = date('d M Y', strtotime($mDate1));
-            }
+            } */
             // There are no weekly reports.
-            else {
+            // else {
                 $project_id = $this->request->session()->read('selected_project')['id'];
                 $query2 = Cake\ORM\TableRegistry::get('Projects')
                     ->find()
@@ -101,7 +102,7 @@ echo $this->Html->script('jquery-ui.min');
                     // $mDate is the date project was created on              
                     $mDate = date("d M Y", mktime(0,0,0, $month, $day, $year));
                 }
-            }
+            // }
 			echo $this->Form->button(__('Submit'));
         ?>    
  
@@ -112,8 +113,7 @@ echo $this->Html->script('jquery-ui.min');
 <script> 
     /*
      * Req 21
-     * minDate is either the first day of the weeklyreport week or 
-     * the date project was created
+     * minDate is the date project was created
      * maxDate is the current day
      */
     $( "#date" ).datepicker({

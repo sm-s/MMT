@@ -27,9 +27,10 @@
 		/* The next IF looks kinda complicated, but it means this:
 		* IF you are the owning user AND workinghour isn't from previous weeks
 		* OR you are an admin or a supervisor */
-        	if ( ( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id') || $manager)
-                        && ($firstWeeklyReport || (($year >= $maxYear) && ($week > $maxWeek)))) 
-				|| ($admin || $supervisor) ) { ?>
+        	//if ( ( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id') || $manager)
+                //        && ($firstWeeklyReport || (($year >= $maxYear) && ($week > $maxWeek)))) 
+		//		|| ($admin || $supervisor) ) { 
+                if ( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id')) || $manager || $supervisor || $admin ) { ?>
 			<li><?= $this->Html->link(__('Edit logged time'), ['action' => 'edit', $workinghour->id]) ?> </li>
 		<?php } ?>
     </ul>

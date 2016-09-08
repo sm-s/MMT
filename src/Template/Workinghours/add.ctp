@@ -39,6 +39,7 @@ echo $this->Html->script('jquery-ui.min');
              */
          
             $project_id = $this->request->session()->read('selected_project')['id'];
+            /*
             $query1 = Cake\ORM\TableRegistry::get('Weeklyreports')
                 ->find()
            	->select(['year','week']) 
@@ -57,43 +58,36 @@ echo $this->Html->script('jquery-ui.min');
                 $monday->setISODate($maxYear,$maxWeek,8);
                 $mDate1 = $monday->format('d M Y');
                 $mDate = date('d M Y', strtotime($mDate1));
-            }
+            }             
             /*
-             * No weekly reports
              * The date project was created is fetched from the db.
              */
-            else {
+            // else {  
                 $project_id = $this->request->session()->read('selected_project')['id'];
-                $query2 = Cake\ORM\TableRegistry::get('Projects')
-                    ->find()
-                    ->select(['created_on']) 
-                    ->where(['id =' => $project_id])
-                    ->toArray(); 
-                
-                foreach($query2 as $result) {
+                $queryP = Cake\ORM\TableRegistry::get('Projects')
+                        ->find()
+                        ->select(['created_on']) 
+                        ->where(['id =' => $project_id])
+                        ->toArray(); 
+
+                foreach($queryP as $result) {
                     $temp = date_parse($result);
                     $year = $temp['year'];
                     $month = $temp['month'];
                     $day = $temp['day'];
-                    /*
-                     * $mDate is the date project was created on
-                     */    
+                    // $mDate is the date project was created on      
                     $mDate = date("d M Y", mktime(0,0,0, $month, $day, $year));
                 }
-            }
-			
-			echo $this->Form->button(__('Submit'));
+            // }    
+	    echo $this->Form->button(__('Submit'));
         ?>    
-            
     </fieldset>
     <?= $this->Form->end() ?>
 </div>
 
 <script> 
     /*
-     * Req 1
-     * minDate is either the first day of the weeklyreport week or 
-     * the date project was created
+     * minDate is the date project was created
      * maxDate is the current day
      * both the input field and the icon can be clicked
      */

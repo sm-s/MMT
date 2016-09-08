@@ -65,6 +65,7 @@
                     $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
                     $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
                     // the week and the year of the workinghour
+                    /*
                     $week= $workinghour->date->format('W');
                     $year= $workinghour->date->format('Y');
                     $firstWeeklyReport = false;
@@ -84,7 +85,7 @@
                     else {
                         $firstWeeklyReport = true;
                     }
-                    
+                    */
                     // edit and delete are only shown if the weekly report is not sent
                     // edit and delete can also be viewed by the developer who owns them
 					
@@ -93,12 +94,13 @@
 			 * IF (you are the owning user or a manager) AND workinghour isn't from previous weeks
 			 * OR you are an admin or a supervisor
 			 */
-                    if (( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id') || $manager)
-                            && ($firstWeeklyReport || (($year == $maxYear) && ($week > $maxWeek)) || ($year > $maxYear) )) 
-					     || ($admin || $supervisor) ) { ?>
+                    //if (( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id') || $manager)
+                    //        && ($firstWeeklyReport || (($year == $maxYear) && ($week > $maxWeek)) || ($year > $maxYear) )) 
+                    //                          || ($admin || $supervisor) ) { 
+                    if ( ($workinghour->member->user_id == $this->request->session()->read('Auth.User.id')) || $manager || $supervisor ||  $admin  ) { ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $workinghour->id]) ?>
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $workinghour->id], ['confirm' => __('Are you sure you want to delete # {0}?', $workinghour->id)]) ?> 
-                        <?php } ?>
+                    <?php } ?>
                 </td>
             </tr>
             <?php endforeach; ?>
