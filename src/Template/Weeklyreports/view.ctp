@@ -93,6 +93,7 @@
             <?php }
             // Logging time is allowed for the last weeklyreport
             // link not visible to supervisors and clients
+            /*
             $queryForMax = Cake\ORM\TableRegistry::get('Weeklyreports')
 		->find()
 		->select(['year', 'week'])
@@ -105,7 +106,7 @@
                 if ($admin || $manager || $developer) { ?>
                 <li><?= $this->Html->link(__('Log time late'), ['controller' => 'Workinghours', 'action' => 'addlate']) ?></li>            
             <?php } 
-            }?>
+            } */ ?>
     </ul>
 </nav>
 <div class="weeklyreports view large-8 medium-16 columns content float: left">
