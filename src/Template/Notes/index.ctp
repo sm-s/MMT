@@ -32,7 +32,7 @@
                     <td><?= h($read) ?></td>
                     <td><?= h($note->created_on->format('d.m.Y')) ?></td>
                     <td><?= h($note->project_role) ?></td>
-                    <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($preview,30,"\n",TRUE)) ?></td>
+                    <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($preview,25,"\n",TRUE)) ?></td>
                     <td class="Actions"><?= $this->Html->link(__('View'), ['action' => 'view', $note->id]) ?>
                     <?= $this->Form->postLink(
                             __('Delete'),

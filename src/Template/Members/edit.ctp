@@ -36,6 +36,8 @@ echo $this->Html->script('jquery-ui.min');
      
             // Using jQuery UI datepicker
             // Starting date
+            Cake\I18n\Time::setToStringFormat('MMMM d, yyyy');
+            
             echo $this->Form->input('starting_date', ['type' => 'text', 'readonly' => true, 'id' => 'datepicker1']);            
             ?> <input type="button" value="Clear starting date" id="resetStart" />
             </br>

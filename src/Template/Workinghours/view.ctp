@@ -40,23 +40,23 @@
     <table class="vertical-table">
         <tr>
             <th><?= __('Member') ?></th>
-            <td><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Members', 'action' => 'view', $workinghour->member->id]) : '' ?></td>
+            <td colspan="2"><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Members', 'action' => 'view', $workinghour->member->id]) : '' ?></td>
         </tr>
         <tr>
             <th><?= __('Date') ?></th>
-            <td><?= h($workinghour->date->format('d.m.Y')) ?></tr>
+            <td colspan="2"><?= h($workinghour->date->format('d.m.Y')) ?></tr>
         </tr>
         <tr>
             <th><?= __('Description') ?></th>
-            <td><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
+            <td colspan="2"><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
         </tr>
         <tr>
             <th><?= __('Duration') ?></th>
-            <td><?= $this->Number->format($workinghour->duration) ?></td>
+            <td colspan="2"><?= $this->Number->format($workinghour->duration) ?></td>
         </tr>
         <tr>
             <th><?= __('Worktype') ?></th>
-            <td><?= $workinghour->has('worktype') ? $this->Html->link($workinghour->worktype->description, ['controller' => 'Worktypes', 'action' => 'view', $workinghour->worktype->id]) : '' ?></td>
+            <td colspan="2"><?= $workinghour->has('worktype') ? $this->Html->link($workinghour->worktype->description, ['controller' => 'Worktypes', 'action' => 'view', $workinghour->worktype->id]) : '' ?></td>
         </tr>
     </table>
 </div>
