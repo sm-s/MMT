@@ -8,7 +8,7 @@ class NotesController extends AppController
     public function index() {
         
         $this->paginate = [
-            'order' => ['note_read' => 'asc']
+            'order' => ['note_read' => 'asc', 'created_on' => 'desc']
         ];
 
         $this->set('notes', $this->paginate($this->Notes));
@@ -37,7 +37,7 @@ class NotesController extends AppController
         if ($this->request->is('post')) { 
         
             $note = $this->Notes->patchEntity($note, $this->request->data);
-            //$var= isset($_GET['contact_user']) ? 1 : 0;
+
             $note['project_role'] = $this->request->session()->read('selected_project_role');
 
             $note['email'] = $this->request->session()->read('Auth.User.email');
