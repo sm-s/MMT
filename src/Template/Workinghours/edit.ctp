@@ -2,6 +2,7 @@
 echo $this->Html->css('jquery-ui.min');
 echo $this->Html->script('jquery');
 echo $this->Html->script('jquery-ui.min');
+use Cake\I18n\Date;
 ?>
 
 <nav class="large-2 medium-4 columns" id="actions-sidebar">

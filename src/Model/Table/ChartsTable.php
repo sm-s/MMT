@@ -257,62 +257,71 @@ class ChartsTable extends Table
         $workinghours = TableRegistry::get('Workinghours');
         // get all the different work types one by one
         $data = array();
-        $query = $workinghours
-                ->find()
-                ->select(['duration'])
-                ->where(['worktype_id =' => 1, 'member_id IN' => $memberlist])
-                ->toArray();
-        $num = 0;
-        // count the total ammount of the duration of the worktype
-        foreach($query as $temp){
-            $num += $temp->duration;
+        if (!empty($memberlist)) {
+            $query = $workinghours
+                    ->find()
+                    ->select(['duration'])
+                    ->where(['worktype_id =' => 1, 'member_id IN' => $memberlist])
+                    ->toArray();
+            $num = 0;
+            // count the total ammount of the duration of the worktype
+            foreach($query as $temp){
+                $num += $temp->duration;
+            }
+            $data['management'] = $num;
+
+            $query = $workinghours
+                    ->find()
+                    ->select(['duration'])
+                    ->where(['worktype_id =' => 2, 'member_id IN' => $memberlist])
+                    ->toArray();
+            $num = 0;
+            foreach($query as $temp){
+                $num += $temp->duration;
+            }
+            $data['code'] = $num;
+
+            $query = $workinghours
+                    ->find()
+                    ->select(['duration'])
+                    ->where(['worktype_id =' => 3, 'member_id IN' => $memberlist])
+                    ->toArray();
+            $num = 0;
+            foreach($query as $temp){
+                $num += $temp->duration;
+            }
+            $data['document'] = $num;
+
+            $query = $workinghours
+                    ->find()
+                    ->select(['duration'])
+                    ->where(['worktype_id =' => 4, 'member_id IN' => $memberlist])
+                    ->toArray();
+            $num = 0;
+            foreach($query as $temp){
+                $num += $temp->duration;
+            }
+            $data['study'] = $num;
+
+            $query = $workinghours
+                    ->find()
+                    ->select(['duration'])
+                    ->where(['worktype_id =' => 5, 'member_id IN' => $memberlist])
+                    ->toArray();
+            $num = 0;
+            foreach($query as $temp){
+                $num += $temp->duration;
+            }
+            $data['other'] = $num;
+        } 
+        else {
+            $num = "";
+            $data['management'] = $num;
+            $data['code'] = $num;
+            $data['document'] = $num;
+            $data['study'] = $num;
+            $data['other'] = $num;
         }
-        $data['management'] = $num;
-        
-        $query = $workinghours
-                ->find()
-                ->select(['duration'])
-                ->where(['worktype_id =' => 2, 'member_id IN' => $memberlist])
-                ->toArray();
-        $num = 0;
-        foreach($query as $temp){
-            $num += $temp->duration;
-        }
-        $data['code'] = $num;
-        
-        $query = $workinghours
-                ->find()
-                ->select(['duration'])
-                ->where(['worktype_id =' => 3, 'member_id IN' => $memberlist])
-                ->toArray();
-        $num = 0;
-        foreach($query as $temp){
-            $num += $temp->duration;
-        }
-        $data['document'] = $num;
-        
-        $query = $workinghours
-                ->find()
-                ->select(['duration'])
-                ->where(['worktype_id =' => 4, 'member_id IN' => $memberlist])
-                ->toArray();
-        $num = 0;
-        foreach($query as $temp){
-            $num += $temp->duration;
-        }
-        $data['study'] = $num;
-        
-        $query = $workinghours
-                ->find()
-                ->select(['duration'])
-                ->where(['worktype_id =' => 5, 'member_id IN' => $memberlist])
-                ->toArray();
-        $num = 0;
-        foreach($query as $temp){
-            $num += $temp->duration;
-        }
-        $data['other'] = $num;
-        
         return $data;
     }
     
@@ -333,13 +342,13 @@ class ChartsTable extends Table
             }
         }
         $workinghours = TableRegistry::get('Workinghours');
-        
-        $queryW = $workinghours
-                    ->find()
-                    ->select(['date', 'duration'])
-                    ->where(['member_id IN' => $memberlist])
-                    ->toArray();
-        
+        if(!empty($memberlist)) {
+            $queryW = $workinghours
+                        ->find()
+                        ->select(['date', 'duration'])
+                        ->where(['member_id IN' => $memberlist])
+                        ->toArray();
+        }
         $data = array();
         foreach($weeklist as $temp){
             
