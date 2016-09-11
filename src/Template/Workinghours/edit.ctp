@@ -2,7 +2,6 @@
 echo $this->Html->css('jquery-ui.min');
 echo $this->Html->script('jquery');
 echo $this->Html->script('jquery-ui.min');
-use Cake\I18n\Date;
 ?>
 
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
@@ -47,7 +46,7 @@ use Cake\I18n\Date;
         <?php
 
             // change the format of the date that comes from the db
-            Cake\I18n\Date::setToStringFormat('MMMM d, yyyy');
+            Cake\I18n\Time::setToStringFormat('MMMM d, yyyy');
             
             echo $this->Form->input('date', ['type' => 'text', 'readonly' => true]);
             ?> </br>
