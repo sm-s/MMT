@@ -35,7 +35,7 @@
             <td><?= h($note->email) ?></td>
         </tr>               
         <tr>     
-            <td colspan="2" style="text-align: left;"><?= $note->content ?></td>
+            <td colspan="2" style="text-align: left;"><?= h(wordwrap($note->content,50,"\n",TRUE)) ?></td>
         </tr>
     </table>
 </div>
