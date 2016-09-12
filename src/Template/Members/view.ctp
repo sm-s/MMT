@@ -9,7 +9,7 @@
         <?php } 
         // since clients and supervisors don't log time, no need to show a link to their hour 
         if (($member->project_role == 'developer') || ($member->project_role == 'manager')) { ?>
-            <li><?= $this->Html->link(__('Logged tasks'), ['controller' => 'Members', 'action' => 'tasks', $member->id]) ?> </li>
+            <li><?= $this->Html->link(__('Logged tasks'), ['controller' => 'Workinghours', 'action' => 'tasks', $member->id]) ?> </li>
         <?php } ?>
     </ul>
 </nav>

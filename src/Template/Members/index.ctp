@@ -18,7 +18,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th><?= __('Name') ?></th>
+                <th colspan="2"><?= __('Name') ?></th>
                 <th><?= $this->Paginator->sort('project_role') ?></th>
                 <th><?= __('Working hours') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
@@ -29,7 +29,7 @@
             <?php foreach ($members as $member): ?>
 
             <tr>
-                <td><?= h($member->user->first_name . " ". $member->user->last_name) ?></td>
+                <td colspan="2"><?= $member->has('user') ? $this->Html->link($member->user->first_name . " ". $member->user->last_name, ['controller' => 'Members', 'action' => 'view', $member->id]) : '' ?></td>  
                 <td><?= h($member->project_role) ?></td><?php
                 // Get the sum of workinghours for a member who has working hours              
                 if (!empty($member->workinghours)) {
