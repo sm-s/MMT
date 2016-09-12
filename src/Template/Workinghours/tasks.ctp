@@ -1,34 +1,29 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <?php
-            use Cake\I18n\Time;
-            
-            $admin = $this->request->session()->read('is_admin');
-            $supervisor = ( $this->request->session()->read('selected_project_role') == 'supervisor' ) ? 1 : 0;
-            $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
-            $developer = ( $this->request->session()->read('selected_project_role') == 'developer' ) ? 1 : 0;
-            // link not visible to supervisors and clients
-            if ($admin || $manager || $developer) {
-            ?>
-            <li><?= $this->Html->link(__('Log time'), ['action' => 'add']) ?></li>
-            <?php 
-            } 
-            // link not visible to devs and clients
-            if($admin || $supervisor || $manager) {
-            ?>
-            <li><?= $this->Html->link(__('Log time for another member'), ['action' => 'adddev']) ?></li>
-        <?php } ?>
+        <?php use Cake\I18n\Time;
+        // get the member id parameter
+        foreach ($this->request['pass'] as $var) {
+            $id = $var;
+        } ?>
+        <li><?= $this->Html->link(__('Team\'s logged time'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('View member'), ['controller' => 'Members', 'action' => 'view', $id]) ?></li>
     </ul>
 </nav>
 <div class="workinghours index large-9 medium-18 columns content float: left">
-    <h3><?= __('Logged time') ?></h3>
-    <?php // the code for the menu is the same as in adddev.ctp 
-    //echo $this->Form->input('member_id', ['options' => $members, 'label' => 'Show hours for', 'empty' => '']) . $this->Form->button(__('Submit'));
-    ?>
+    <?php // member name for the header
+    foreach ($workinghours as $workinghour) {
+        foreach($memberlist as $member){
+            if($workinghour->member->id == $member['id']){
+                $workinghour->member['member_name'] = $member['member_name'];
+            }
+        }
+    } ?>
+    <h3><?= h($workinghour->member['member_name']) ?></h3>
+    <div class="related">
+    <h4><?= __('Logged tasks') ?></h4>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th style="width:130px;"><?= $this->Paginator->sort('member_id') ?></th>
                 <th style="width:75px;"><?= $this->Paginator->sort('date') ?></th>
                 <th style="width:60px;"><?= __('Week') ?></th>
                 <th colspan="2"><?= __('Description') ?></th>
@@ -47,17 +42,11 @@
                         }
                     }
                 ?>
-                <td ><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Workinghours', 'action' => 'tasks', $workinghour->member->id]) : '' ?></td>  
                 <td><?= h($workinghour->date->format('d.m.Y')) ?></td>
                 <td style="text-align: center;"><?= h($workinghour->date->format('W')) ?></td>
-                <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghour->description,20,"\n",TRUE)) ?></td>
+                <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
                 <td style="text-align: center;"><?= $this->Number->format($workinghour->duration) ?></td>  
-                <?php // link for admin, text for others
-                if ($admin) { ?>
-                    <td><?= $workinghour->has('worktype') ? $this->Html->link($workinghour->worktype->description, ['controller' => 'Worktypes', 'action' => 'view', $workinghour->worktype->id]) : '' ?></td>
-                <?php } else { ?>
-                    <td><?= h($workinghour->worktype->description) ?></td>
-                <?php } ?>
+                <td><?= h($workinghour->worktype->description) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $workinghour->id]) ?>
                     <?php
@@ -106,6 +95,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->prev('< ' . __('previous')) ?>

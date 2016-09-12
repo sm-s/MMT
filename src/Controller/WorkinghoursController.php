@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 class WorkinghoursController extends AppController
 {
@@ -39,7 +40,38 @@ class WorkinghoursController extends AppController
         $this->set(compact('memberlist', 'members'));               
         $this->set('_serialize', ['workinghours']);
     }
+    
+    // For listing member's workinghours
+    public function tasks($id = null)
+    {
+        // only load workinghours from current project
+        // ordered by date
+        $project_id = $this->request->session()->read('selected_project')['id'];
+        $this->paginate = [
+            'contain' => ['Members', 'Worktypes'],
+            'conditions' => array('Members.project_id' => $project_id, 'Members.id' => $id),
+            'order' => ['date' => 'DESC']
+        ];
+        
+        $membersTable = TableRegistry::get('Members');
+        // list of members so we can display usernames instead of id's
+        $memberlist = $membersTable->getMembers($project_id);
 
+        //$now = Time::now();
+        $members = $this->Workinghours->Members->find('list',[ 
+              'conditions' => ['Members.project_id' => $project_id, 
+                                'Members.id' => $id],                                 
+                               //'Members.project_role !=' => 'supervisor', 
+                               //'or' => array(''Members.ending_date >' => $now,'Members.ending_date IS' => NULL)],
+              'contain' => ['Users'], 
+              'keyField' => 'id', 
+              'valueField' => 'user.full_name',
+              'limit' => 200]);
+        
+        $this->set('workinghours', $this->paginate($this->Workinghours));
+        $this->set(compact('memberlist', 'members'));               
+        $this->set('_serialize', ['workinghours']);
+    }
     public function view($id = null)
     {
         $project_id = $this->request->session()->read('selected_project')['id'];
@@ -150,7 +182,8 @@ class WorkinghoursController extends AppController
         $workinghour = $this->Workinghours->get($id, [
             'contain' => ['Members', 'Worktypes'],
             'conditions' => array('Members.project_id' => $project_id)
-        ]);  
+        ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $workinghour = $this->Workinghours->patchEntity($workinghour, $this->request->data);
             if ($this->Workinghours->save($workinghour)) {
@@ -190,7 +223,7 @@ class WorkinghoursController extends AppController
         
         $project_role = $this->request->session()->read('selected_project_role');
         
-        if  (($this->request->action === 'add') || ($this->request->action === 'getMinDate'))
+        if  ($this->request->action === 'add')
         {
             // supervisor cannot have workinghours, and the add function simply takes the member_id of the current user
             if($project_role != "notmember" && $project_role != "supervisor" && $project_role != "client"){
@@ -234,13 +267,19 @@ class WorkinghoursController extends AppController
         //special rule for workinghours controller.
         
         // supervisors cannot log time late
-        if ($this->request->action === 'addlate') 
+        if ($this->request->action === 'addlate')
         {
-            if($project_role == "manager" || $project_role == "developer"){
+            //if($project_role == "manager" || $project_role == "developer"){
+            //    return True;
+            //}
+            return False;
+        }
+        if ($this->request->action === 'tasks') 
+        {
+            if($project_role == "manager" || $project_role == "supervisor" || $project_role == "developer" || $project_role == "client"){
                 return True;
             }
-            return False;
-        }    
+        }
         //all members can add edit and delete workinghours
         if ($this->request->action === 'adddev' || $this->request->action === 'edit'
             || $this->request->action === 'delete') 
