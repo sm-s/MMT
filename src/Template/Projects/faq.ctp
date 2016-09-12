@@ -160,25 +160,35 @@
 
     <h4 id="Q8">8. Where can I find team's/member's working hours and the total number of working hours?</h4>
        <p>
-           You can view the working hours and the total numbers of hours as follows 
+           You can view the total numbers of working hours as follows 
             <ul>
                 <li>log in and select your project</li>
-                <li>to view team's working hours: 
-                    <ul>click the "Log time" tab at the top menu</ul>
-                </li>
                 <li>to view the total numbers of working hours per team and per member: 
                     <ul>click the "Members" tab at the top menu</ul>
                 </li>
-                <li>to view member's working hours:
-                    <ul>click the "Members" tab at the top menu</ul>
-                    <ul>click the "View" link in the Actions column of the "Members" table</ul> 
-                    <ul>click the "Logged tasks" link on the left hand side of member's page</ul>
-                </li>
+
                 <li>to view the total numbers of member's working hours by worktype:
                     <ul>click the "Members" tab at the top menu</ul> 
                     <ul>click the "View" link in the Actions column of the "Members" table</ul>
                 </li>
             </ul>
+        </p>
+        <p> 
+            You can view the working hours as follows
+            <ul>
+                <li>log in and select your project</li>
+                <li>to view team's working hours: 
+                    <ul>click the "Log time" tab at the top menu</ul>
+                </li>
+                <li>to view member's working hours:
+                    <ul>click the "Log time" tab at the top menu</ul>
+                    <ul>click the name of the team member</ul>
+                    <ul>or alternatively</ul>
+                    <ul>click the "Members" tab at the top menu</ul>
+                    <ul>click the "View" link in the Actions column of the "Members" table</ul> 
+                    <ul>click the "Logged tasks" link on the left hand side of member's page</ul>
+                </li>
+            </ul>    
         <a href="#">[back to the top]</a>
        </p>
 
