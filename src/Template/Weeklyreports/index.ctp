@@ -15,7 +15,7 @@
     </ul>
 </nav>
 <div class="weeklyreports index large-9 medium-18 columns content float: left">
-    <h3><?= __('Weeklyreports') ?></h3>
+    <h3><?= __('Weekly reports') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>

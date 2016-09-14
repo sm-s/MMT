@@ -15,7 +15,7 @@
       <li><a accesskey="alt+5" href="#Q5">How can I change my password?</a></li>
       <li><a accesskey="alt+6" href="#Q6">As a project manager, how do I do the weekly reporting of my project?</a></li>
       <li><a accesskey="alt+7" href="#Q7">How do I log my daily working time?</a></li>
-      <li><a accesskey="alt+8" href="#Q8">Where can I find team's/member's working hours and the total number of working hours?</a></li>
+      <li><a accesskey="alt+8" href="#Q8">Where can I find team's/member's logged working time and the total number of working hours?</a></li>
       <li><a accesskey="alt+9" href="#Q9">How can I view the progress of my project?</a></li>
       <li><a href="#Q10">How can I view the progress of other projects?</a></li>
     </ol>
@@ -41,7 +41,7 @@
        <ul>
             <li>Developer tutorial shows how to log time and view the progress of the project.</li>
             <li>Manager tutorial shows how to add members and fill in the weekly report form.</li>
-            <li>New features have been added after the videos were made thus some features look different in the current version of MMT than in the videos.</li>
+            <li>New features have been added after the videos were made in June 2016 thus the current version of MMT looks little different compared to the videos.</li>
        </ul>
         <p>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/RE5sO55sDyk" frameborder="0" allowfullscreen></iframe>
@@ -147,7 +147,7 @@
 	   <li>click the "Log time" tab at the top of the screen</li>
 	   <li>click the "Log time" link on the left hand side</li>
 	   <li>enter the date, description, duration (hours) and work type for the time to be logged</li>
-	   <li>click "Submit" once you are done, and your logged time is saved</li>
+	   <li>click "Submit" once you are done, and your logged task is saved</li>
          </ul>
      <!--Please note that you can log time late, but only for the week of the last weekly report.
         <ul>
@@ -158,7 +158,7 @@
       <a href="#">[back to the top]</a>
      </p>
 
-    <h4 id="Q8">8. Where can I find team's/member's working hours and the total number of working hours?</h4>
+    <h4 id="Q8">8. Where can I find team's/member's logged working time and the total number of working hours?</h4>
        <p>
            You can view the total numbers of working hours as follows 
             <ul>
@@ -169,24 +169,24 @@
 
                 <li>to view the total numbers of member's working hours by worktype:
                     <ul>click the "Members" tab at the top menu</ul> 
-                    <ul>click the "View" link in the Actions column of the "Members" table</ul>
+                    <ul>click member's name on the list</ul>
                 </li>
             </ul>
         </p>
         <p> 
-            You can view the working hours as follows
+            You can view the logged working time as follows
             <ul>
                 <li>log in and select your project</li>
-                <li>to view team's working hours: 
+                <li>to view team's logged tasks: 
                     <ul>click the "Log time" tab at the top menu</ul>
                 </li>
-                <li>to view member's working hours:
+                <li>if a member has logged workinghours, you can view his/her logged tasks:
                     <ul>click the "Log time" tab at the top menu</ul>
-                    <ul>click the name of the team member</ul>
+                    <ul>click member's name on the list</ul>
                     <ul>or alternatively</ul>
                     <ul>click the "Members" tab at the top menu</ul>
-                    <ul>click the "View" link in the Actions column of the "Members" table</ul> 
-                    <ul>click the "Logged tasks" link on the left hand side of member's page</ul>
+                    <ul>click member's name on the list</ul> 
+                    <ul>click the "Logged tasks" link on the left-hand side</ul>
                 </li>
             </ul>    
         <a href="#">[back to the top]</a>
