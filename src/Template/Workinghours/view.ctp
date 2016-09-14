@@ -6,7 +6,8 @@
 		$manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
 		// the week and year of the last weekly report
 		$project_id = $this->request->session()->read('selected_project')['id'];
-		$query = Cake\ORM\TableRegistry::get('Weeklyreports')
+		/*
+                $query = Cake\ORM\TableRegistry::get('Weeklyreports')
 				->find()
 				->select(['year','week']) 
 				->where(['project_id =' => $project_id])
@@ -23,7 +24,8 @@
 		// the week and the year of the workinghour
 		$week= $workinghour->date->format('W');
 		$year= $workinghour->date->format('Y');
-		$firstWeeklyReport = false;
+		$firstWeeklyReport = false; 
+                 */
 		/* The next IF looks kinda complicated, but it means this:
 		* IF you are the owning user AND workinghour isn't from previous weeks
 		* OR you are an admin or a supervisor */
@@ -36,7 +38,7 @@
     </ul>
 </nav>
 <div class="workinghours view large-7 medium-14 columns content float: left">
-    <h3><?= h("View logged time") ?></h3>
+    <h3><?= h("View logged task") ?></h3>
     <table class="vertical-table">
         <tr>
             <th><?= __('Member') ?></th>
@@ -47,16 +49,16 @@
             <td colspan="2"><?= h($workinghour->date->format('d.m.Y')) ?></tr>
         </tr>
         <tr>
-            <th><?= __('Description') ?></th>
-            <td colspan="2"><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
-        </tr>
-        <tr>
             <th><?= __('Duration') ?></th>
             <td colspan="2"><?= $this->Number->format($workinghour->duration) ?></td>
         </tr>
         <tr>
             <th><?= __('Worktype') ?></th>
             <td colspan="2"><?= $workinghour->has('worktype') ? $this->Html->link($workinghour->worktype->description, ['controller' => 'Worktypes', 'action' => 'view', $workinghour->worktype->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Description') ?></th>
+            <td colspan="2"><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
         </tr>
     </table>
 </div>

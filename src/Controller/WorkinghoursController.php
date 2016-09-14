@@ -63,10 +63,7 @@ class WorkinghoursController extends AppController
                                 'Members.id' => $id],                                 
                                //'Members.project_role !=' => 'supervisor', 
                                //'or' => array(''Members.ending_date >' => $now,'Members.ending_date IS' => NULL)],
-              'contain' => ['Users'], 
-              'keyField' => 'id', 
-              'valueField' => 'user.full_name',
-              'limit' => 200]);
+                ]);
         
         $this->set('workinghours', $this->paginate($this->Workinghours));
         $this->set(compact('memberlist', 'members'));               

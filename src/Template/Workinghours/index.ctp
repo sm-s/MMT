@@ -19,9 +19,14 @@
             <li><?= $this->Html->link(__('Log time for another member'), ['action' => 'adddev']) ?></li>
         <?php } ?>
     </ul>
+    <ul class="side-nav">
+            <li><b>New features in MMT 09/2016</b></li>
+            <li>To view member's logged tasks, click member's name in the list</li>
+            <li>To view total numbers of working hours, go to Members section</li>
+    </ul>
 </nav>
 <div class="workinghours index large-9 medium-18 columns content float: left">
-    <h3><?= __('Logged time') ?></h3>
+    <h3><?= __('Project team\'s logged tasks') ?></h3>
     <?php // the code for the menu is the same as in adddev.ctp 
     //echo $this->Form->input('member_id', ['options' => $members, 'label' => 'Show hours for', 'empty' => '']) . $this->Form->button(__('Submit'));
     ?>

@@ -5,19 +5,19 @@
         foreach ($this->request['pass'] as $var) {
             $id = $var;
         } ?>
-        <li><?= $this->Html->link(__('Team\'s logged time'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('Team\'s logged tasks'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('View member'), ['controller' => 'Members', 'action' => 'view', $id]) ?></li>
     </ul>
 </nav>
 <div class="workinghours index large-9 medium-18 columns content float: left">
     <?php // member name for the header
-    foreach ($workinghours as $workinghour) {
-        foreach($memberlist as $member){
-            if($workinghour->member->id == $member['id']){
-                $workinghour->member['member_name'] = $member['member_name'];
+        foreach ($workinghours as $workinghour) {
+            foreach($memberlist as $member){
+                if($workinghour->member->id == $member['id']){
+                  $workinghour->member['member_name'] = $member['member_name'];
+                }
             }
-        }
-    } ?>
+        } ?>
     <h3><?= h($workinghour->member['member_name']) ?></h3>
     <div class="related">
     <h4><?= __('Logged tasks') ?></h4>
@@ -35,16 +35,16 @@
         <tbody>
             <?php foreach ($workinghours as $workinghour): ?>
             <tr>
-                <?php
+                <?php /*
                     foreach($memberlist as $member){
                         if($workinghour->member->id == $member['id']){
                            $workinghour->member['member_name'] = $member['member_name'];
                         }
-                    }
+                    } */
                 ?>
                 <td><?= h($workinghour->date->format('d.m.Y')) ?></td>
                 <td style="text-align: center;"><?= h($workinghour->date->format('W')) ?></td>
-                <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
+                <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghour->description,28,"\n",TRUE)) ?></td>
                 <td style="text-align: center;"><?= $this->Number->format($workinghour->duration) ?></td>  
                 <td><?= h($workinghour->worktype->description) ?></td>
                 <td class="actions">
