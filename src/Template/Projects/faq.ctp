@@ -27,7 +27,8 @@
             <li>A weekly report covers a calendar week and the first weekly report is written for week 38.</li>
             <li>However, remember to log your working hours for weeks 36-37.</li>
             <li>The working hours that are in the table on Members' page include all working hours, even the ones that are not covered by a weekly report.</li>
-            <li>In this version of MMT logging time is limited between the day the project was created and the current day.</li> 
+            <li>In the current version of MMT, logging time is limited between the day the project was created and the current day.</li> 
+            <li>This means that working hours that are listed in the weekly report change automatically, if a member adds, edits or deletes hours.</li>
             <li>Make a habit of logging your working hours so you don't forget them.</li>    
           </ul>
     For managers:
