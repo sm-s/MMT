@@ -22,7 +22,7 @@ echo $this->Html->script('jquery-ui.min');
             echo $this->Form->input('starting_date', ['type' => 'text', 'readonly' => true, 'id' => 'datepicker1']);            
             ?> </br>
             <?php            
-            echo $this->Form->input('ending_date', ['type' => 'text', 'readonly' => true, 'id' => 'datepicker2']);
+            echo $this->Form->input('ending_date', ['type' => 'text', 'label' => 'Ending date (preferably leave this field empty)', 'readonly' => true, 'id' => 'datepicker2']);
 
             // Fetching from the db the date when the project was created          
             $project_id = $this->request->session()->read('selected_project')['id'];

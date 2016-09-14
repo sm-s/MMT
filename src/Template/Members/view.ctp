@@ -7,9 +7,9 @@
         if ($admin || $supervisor ) { ?>
             <li><?= $this->Html->link(__('Edit Member'), ['action' => 'edit', $member->id]) ?> </li>
         <?php } 
-        // since clients and supervisors don't log time, no need to show a link to their hour 
-        if (($member->project_role == 'developer') || ($member->project_role == 'manager')) { ?>
-            <li><?= $this->Html->link(__('Logged tasks'), ['controller' => 'Workinghours', 'action' => 'tasks', $member->id]) ?> </li>
+        // if member has workinghours and member's role is dev or manager
+        if ((!empty($member->workinghours)) && ($member->project_role == 'developer') || ($member->project_role == 'manager')) { ?>
+            <li><?= $this->Html->link(__('Member\'s logged tasks'), ['controller' => 'Workinghours', 'action' => 'tasks', $member->id]) ?> </li>
         <?php } ?>
     </ul>
 </nav>

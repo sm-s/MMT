@@ -9,8 +9,11 @@
             if($admin || $supervisor || $manager ) {
         ?>
             <li><?= $this->Html->link(__('New Member'), ['action' => 'add']) ?></li>
-        <?php }
-        ?>
+        <?php } ?>
+    </ul>
+    <ul class="side-nav">
+        <li><b>New features in MMT 09/2016</b></li>
+        <li>To view member's hours per work type, click member's name in the list</li> 
     </ul>
 </nav>
 <div class="members index large-9 medium-18 columns content float: left">
@@ -45,7 +48,7 @@
                     $sum = "";
                 }
                 $total += $sum;?>
-                
+
                 <td><?= h($sum) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $member->id]) ?>
@@ -63,7 +66,7 @@
             
             <?php if (!empty($member->project_id)) { ?>
             <tr style="border-top: 2px solid black;">
-                <td><b><?= __('Total') ?></b></td>
+                <td colspan="2"><b><?= __('Total') ?></b></td>
                 <td></td>
                 <td><b><?= h($total) ?></b></td>
             </tr> 
