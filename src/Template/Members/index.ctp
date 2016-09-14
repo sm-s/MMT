@@ -13,7 +13,7 @@
     </ul>
     <ul class="side-nav">
         <li><b>New features in MMT 09/2016</b></li>
-        <li>To view member's hours per work type, click member's name in the list</li> 
+        <li>To view member's hours per work type, click member's name on the list</li> 
     </ul>
 </nav>
 <div class="members index large-9 medium-18 columns content float: left">

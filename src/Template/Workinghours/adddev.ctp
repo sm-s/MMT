@@ -5,9 +5,7 @@ echo $this->Html->script('jquery-ui.min');
 ?>
 
 <nav class="large-2 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-    </ul>
+    <ul class="side-nav"></ul>
 </nav>
 <div class="workinghours form large-8 medium- columns content float: left">
     <?= $this->Form->create($workinghour) ?>
@@ -17,9 +15,8 @@ echo $this->Html->script('jquery-ui.min');
             /* Req 10: changing the ID's of entities to their textual names 
              * updated: WorkingHours.addev.ctp, WorkingHoursController.php, User.php, 
              * Weeklyhours.edit.ctp, WeeklyHoursController.php*/
-            echo $this->Form->input('member_id', ['options' => $members, 'label' => 'Member Name']);
+            echo $this->Form->input('member_id', ['options' => $members, 'label' => 'Member Name', 'empty' => ' ', 'required' => true]);
             
-
             // Req 21: Using jQuery UI datepicker
             echo $this->Form->input('date', ['type' => 'text', 'readonly' => true]);
             ?> </br>

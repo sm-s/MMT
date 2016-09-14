@@ -36,6 +36,7 @@
             <li>The first week you'll need write a weekly report for is week 38.</li>
             <li>Submit the first weekly report on Monday, 26th September 2016</li>
             <li>For all teams, the phase will be 0 in the first weekly report.</li>
+            <li>In the current version of MMT, the automatic title in the weekly report is:</br> "Project Name, weekly report".</li>
         </ul>
 
        Video tutorials

@@ -8,9 +8,11 @@
             <li><?= $this->Html->link(__('Edit Member'), ['action' => 'edit', $member->id]) ?> </li>
         <?php } 
         // if member has workinghours and member's role is dev or manager
-        if ((!empty($member->workinghours)) && ($member->project_role == 'developer') || ($member->project_role == 'manager')) { ?>
+        if (($member->project_role == 'developer') || ($member->project_role == 'manager')) { 
+            if (!empty($member->workinghours)) {?>
             <li><?= $this->Html->link(__('Member\'s logged tasks'), ['controller' => 'Workinghours', 'action' => 'tasks', $member->id]) ?> </li>
-        <?php } ?>
+        <?php } 
+        } ?>
     </ul>
 </nav>
 <div class="members view large-8 medium-16 columns content float: left">
