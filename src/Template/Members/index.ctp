@@ -69,6 +69,7 @@
                 <td colspan="2"><b><?= __('Total') ?></b></td>
                 <td></td>
                 <td><b><?= h($total) ?></b></td>
+                <td></td>
             </tr> 
             <?php } ?>
         </tbody>
