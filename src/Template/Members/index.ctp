@@ -11,10 +11,6 @@
             <li><?= $this->Html->link(__('New Member'), ['action' => 'add']) ?></li>
         <?php } ?>
     </ul>
-    <ul class="side-nav">
-        <li><b>New features in MMT 09/2016</b></li>
-        <li>To view member's hours per work type, click member's name on the list</li> 
-    </ul>
 </nav>
 <div class="members index large-9 medium-18 columns content float: left">
     <h3><?= __('Members') ?></h3>

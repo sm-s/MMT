@@ -19,11 +19,6 @@
             <li><?= $this->Html->link(__('Log time for another member'), ['action' => 'adddev']) ?></li>
         <?php } ?>
     </ul>
-    <ul class="side-nav">
-            <li><b>New features in MMT 09/2016</b></li>
-            <li>To view member's logged tasks, click member's name in the list</li>
-            <li>To view total numbers of working hours, go to Members section</li>
-    </ul>
 </nav>
 <div class="workinghours index large-9 medium-18 columns content float: left">
     <h3><?= __('Project team\'s logged tasks') ?></h3>
@@ -55,7 +50,7 @@
                 <td ><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Workinghours', 'action' => 'tasks', $workinghour->member->id]) : '' ?></td>  
                 <td><?= h($workinghour->date->format('d.m.Y')) ?></td>
                 <td style="text-align: center;"><?= h($workinghour->date->format('W')) ?></td>
-                <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghour->description,20,"\n",TRUE)) ?></td>
+                <td colspan="2" style="font-family:monospace;"><?= h(wordwrap($workinghour->description,22,"\n",TRUE)) ?></td>
                 <td style="text-align: center;"><?= $this->Number->format($workinghour->duration) ?></td>  
                 <?php // link for admin, text for others
                 if ($admin) { ?>
@@ -71,6 +66,10 @@
                     $manager = ( $this->request->session()->read('selected_project_role') == 'manager' ) ? 1 : 0;
                     // the week and the year of the workinghour
                     /*
+                     * 
+<td ><?= $workinghour->has('member') ? $this->Html->link($workinghour->member->member_name, ['controller' => 'Members', 'action' => 'view', $workinghour->member->id]) : '' ?></td> 
+                     * 
+                     * 
                     $week= $workinghour->date->format('W');
                     $year= $workinghour->date->format('Y');
                     $firstWeeklyReport = false;

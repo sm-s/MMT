@@ -413,6 +413,8 @@
 	.side-nav li a:not(.button) {
 	  color: #15848F;
 	  margin-left: 0.8em;
+          border-style: dashed;
+          border-width: 1px;
 	}
 
 	.side-nav li a:not(.button):hover {
