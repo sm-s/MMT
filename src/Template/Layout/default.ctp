@@ -187,10 +187,11 @@ $cakeDescription = 'MMT';
 					<li class="login">
 						<?= $this->Html->link(__('Log in'), ['controller' => 'Users', 'action' => 'login']) ?>
 					</li>
+                                        <?php /*
 					<li id="space">: :</li>
 					<li class="login">
 						<?= $this->Html->link(__('Sign up'), ['controller' => 'Users', 'action' => 'signup']) ?>
-					</li>
+					</li> */ ?>
 				</ul>
 				<?php
 

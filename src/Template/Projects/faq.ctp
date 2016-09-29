@@ -165,31 +165,37 @@
            You can view the total numbers of working hours as follows 
             <ul>
                 <li>log in and select your project</li>
-                <li>to view the total numbers of working hours per team and per member: 
-                    <ul>click the "Members" tab at the top menu</ul>
-                </li>
-
-                <li>to view the total numbers of member's working hours by worktype:
-                    <ul>click the "Members" tab at the top menu</ul> 
-                    <ul>click member's name on the list</ul>
-                </li>
+                <li>to view the total numbers of working hours per team and per member:</li> 
+                    <ul>
+                        <li>click the "Members" tab at the top menu</li>
+                    </ul>
+                <li>to view the total numbers of member's working hours by worktype:</li>
+                    <ul>
+                        <li>click the "Members" tab at the top menu</li> 
+                        <li>click member's name on the list</li>
+                    </ul>
             </ul>
         </p>
         <p> 
             You can view the logged working time as follows
             <ul>
                 <li>log in and select your project</li>
-                <li>to view team's logged tasks: 
-                    <ul>click the "Log time" tab at the top menu</ul>
-                </li>
+                <li>to view team's logged tasks:</li> 
+                    <ul>
+                        <li>click the "Log time" tab at the top menu</li>
+                    </ul>
+                
                 <li>if a member has logged workinghours, you can view his/her logged tasks:
-                    <ul>click the "Log time" tab at the top menu</ul>
-                    <ul>click member's name on the list</ul>
-                    <ul>or alternatively</ul>
-                    <ul>click the "Members" tab at the top menu</ul>
-                    <ul>click member's name on the list</ul> 
-                    <ul>click the "Logged tasks" link on the left-hand side</ul>
-                </li>
+                    <ul>
+                        <li>click the "Log time" tab at the top menu,</li>
+                        <li>click member's name on the list</li>
+                    </ul>
+                <li>or alternatively</li>
+                    <ul>
+                        <li>click the "Members" tab at the top menu</li>
+                        <li>click member's name on the list</li> 
+                        <li>click the "Logged tasks" link on the left-hand side</li>
+                    </ul>
             </ul>    
         <a href="#">[back to the top]</a>
        </p>
