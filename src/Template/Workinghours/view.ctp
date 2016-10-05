@@ -58,7 +58,7 @@
         </tr>
         <tr>
             <th><?= __('Description') ?></th>
-            <td colspan="2"><?= h(wordwrap($workinghour->description,25,"\n",TRUE)) ?></td>
+            <td colspan="2"><?= h(wordwrap($workinghour->description,35,"\n",TRUE)) ?></td>
         </tr>
     </table>
 </div>

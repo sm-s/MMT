@@ -62,7 +62,7 @@ class ProjectsController extends AppController
             // fetch values using helpers
             $min = $data['weekmin'];
             $max = $data['weekmax'];
-			$year = $data['year'];
+		$year = $data['year'];
             
             // correction for nonsensical values for week numbers
             if ( $min < 1 )  $min = 1;
@@ -104,14 +104,36 @@ class ProjectsController extends AppController
         // current default settings
         if(!$this->request->session()->check('statistics_limits')){
             $time = Time::now();
+            $week = date('W');
+            
+            // weekmin will be the current week - 10
+            // weekmax will be the current week + 1
+            // exceptions when the current week is 1-10 or 52
+            
+            // weeks 1-10
+            if ($week <= 10) {
+                $weekmin = 1;
+                $weekmax = $week+1;               
+            }
+            // week 52
+            elseif ($week == 52) {
+                $weekmin = $week-10;
+                $weekmax = $week;        
+            }
+            // weeks 11-51
+            else {
+                $weekmin = $week-10;
+                $weekmax = $week+1;         
+            }
             // these initial limits are arbitrary so change freely if needed
-            $statistics_limits['weekmin'] = 2;
-            $statistics_limits['weekmax'] = 11;
+            $statistics_limits['weekmin'] = $weekmin;
+            $statistics_limits['weekmax'] = $weekmax;
             
             $statistics_limits['year'] = $time->year;
             
             $this->request->session()->write('statistics_limits', $statistics_limits);
         }
+
         // load the limits to a variable
         $statistics_limits = $this->request->session()->read('statistics_limits');
         // function in the projects table "ProjectsTable.php"
