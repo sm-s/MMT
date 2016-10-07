@@ -15,6 +15,11 @@
                 array('value' => $current_metrics[0]['value'], 'label' => 'Current phase','type' => 'number', 'required'=>true));
             echo $this->Form->input('totalPhases', 
                 array('value' => $current_metrics[1]['value'], 'label' => 'Total number of planned phases','type' => 'number', 'required'=>true));
+            ?>
+            <div class="boxed">
+            <p>
+                <?php echo "Current state of the requirements list"; ?>
+            </p><?php
             echo $this->Form->input('reqNew', 
                 array('value' => $current_metrics[2]['value'], 'label' => 'New requirements','type' => 'number', 'required'=>true));
             echo $this->Form->input('reqInProgress', 
@@ -23,6 +28,7 @@
                 array('value' => $current_metrics[4]['value'], 'label' => 'Closed requirements','type' => 'number', 'required'=>true));
             echo $this->Form->input('reqRejected', 
                 array('value' => $current_metrics[5]['value'], 'label' => 'Rejected requirements','type' => 'number', 'required'=>true));
+            ?></div><?php
             echo $this->Form->input('commits', 
                 array('value' => $current_metrics[6]['value'], 'label' => 'Total number of commits','type' => 'number', 'required'=>true));
             echo $this->Form->input('passedTestCases', 
