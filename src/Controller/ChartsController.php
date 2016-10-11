@@ -417,7 +417,7 @@ class ChartsController extends AppController
     			'Documentation',
     			'Other'
     	);
-    	$myChart->yAxis->title->text = 'Total amount of working hours';
+    	$myChart->yAxis->title->text = 'Working hours';
 		// tooltips etc
     	$myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {
         return 'Total hours: ' +' <b>'+
@@ -457,7 +457,7 @@ class ChartsController extends AppController
         // labels of axes
     	
         $myChart->xAxis->title->text = 'Week number';
-	$myChart->yAxis->title->text = 'Total amount of working hours';
+	$myChart->yAxis->title->text = 'Working hours';
     	
 	// tooltips etc
     	$myChart->tooltip->formatter = $this->Highcharts->createJsExpr("function() {

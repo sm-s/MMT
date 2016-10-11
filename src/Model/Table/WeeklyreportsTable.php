@@ -41,6 +41,11 @@ class WeeklyreportsTable extends Table
         	'dependent' => true,
         	'cascadeCallbacks' => true
         ]);
+        $this->hasMany('Comments', [
+            'foreignKey' => 'weeklyreport_id',
+        	'dependent' => true,
+        	'cascadeCallbacks' => true
+        ]);
     }
     
     // check if the project_id and week pair already exists
