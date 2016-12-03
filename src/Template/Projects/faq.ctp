@@ -1,6 +1,7 @@
 <nav class="large-2 medium-4 columns" id="actions-sidebar">    
     <ul class="side-nav">
         <li><?= $this->Html->link(__('Public statistics'), ['controller' => 'Projects', 'action' => 'statistics']) ?> </li>
+        <li><?= $this->Html->link(__('About MMT'), ['controller' => 'Projects', 'action' => 'about']) ?> </li>
     </ul>    
 </nav>
 
