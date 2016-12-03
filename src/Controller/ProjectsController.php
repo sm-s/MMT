@@ -160,6 +160,12 @@ class ProjectsController extends AppController
 
     }
     
+    // empty function, because nothing needs to be done but the function has to exist
+    public function about()
+    {
+
+    }  
+    
     public function add()
     {
         $project = $this->Projects->newEntity();
@@ -248,9 +254,10 @@ class ProjectsController extends AppController
             // allow access to index
             $this->Auth->allow(['index']);
         }
-        // statistics and faq are open pages to everyone
+        // statistics, faq and about are open pages to everyone
         $this->Auth->allow(['statistics']);
         $this->Auth->allow(['faq']);
+        $this->Auth->allow(['about']);
     }
     
     public function isAuthorized($user)
