@@ -219,7 +219,16 @@
                     <th colspan="2"><?= __('Metrictype') ?></th>                 
                     <th><?= __('Value') ?></th>
                     <th><?= __('Date') ?></th>
-                    <?php if($admin || $supervisor) { ?>
+                    <?php 
+                    $queryForMax = Cake\ORM\TableRegistry::get('Weeklyreports')
+                        ->find()
+                        ->select(['year', 'week'])
+                        ->where(['project_id =' => $weeklyreport['project_id']])
+                        ->toArray();
+                    if(!empty($queryForMax)) {
+                        $lastReport = max($queryForMax);
+                    }        
+                    if (($admin || $supervisor) || ($manager && (($weeklyreport->year >= $lastReport['year']) && ($weeklyreport->week >= $lastReport['week'])))) { ?>
                         <th class="actions"><?= __('Actions') ?></th>
                     <?php } ?>
                 </tr>
@@ -228,8 +237,10 @@
                     <td colspan="2"><?= h($metrics->metric_description) ?></td>
                     <td><?= h($metrics->value) ?></td>
                     <td><?= h($metrics->date->format('d.m.Y')) ?></td>                  
-                    <?php // only admins and supervisors can edit metrics
-                    if($admin || $supervisor) { ?>
+                    <?php           
+                    // admins and supervisors can edit metrics
+                    // managers can edit metrics of the last weeklyreport
+                    if (($admin || $supervisor) || ($manager && (($weeklyreport->year >= $lastReport['year']) && ($weeklyreport->week >= $lastReport['week'])))) { ?>
                         <td class="actions">
                             <?= $this->Html->link(__('Edit'), ['controller' => 'Metrics', 'action' => 'edit', $metrics->id]) ?>  
                         </td> 
