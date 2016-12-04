@@ -28,7 +28,7 @@ echo $this->Html->script('jquery-ui.min');
         <?php  
             echo $this->Form->input('description');
             echo $this->Form->input('duration', array('style' => 'width: 35%;'));
-            echo $this->Form->input('worktype_id', ['options' => $worktypes]); 
+            echo $this->Form->input('worktype_id', ['options' => $worktypes, 'empty' => ' ', 'required' => true]); 
             
             /*
              * Req 1

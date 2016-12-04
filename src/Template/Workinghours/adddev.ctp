@@ -23,7 +23,7 @@ echo $this->Html->script('jquery-ui.min');
         <?php  
             echo $this->Form->input('description');
             echo $this->Form->input('duration', array('style' => 'width: 35%;'));
-            echo $this->Form->input('worktype_id', ['options' => $worktypes]);
+            echo $this->Form->input('worktype_id', ['options' => $worktypes, 'empty' => ' ', 'required' => true]);
         
             // Fetching from the db the date when the project was created      
             $project_id = $this->request->session()->read('selected_project')['id'];
