@@ -5,14 +5,15 @@
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Add User') ?></legend>
-        <?php
+            <?php 
             echo $this->Form->input('email');
             echo $this->Form->input('password');
             echo $this->Form->input('first_name');
             echo $this->Form->input('last_name');
             echo $this->Form->input('phone');
-			echo $this->Form->button(__('Submit'));
+            echo $this->Form->input('checkIfHuman', array('label' => 'Write the sum of 2 + 3'));
+            echo $this->Form->button(__('Submit'));
         ?>
     </fieldset>
-    <?= $this->Form->end() ?>
+    <?= $this->Form->end(); ?>
 </div>

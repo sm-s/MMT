@@ -72,20 +72,29 @@ class UsersController extends AppController
     }
     
     public function signup()
-    {
+    { 
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             
             // when adding a new user, make the role always "user", as in normal user
             $this->request->data['role'] = "user";
             
-            $user = $this->Users->patchEntity($user, $this->request->data);   
-            if ($this->Users->save($user)){
-                $this->Flash->success(__('Your account has been saved.'));
-                return $this->redirect(['controller' => 'Projects', 'action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
-            }   
+            /* 
+             * CHANGE THE VALUE HERE
+             * Check if the user is human
+             */ 
+            if ($this->request->data['checkIfHuman'] == 5) {
+                $user = $this->Users->patchEntity($user, $this->request->data);   
+                if ($this->Users->save($user)){
+                    $this->Flash->success(__('Your account has been saved.'));
+                    return $this->redirect(['controller' => 'Projects', 'action' => 'index']);
+                } else {
+                    $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                }                
+            }
+            else {
+                    $this->Flash->error(__('Check the sum.'));
+            }  
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
