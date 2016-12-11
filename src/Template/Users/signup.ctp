@@ -11,7 +11,7 @@
             echo $this->Form->input('first_name');
             echo $this->Form->input('last_name');
             echo $this->Form->input('phone');
-            echo $this->Form->input('checkIfHuman', array('label' => 'Write the sum of 2 + 3'));
+            echo $this->Form->input('checkIfHuman', array('label' => 'Write the sum of 2 + 3', 'required' => true));
             echo $this->Form->button(__('Submit'));
         ?>
     </fieldset>
