@@ -239,18 +239,23 @@ $cakeDescription = 'MMT';
 	</div>
 	<!-- this non-breaking space is empty content that makes the page render correctly -->
 	&nbsp;
-	<div id="topimg">
+	<!--<div id="topimg">
 		<?= $this->Html->image('ylapalkki.jpg'); ?>
+	</div>-->
+	<div id="topimg">
+		<?= $this->Html->image('pitkalogo1.png'); ?>
+		<div class="logo">METRICS</div>
+		<div class="logo">MONITORING</div>
+		<div class="logo">TOOL</div>
 	</div>
-
-	<!-- Left side (displays current location) -->
+	<!-- Left side (displays current location)-->
 	<nav id="left-title">
 		<ul>
 			<li class="title-area">
 				<h1><a href=""><?= $this->fetch('title') ?></a></h1>
 			</li>
 		</ul>
-	</nav>
+	</nav> 
 	
 	<!-- top navigation bar with every other button -->
 	<nav id="navtop" role="navigation" data-topbar>
@@ -274,7 +279,7 @@ $cakeDescription = 'MMT';
                         } ?>
 	        </ul> <!-- end -->
 		<div class="clearer"></div>
-	</nav>	
+	</nav>
 
     <?= $this->Flash->render() ?>
     <section class="container clearfix">
@@ -282,47 +287,36 @@ $cakeDescription = 'MMT';
     </section>
 
 </div>
-<hr/>
+<!--<hr/>-->
 <footer>
 	<!-- "reverse background" for footer -->
 	<div id="area52">
 		<div class="footerblock">
 			<div id="logoblock">
-				<?= $this->Html->image('pitkalogo1.png'); ?>
+                                <?= $this->Html->image('ylapalkki.jpg'); ?>
+				<!--<?= $this->Html->image('pitkalogo1.png'); ?>
 				<div class="footerlogo">METRICS</div>
 				<div class="footerlogo">MONITORING</div>
-				<div class="footerlogo">TOOL</div>
+				<div class="footerlogo">TOOL</div>-->
 			</div>
 		</div>
 		<div class="footerblock">
 			<h6>PUBLIC PAGES</h6>
 			<ul>
-				<li><?= $this->Html->link(__('Home'), ['controller' => 'Projects', 'action' => 'index']) ?></li>
-                                <li><?= $this->Html->link(__('About MMT'), ['controller' => 'Projects', 'action' => 'about']) ?> </li>
-				<li><?= $this->Html->link(__('Public statistics'), ['controller' => 'Projects', 'action' => 'statistics']) ?> </li>
-				<li><?= $this->Html->link(__('FAQ'), ['controller' => 'Projects', 'action' => 'faq']) ?> </li>                   
-			</ul>
-			<h6>OTHER RESOURCES</h6>
-			<ul>
-				<li><a href="http://www.uta.fi/sis/tie/pw/statistics.html" target="_blank">Project Work Statistics</a></li>
+                            <li><?= $this->Html->link(__('Home'), ['controller' => 'Projects', 'action' => 'index']) ?></li>      
+                            <li><?= $this->Html->link(__('About MMT'), ['controller' => 'Projects', 'action' => 'about']) ?> </li>
+                            <li><?= $this->Html->link(__('Public statistics'), ['controller' => 'Projects', 'action' => 'statistics']) ?> </li>
+                            <li><?= $this->Html->link(__('FAQ'), ['controller' => 'Projects', 'action' => 'faq']) ?> </li>                   
 			</ul>
 		</div>
 		<div class="footerblock">
-			<h6>CONTACT INFO</h6>
+			<h6>OTHER RESOURCES</h6>
 			<ul>
-				<li><a href="http://www.uta.fi/sis/yhteystiedot/henkilokunta/pekkamakiaho.html" target="_blank">Supervisor's page</a></li>
+                            <li><a href="http://www.uta.fi/sis/tie/pw/statistics.html" target="_blank">Project Work course - Statistics</a></li>
+                            <li><a href="http://www.uta.fi/sis/yhteystiedot/henkilokunta/pekkamakiaho.html" target="_blank">Supervisor's web site</a></li>
 			</ul>
-			<h6>MISC</h6>
-			<ul>
-				<li><a href="http://mmttest.sis.uta.fi/" target="_blank">MMT's test page</a></li>
-			</ul>
-                        <!--
-                        <h6>SHORTCUTS</h6>
-                        <ul>
-                                <li><?= $this->Html->link(__('Log in'), ['controller' => 'Users', 'action' => 'login']) ?>
-                                    <?php echo " / ";?>
-				<?= $this->Html->link(__('Log out'), ['controller' => 'Users', 'action' => 'logout']) ?></li>
-			</ul>-->
+
+
 		</div>
 	</div>
 </footer>

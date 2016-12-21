@@ -172,13 +172,27 @@
 
 	/* Banner picture */
 	#topimg {
-		
+            margin-left: 1em;
+            margin-bottom: 1em;
 	}
+        /*
 		#topimg img {
 			display: block;
 			margin: 1em 0 1em 1em;
-		}
+		} */
 
+		#topimg img {
+                    float: left;
+                    margin-right: 1em;
+                    padding: 0.1em;
+		}
+		#topimg .logo {
+
+                    font-size: 1.4em;
+		}
+                
+                                
+                                
 	/* I just came up with a unique name that probably was not used
 	   This div contains the actual content of this site */
 	#area51 {
@@ -207,65 +221,85 @@
 		float: left;
 		background-color: #083e7f;
 		z-index: 2;
-		width: 300px;
+		width: 260px;
+                margin-right: 0.5em;
 
-		border-right: 2px solid #9BD;
-		border-bottom: 2px solid #9BD;
-		border-radius: 0px 0px 20px 0px;
+		/* border-right: 2px solid #9BD; */
+		/* border-bottom: 2px solid #9BD; */
+		/* border-radius: 0px 0px 20px 0px; */
 	}
 		#left-title li a {
 			font-family: monospace;
-				font-size: 0.8em;
-				color: #FFF;
+			font-size: 0.7em;
+			color: #FFF;
 			margin-left: 0.4em;
 		}
 		
 	/* Navigation bar */
 	#navtop {
-		background-color: #19578A;
+		/* background-color: #19578A; */
 		width: 100%;
-		max-height: 25px;
+		/* max-height: 25px; */
 		margin-top: 2.5em;
+                
 	}	
 		#navtop ul .navbutton {
 			float: left;
-			margin-top: -1.25em;
+			margin-top: -1em;
 		}
 		
 		#navtop ul .login {
 			float: right;
 			margin-top: -1.4em;
 		}
-			#navtop ul a {
-				display: block;
-				background-color: #083e7f;
-				font-size: 1.2em;
-				color: #FFF;
-				padding: 0.5em;
-				margin: 0.2em;
-				border: 2px ridge skyblue;
-				border-radius: 10px;
+		
+                #navtop ul a {
+			display: block;
+			background-color: #083e7f;
+                        /* background-color: #FFF; */
+			font-size: 1.2em;
+			color: #FFF;
+                        /* color: #083e7f; */
+			padding: 0.5em;
+			margin-top: 0.2em;
+                        /* margin: 0.2em; */
+			/* border: 2px ridge skyblue; */
+			/* border-radius: 10px; */
 			}
-				#navtop ul li a:hover {
-				background-color: #222;
-			}
+		#navtop ul li a:hover {
+			/* background-color: #222; */
+                        /* background-color: #009bee; */
+                        background-color: #dae2ef;
+                        color: #083e7f;
+                }
+
 
 	/* All footer related styling */
 	footer {
 		min-height: 200px;
+                background-image: none !important;
+                background-color: #19578A !important;
+                color: #FFF;
+                padding: 0.5em;
+                
 	}
 		footer ul {
-			list-style-type: none;
-			margin: 0;
+                    list-style-type: none;
+                    margin: 0;
 		}
 		
 		footer h6 {
-			font-weight: bold;
-				font-family: Liberation Sans, Arial, sans;
+                    font-weight: bold;
+       		    font-family: Liberation Sans, Arial, sans;
+                    color: #FFF;  
 		}
+                footer li a {
+                    color: #FFF;
+                }
+                
 
 		#area52 {
-			background-color: #FFF;
+
 			width: 80%;
 
 			min-height: 100%;
@@ -273,23 +307,24 @@
 		}
 			#area52 .footerblock {
 				width: 31%;
-				float: left;
-				
+				float: left;				
 				margin-left: 1em;
-				
 				border-right: 2px inset #999;
 				min-height: 180px;
 			}
 				.footerblock #logoblock {
-					margin-top: 12%;
+					margin-top: 10%;
 				}
 				#area52 img {
-					float: left;
-					margin-right: 1em;
+					/* float: left; */
+					/* margin-right: 2em; */
+                                        background-color: #FFF;
+                                        /* padding: 0.1em; */
+                                        padding: 0.5em;
 				}
 				#area52 .footerlogo {
 					font-family: serif;
-						font-size: 1.4em;
+                                        font-size: 1.4em;
 				}
 				#area52 :last-child {
 					border: none;
@@ -1006,5 +1041,13 @@
         input.feedback {
             width:600px; 
             height:200px;
-        } 
-     
+        }
+        label.confirmPassword {
+            font-weight: bold;
+        }
+        
+        label.confirmPassword:after {
+            color: #C3232D;
+            content: ' *';
+            display:inline;
+        }
