@@ -89,9 +89,9 @@ class ProjectsController extends AppController
 			 */
 				
 			// correction of year to current if bigger than it
-			if ( $year > date("Y") ) {
+			/*if ( $year > date("Y") ) {
 				$year = date("Y");
-			}
+			}*/
             
             $statistics_limits['weekmin'] = $min;
             $statistics_limits['weekmax'] = $max;
@@ -105,22 +105,26 @@ class ProjectsController extends AppController
         if(!$this->request->session()->check('statistics_limits')){
             $time = Time::now();
             $week = date('W');
-            
+            $month = date('m');
             // weekmin will be the current week - 10
             // weekmax will be the current week + 1
             // exceptions when the current week is 1-10 or 52
             
-            // weeks 1-10
-            if ($week <= 10) {
+            // weeks 2-10
+            if ($week >= 2 && $week <= 10) {
                 $weekmin = 1;
                 $weekmax = $week+1;               
             }
-            // week 52
-            elseif ($week == 52) {
-                $weekmin = $week-10;
-                $weekmax = $week;        
+            // week 1
+            elseif ($week == 1) {
+                $weekmin = 43;
+                $weekmax = 53;        
             }
-            // weeks 11-51
+            elseif ($week == 53) {
+                $weekmin = $week-10;
+                $weekmax = $week;                
+            }
+            // weeks 11-52
             else {
                 $weekmin = $week-10;
                 $weekmax = $week+1;         
@@ -129,8 +133,16 @@ class ProjectsController extends AppController
             $statistics_limits['weekmin'] = $weekmin;
             $statistics_limits['weekmax'] = $weekmax;
             
-            $statistics_limits['year'] = $time->year;
+            $year = $time->year;
+            $diffYear = $year - 1 ; 
             
+            if ($week == 1 || ($week == 52 && $month == 01) || ($week == 53 && $month == 01) ) {
+                $statistics_limits['year'] = $diffYear;
+            }
+            else {
+                $statistics_limits['year'] = $time->year;
+            }
+         
             $this->request->session()->write('statistics_limits', $statistics_limits);
         }
 
@@ -164,7 +176,7 @@ class ProjectsController extends AppController
     public function about()
     {
 
-    }  
+    }
     
     public function add()
     {
