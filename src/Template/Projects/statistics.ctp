@@ -25,6 +25,7 @@
                 <?php 
                 $min = $this->request->session()->read('statistics_limits')['weekmin'];
                 $max = $this->request->session()->read('statistics_limits')['weekmax'];
+                $year = $this->request->session()->read('statistics_limits')['year'];
                 
                 // correction for nonsensical values
                 if ( $min < 1 )  $min = 1;
