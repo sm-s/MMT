@@ -190,9 +190,15 @@
                     $hours = array();
                     // Get member's hours for the week
                     foreach ($queryForHours as $key) {
-                        if ($weeklyreport->week == $key->date->format('W')) {                        
-                            $hours[] = $key->duration;
-                            $sum = array_sum($hours); 
+                        if ($weeklyreport->week == $key->date->format('W')) {
+                            if (($weeklyreport->week == 52 && $key->date->format('m') == 01) ||
+                                    ($weeklyreport->week == 5 && $key->date->format('m') == 01) || 
+                                    ($weeklyreport->week == 1 && $key->date->format('m') == 12) ||
+                                    ($weeklyreport->year == $key->date->format('Y'))) {
+                            
+                                    $hours[] = $key->duration;
+                                    $sum = array_sum($hours);
+                                }
                         }
                     } 
                 } 
