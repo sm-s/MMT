@@ -339,16 +339,8 @@ class MetricsController extends AppController
         if (isset($user['role']) && $user['role'] === 'admin') {
             return true;
         }
-        $project_role = $this->request->session()->read('selected_project_role');
         
-        // SUPERVISORS???
-        // managers ar e allowed to edit metrics of their projects
-        if ($this->request->action === 'edit') {
-            if($project_role == "manager" || $project_role == "supervisor"){
-                return True;
-            }
-            
-        }
-        //return parent::isAuthorized($user);
+        
+        return parent::isAuthorized($user);
     }
 }
