@@ -28,9 +28,9 @@
                 
                 // correction for nonsensical values
                 if ( $min < 1 )  $min = 1;
-                if ( $min > 52 ) $min = 52;
+                if ( $min > 53 ) $min = 53;
                 if ( $max < 1 )  $max = 1;
-                if ( $max > 52 ) $max = 52;
+                if ( $max > 53 ) $max = 53;
                 if ( $max < $min ) { 
 			$temp = $max;
                 	$max = $min;
@@ -79,7 +79,7 @@
                                             ->find()
                                             ->select(['id'])
                                             ->where(['project_id =' => $project['id'], 
-                                                    'week >=' => $min])
+                                                    'week >=' => $min, 'year >=' => $year])
                                             ->toArray();
                                     // transforming returned query item to integer
                                     $reportId = $query[$i++]->id;
