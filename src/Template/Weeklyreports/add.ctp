@@ -20,15 +20,20 @@
             }
             else{
                 $now = Time::now();
+                $nowWeek = date('W');
                 $reportWeek = $now->weekOfYear -1;
                 $currProj = $this->request->session()->read('selected_project')['project_name'];
 
-		// autofills some info to report title
-                //echo $this->Form->input('title', array('value' => $currProj.', report for week '.$reportWeek.', '.$now->year) );              
-                // The automatic title doesn't contain the week any longer
                 echo $this->Form->input('title', array('value' => $currProj.', weekly report') );
-                echo $this->Form->input('week', array('value' => $reportWeek, 'style' => 'width: 35%;'));
-                echo $this->Form->input('year', array('value' => $now->year, 'style' => 'width: 35%;'));
+                // the week and year for the last weeklyreport of the year are not automatically filled out
+                if ($nowWeek == 01) {
+                    echo $this->Form->input('week', array('style' => 'width: 35%;'));
+                    echo $this->Form->input('year', array('style' => 'width: 35%;'));
+                }
+                else {
+                    echo $this->Form->input('week', array('value' => $reportWeek, 'style' => 'width: 35%;'));
+                    echo $this->Form->input('year', array('value' => $now->year, 'style' => 'width: 35%;'));
+                }
                 echo $this->Form->input('meetings');
                 echo $this->Form->input('reglink', array('label' => 'Requirements link'));
                 echo $this->Form->input('problems', array('label' => 'Challenges, issues, etc.'));
