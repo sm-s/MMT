@@ -135,6 +135,29 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
+        public function password()
+    {
+        $user = $this->Users->get($this->Auth->user('id'), [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->request->data['password'] == $this->request->data['checkPassword']) {
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('The profile has been updated.'));
+                    return $this->redirect(['controller' => 'Projects', 'action' => 'index']);
+                } 
+                else {
+                    $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                }
+            }
+            else {
+                $this->Flash->error(__('Passwords are not a match. Try again, please.'));
+            }
+        }
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
+    }
     
     public function delete($id = null)
     {
@@ -168,7 +191,8 @@ class UsersController extends AppController
         }
         
         // All registered users can edit their own profile and logout
-        if ($this->request->action === 'logout' || $this->request->action === 'editprofile') {
+        if ($this->request->action === 'logout' || $this->request->action === 'editprofile' 
+                || $this->request->action === 'password' ) {
             return true;
         }
         
