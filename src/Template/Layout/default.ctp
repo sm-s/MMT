@@ -184,13 +184,8 @@ $cakeDescription = 'MMT';
 					print_r('Currently not logged in');
 				?>
 				<ul>
-					<li class="login">
-						<?= $this->Html->link(__('Log in'), ['controller' => 'Users', 'action' => 'login']) ?>
-					</li>
-					<li id="space">: :</li>
-					<li class="login">
-						<?= $this->Html->link(__('Sign up'), ['controller' => 'Users', 'action' => 'signup']) ?>
-					</li>
+                                    <li class="buttonIn"><?= $this->Html->link(__('Log in'), ['controller' => 'Users', 'action' => 'login']) ?></li>					
+                                    <li class="buttonTop"><?= $this->Html->link(__('Sign up'), ['controller' => 'Users', 'action' => 'signup']) ?></li>
 				</ul>
 				<?php
 
@@ -225,14 +220,10 @@ $cakeDescription = 'MMT';
 					}
 				?>
 				<ul>
-					<li class="login">
-						<?= $this->Html->link(__('Profile'), ['controller' => 'Users', 'action' => 'editprofile']) ?>
-					</li>
-					<li id="space">: :</li>
-					<li class="login">
-						<?= $this->Html->link(__('Log out'), ['controller' => 'Users', 'action' => 'logout']) ?>
-					</li>
-				</ul>
+                                    <li class="buttonTop"><?= $this->Html->link(__('Change password'), ['controller' => 'Users', 'action' => 'password']) ?></li>
+                                    <li class="buttonTop"><?= $this->Html->link(__('Edit profile'), ['controller' => 'Users', 'action' => 'editprofile']) ?></li>
+                                    <li class="buttonOut"><?= $this->Html->link(__('Log out'), ['controller' => 'Users', 'action' => 'logout']) ?></li>
+                                </ul>
 				<?php } ?>
 			</div>
 		</div>

@@ -123,14 +123,28 @@
 					display: block;
 					padding: 1.3em;
 				}
-				.dd-content ul #space {
-					display: block;
-					padding-top: 1.3em;
-						padding-bottom: 1.3em;
+                                .dd-content .buttonTop {
+                                    display: block;
+                                    color: #15848F;
+                                    border-style: solid;
+                                    border-width: 1px;
+                                    border-radius: 4px;
+                                    margin-right: 1em;
+                                    margin-top: 0.5em;
+                                }
+                                .dd-content .buttonIn, .buttonOut {
+                                    display: block;
+                                    font-weight: bold;
+                                    color: #15848F;
+                                    border-style: solid;
+                                    border-width: 1px;
+                                    border-radius: 4px;
+                                    margin-right: 1em;
+                                    margin-top: 0.5em;
+                                }
+				.dd-content a:hover {
+					background-color: #f1f1f1
 				}
-					.dd-content a:hover {
-						background-color: #f1f1f1
-					}
 					
 	/* Notifications of unread messages
 	 */
