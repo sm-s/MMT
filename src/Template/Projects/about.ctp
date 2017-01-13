@@ -15,25 +15,23 @@
     </p>
     <h4>Release notes</h4>
     <p>
-        ...
+        <h5>Version 3.0 (January 2017)</h5>
+        <p>New Layout, new page (About MMT)<p
     </p>
-    <h4>Versions</h4>
+    <h4>Previous versions</h4>
     
-    <h5>Version 2</h5>
         <p>
-            Versions 2.0-2.2 were implemented by Sirkku Seitamäki as a TIETS16 programming project 
+            Versions 2.0-2.1 and version 3.0 were implemented by Sirkku Seitamäki as a TIETS16 programming project 
             during the fall term of 2016. 
         </p>
-    <h5>Version 1</h5>
         <p>
-            Versions 1.0-1.3 were implemented during the spring term of 2016 as a coursework for 
+            Versions 1.1-1.3 were implemented during the spring term of 2016 as a coursework for 
             TIEA4 Project Work course and TIETS19 Software Project Management course. 
             The team consisted of two project managers (Elena Solovieva and Choudhary Shahzad Shabbir) 
             and two developers (Andreas Valjakka and Sirkku Seitamäki). 
         </p>   
-    <h5>Version 0</h5>
         <p>
-            Version 0 was the product of the fall 2015 Project Work team.  
+            Version 1.0 was the product of the fall 2015 Project Work team.  
             Jukka Ala-Fossi and Mykola Andrushchenko were the developers in the project and 
             Katriina Löytty was the manager.
         </p>    
