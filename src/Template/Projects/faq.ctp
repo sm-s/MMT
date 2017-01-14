@@ -7,10 +7,10 @@
 
 <div id="faq" class="projects index large-9 medium-18 columns content float: left">
     <h3><?= __('FAQ') ?></h3>
-     
-    <ol>
-      <li><a accesskey="alt+1 "href="#Q1">For students of PW and SPM courses in fall 2016</a></li>
-      <li><a accesskey="alt+2"><?= $this->Html->link('What can I use the Metrics Monitoring Tool (MMT) for?', array('controller' => 'projects', 'action' => 'faq', '#' => 'Q2')) ?></a></li>
+    <ol start="0">
+      <li style="list-style-type:none;"><a accesskey="alt+0 "href="#Q0">Video tutorials</a></li>
+      <li><a accesskey="alt+1 "href="#Q1">For students of PW and SPM courses in spring 2017</a></li>
+      <li><a accesskey="alt+2" href="#Q2">What can I use the Metrics Monitoring Tool (MMT) for?</a></li>
       <li><a accesskey="alt+3" href="#Q3">How do I get started?</a></li>
       <li><a accesskey="alt+4" href="#Q4">I forgot my password. How do I get a new one?</a></li>
       <li><a accesskey="alt+5" href="#Q5">How can I change my password?</a></li>
@@ -21,38 +21,42 @@
       <li><a href="#Q10">How can I view the progress of other projects?</a></li>
     </ol>
     
-    <h4 id="Q1">1. For students of PW and SPM courses in fall 2016</h4>
+    <h4 id="Q0">Video tutorials</h4>
     <p>
-    For developers and managers:
-          <ul >
-            <li>A weekly report covers a calendar week and the first weekly report is written for week 38.</li>
-            <li>However, remember to log your working hours for weeks 36-37.</li>
-            <li>The working hours that are in the table on Members' page include all working hours, even the ones that are not covered by a weekly report.</li>
-            <li>In the current version of MMT, logging time is limited between the day the project was created and the current day.</li> 
-            <li>This means that working hours that are listed in the weekly report change automatically, if a member adds, edits or deletes hours.</li>
-            <li>Make a habit of logging your working hours so you don't forget them.</li>    
-          </ul>
-    For managers:
-      	<ul>    
-            <li>The first week you'll need write a weekly report for is week 38.</li>
-            <li>Submit the first weekly report on Monday, 26th September 2016</li>
-            <li>For all teams, the phase will be 0 in the first weekly report.</li>
-            <li>In the current version of MMT, the automatic title in the weekly report is:</br> "Project Name, weekly report".</li>
-        </ul>
-
-       Video tutorials
        <ul>
             <li>Developer tutorial shows how to log time and view the progress of the project.</li>
             <li>Manager tutorial shows how to add members and fill in the weekly report form.</li>
-            <li>New features have been added after the videos were made in June 2016 thus the current version of MMT looks little different compared to the videos.</li>
        </ul>
         <p>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/RE5sO55sDyk" frameborder="0" allowfullscreen></iframe>
-
-        
             <iframe width="560" height="315" src="https://www.youtube.com/embed/9Qx3TuLZZc8" frameborder="0" allowfullscreen></iframe>
-        </p>
-        <p>
+         </p>
+        <p><a href="#">[back to the top]</a></p>
+    </p>
+    <h4 id="Q1">1. For students of PW and SPM courses in spring 2017</h4>
+    <p>
+    For developers and managers:
+          <ul>
+            <li>Unless you created your user account yourself, change the password during your first log in.</li>
+            <li>The first weekly report is written for week XX.</li>
+            <li>However, remember to log your working hours for weeks XX - XX.</li>
+            <li>The working hours that are in the table on Members' page include all working hours, even the ones that are not covered by a weekly report.</li>   
+          </ul>
+    For managers:
+      	<ul>    
+            <li>The first week you'll need write a weekly report for is week XX.</li>
+            <li>Submit the first weekly report on Monday, XXth January 2017</li>
+            <li>For all teams, the phase will be 0 in the first weekly report.</li>
+        </ul>
+    In the current version of MMT:
+        <ul>
+            <li>Logging time is limited between the day the project was created and the current day.</li> 
+            <li>This means that working hours that are listed in the weekly report change automatically, 
+                if a member adds, edits or deletes hours.</li>
+            <li>The automatic title in the weekly report is:</br> "Project Name, weekly report".</li>
+        
+        </ul>
+
         <a href="#">[back to the top]</a> 
     </p>
 	
@@ -103,17 +107,17 @@
     <p>
         <ul>
             <li>Contact the MMT administrator Pekka Mäkiaho at pekka.makiaho(at)uta.fi, who will send you a new password.</li>
-            <li>Remember to change the password after the first log in! For changing your password see <a accesskey="alt+4" href="#Q4">How can I change my password/edit my profile?</a></li>
        </ul>
        <a href="#">[back to the top]</a>
     </p>
 
-    <h4 id="Q5">5. How can I change my password/edit my profile?</h4>
+    <h4 id="Q5">5. How can I change my password or edit my profile?</h4>
     <p>
-      You can change your password and edit your profile by clicking the "Profile" link at the top right corner of MMT. Make the desired changes and click "Submit".<br />
-      Ps. Your password is encrypted upon submitting it. That is why it seems to have a lot more characters on the screen than what you entered. Safe and sound!
-      <br />
-      <br />      
+        <ul>
+            <li>You can change your password and edit your profile by clicking the "Profile" link at the top right corner of MMT.</li> 
+            <li>"Change password" link is on the left-side menu of "Edit profile" page.</li> 
+            <li>Make the desired changes and click "Submit".</li>
+        </ul>    
       <a href="#">[back to the top]</a>
     </p>
 
@@ -218,8 +222,8 @@
       You can view the progress of other projects similarly as your own project in <a accesskey="alt+9" href="#Q9"> How can I view the progress of my project?</a>, 
 	if the project is classified as "public" in the project's basic data by the administrator. 
       <br />
-      Additionally, you can view the combined statistics of all public projects by clicking "Home" at the top of the screen, and then the "Public statistics"
-      on the the left-hand side.
+      Additionally, you can view the combined statistics of all public projects by clicking the "Public statistics"
+      link in the footer.
       <br />
       <br />
       <a href="#">[back to the top]</a>
