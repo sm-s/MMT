@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 class MembersController extends AppController
 {
@@ -43,6 +44,18 @@ class MembersController extends AppController
             $member = $this->Members->patchEntity($member, $this->request->data);
             // the member is made a part of the currently selected project
             $member['project_id'] = $project_id;
+            $email = $this->request->data['email'];
+            $query = TableRegistry::get('Users')
+                ->find()
+           	->select(['id']) 
+            	->where(['email =' => $email])
+                ->toArray(); 
+            foreach($query as $temp) {
+                $id = $temp['id'];
+            }
+
+            $member['user_id'] = $id;
+
             
             // Managers are not allowed to add members that are supervisors
             if($member['project_role'] != "supervisor" || $this->request->session()->read('selected_project_role') != 'manager'){

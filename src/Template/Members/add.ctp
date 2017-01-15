@@ -12,11 +12,14 @@ echo $this->Html->script('jquery-ui.min');
     <fieldset>
         <legend><?= __('Add Member') ?></legend>
         <?php
-            echo $this->Form->input('user_id', ['options' => $users, 'empty' => ' ', 'required' => true]);
+            //echo $this->Form->input('user_id', ['options' => $users, 'empty' => ' ', 'required' => true]);
+            echo $this->Form->input('user_id', ['type' => 'hidden']);    
+        ?><div class="ui-widget"><?php            
+            echo $this->Form->input('email', ['options' => $users, 'type' => 'text', 'id' => 'autocomplete', 
+                'required' => true, 'label' => 'Email of the user']);
+            ?></div><?php
             echo $this->Form->input('project_role', 
                 ['options' => array('client' => 'client', 'developer' => 'developer', 'manager' => 'manager', 'supervisor' => 'supervisor'), 'empty' => ' ']);
-            //echo $this->Form->input('starting_date', ['empty' => true, 'default' => '']);
-            //echo $this->Form->input('ending_date', ['empty' => true, 'default' => '']);
             
             // jQuery UI datepicker
             echo $this->Form->input('starting_date', ['type' => 'text', 'readonly' => true, 'id' => 'datepicker1']);            
@@ -69,5 +72,25 @@ echo $this->Html->script('jquery-ui.min');
         buttonImage: "../../webroot/img/glyphicons-46-calendar.png",
         buttonImageOnly: true,
         buttonText: "Select date"       
+    });
+</script>
+<script>
+
+    var emails = [ 
+           <?php 
+           if ($users != null) {
+           foreach ($users as $user) {
+               echo "\"" . $user . "\",";
+           }
+           }?>
+    ];
+
+    $( "#autocomplete" ).autocomplete({
+      source: function( request, response ) {
+              var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+              response( $.grep( emails, function( item ){
+                  return matcher.test( item );
+              }) );
+          }
     });
 </script>
