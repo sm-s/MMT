@@ -56,8 +56,8 @@
 	}
 		.dropdown button {
 			padding: 0.2em 4em;
-			border: 2px ridge silver;
-			border-top: none;
+			/* border: 2px ridge silver;*/
+			border: none;
 			border-radius: 0 0 20px 20px;
 			background-color: #083e7f;
 			margin: 0;
@@ -66,7 +66,7 @@
 				background-color: #222;
 			}
 			.dropdown button #label {
-				font-family: sans;
+				font-family: serif;
 				color: #FFF;
 			}
 			.dropdown button img {
@@ -108,7 +108,7 @@
 			
 			.dd-content .info {
 				font-weight: bold;
-					color: #878;
+				color: #878;
 			}
 
 			.dd-content ul {
@@ -123,8 +123,7 @@
 					display: block;
 					padding: 0.4em;
 				}
-                                .dd-content .buttonTop {
-                                    display: block;
+                                .buttonTop {
                                     color: #15848F;
                                     border-style: solid;
                                     border-width: 1px;
@@ -132,8 +131,7 @@
                                     margin-right: 1em;
                                     margin-top: 0.5em;
                                 }
-                                .dd-content .buttonIn, .buttonOut {
-                                    display: block;
+                                .buttonIn, .buttonOut {
                                     font-weight: bold;
                                     color: #15848F;
                                     border-style: solid;
@@ -1066,3 +1064,9 @@
             content: ' *';
             display:inline;
         }
+        label.requiredEmail:after {
+     	/*.required > label:after {*/
+	  content: ' *';
+	  color: #C3232D;
+          display:inline;
+	}
