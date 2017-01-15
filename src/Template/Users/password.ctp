@@ -7,11 +7,9 @@
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Change password') ?></legend>
-
             <?php
-            
             echo $this->Form->input('password', ['label' => 'New password', 'value' => '', 'id' => 'key', 'empty']);
-            echo $this->Form->input('checkPassword', array('label' => 'Retype the new password', 'required' => true, 'type' => 'password'));
+            echo $this->Form->input('checkPassword', array('label' => 'Retype the new password', 'value' => '', 'required' => true, 'type' => 'password', 'empty'));
 
             echo $this->Form->button(__('Submit'));
             

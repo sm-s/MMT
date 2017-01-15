@@ -16,7 +16,7 @@ echo $this->Html->script('jquery-ui.min');
             echo $this->Form->input('user_id', ['type' => 'hidden']);    
         ?><div class="ui-widget"><?php            
             echo $this->Form->input('email', ['options' => $users, 'type' => 'text', 'id' => 'autocomplete', 
-                'required' => true, 'label' => 'Email of the user']);
+                'required' => true, 'label' => 'Email of the user (enter first few characters)']);
             ?></div><?php
             echo $this->Form->input('project_role', 
                 ['options' => array('client' => 'client', 'developer' => 'developer', 'manager' => 'manager', 'supervisor' => 'supervisor'), 'empty' => ' ']);
