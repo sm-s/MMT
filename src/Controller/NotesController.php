@@ -21,7 +21,7 @@ class NotesController extends AppController
         $note = $this->Notes->get($id);
         
         $note->note_read = 1;
-        
+        // mark note as read in database
         if ($this->Notes->save($note)) {
             
         }

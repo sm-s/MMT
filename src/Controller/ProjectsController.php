@@ -108,7 +108,7 @@ class ProjectsController extends AppController
             $month = date('m');
             // weekmin will be the current week - 10
             // weekmax will be the current week + 1
-            // exceptions when the current week is 1-10 or 52
+            // exceptions when the current week is 1-10 or 53
             
             // weeks 2-10
             if ($week >= 2 && $week <= 10) {
